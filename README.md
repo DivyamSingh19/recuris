@@ -1,4 +1,4 @@
-🔹 Project Name: MediChainX – Blockchain-Powered EHR System
+🔹 Project Name: Recuris– Blockchain-Powered EHR System
 
 🔹 Problem Statement:
 
