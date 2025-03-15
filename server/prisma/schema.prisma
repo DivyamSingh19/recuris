@@ -7,51 +7,46 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Specialization {
-  General_Medicine
-  Pediatrics
-  Dermatology
-  Psychiatry
-  Radiology
-  Anesthesiology
-  Emergency_Medicine
-  Pulmonology
-  Cardiology
-  Endocrinology
-  Neurology
-}
+ 
 
 model Patient {
-  id       Int    @id @default(autoincrement())
+  id       Int    @id @default(autoincrement()) @unique
   email    String
   name     String
   password String
+  appointments  Appointments[]
 }
 
 model Hospital_Admin {
-  id       Int    @id @default(autoincrement())
+  id       Int    @id @default(autoincrement()) @unique
+  name     String
   email    String
   hospital String
   password String
+  h_id     String
 }
 
 model Doctor {
-  id       Int    @id @default(autoincrement())
+  id       Int    @id @default(autoincrement()) @unique
+  name String
   email    String
   hospital String
+  h_id     String
   password String
-  name String
+   
 }
 
 model Hospital {
   id       Int    @id @default(autoincrement())
   name     String
   location String
+  h_id     String
 }
 
-model Appointment {
+model Appointments {
   id Int @id @default(autoincrement())
-  userId Int
+  patientId Int @unique
+  patient Patient  @relation(fields: [patientId],references: [id])
   doctorId Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

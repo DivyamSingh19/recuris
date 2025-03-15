@@ -1,6 +1,9 @@
 {
   "dependencies": {
     "@prisma/client": "^6.5.0",
+    "@types/bcrypt": "^5.0.2",
+    "@types/validator": "^13.12.2",
+    "bcrypt": "^5.1.1",
     "bcryptjs": "^3.0.2",
     "chai": "^5.2.0",
     "cors": "^2.8.5",
@@ -18,6 +21,7 @@
     "mongoose": "^8.10.1",
     "solc": "^0.8.29",
     "typescript": "^5.8.2",
+    "validator": "^13.12.0",
     "web3": "^4.16.0",
     "web3.storage": "^4.5.5",
     "zod": "^3.24.2"

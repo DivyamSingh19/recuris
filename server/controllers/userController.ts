@@ -1,18 +1,20 @@
 import {PrismaClient} from "@prisma/client"
-import { Jwt } from "jsonwebtoken";
+import JWT from "jsonwebtoken";
+import "dotenv/config"
+import { User } from "../types/user";
+import { Doctor } from "../types/user";
+import { Request,Response } from "express";
+import validator from "validator"
+import bcrypt from "bcrypt"
+
+
 const prisma = new PrismaClient();
-
-interface User{
-    name: string,
-    email:string,
-    password: string
-}
-
-interface Doctor{ 
-    hospital : string,
-    specialization :string
-}
-async function registerPatient({name,email,password}:User ) {
+ 
+async function registerPatient(req:Request,res:Response ) {
+    const {name,email,password}:User = req.body
+    if(!name || !email || !password){
+        return res.json({success:false,message : "All fields are required"})
+    }
     try {
         
     } catch (error) {
@@ -42,7 +44,7 @@ async function loginAdmin() {
         
     }
 }
-async function registerDoctor({name,email,password}:User,{hospital,specialization}:Doctor) {
+async function registerDoctor({name,email,password}:User) {
     try {
         
     } catch (error) {
