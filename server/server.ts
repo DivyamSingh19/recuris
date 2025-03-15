@@ -1,5 +1,8 @@
 import express from "express"
 import cors from "cors"
+import userRouter from "./routes/userRoute";
+import appointmentRouter from "./routes/appointmentRoute";
+import bookingRouter from "./routes/bookingRoute";
 
 
 
@@ -18,17 +21,15 @@ app.use(cors())
 
 
 
+//api
+app.use("/api/user",userRouter)
+app.use("/api/appointment",appointmentRouter)
+app.use("/api/booking",bookingRouter)
 
 
 
 
 
-
-
-
-
-
-
-
+//global catches
 
 app.listen("Server started on :"+port)
