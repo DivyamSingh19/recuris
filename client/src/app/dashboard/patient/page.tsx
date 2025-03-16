@@ -1,14 +1,7 @@
- 
-import { Sidebar } from '@/components/ui/sidebar'
-import React from 'react'
-
-const Page = () => {
+export default function PatientPage() {
   return (
     <div>
-      <Sidebar/>
+      <h1>Patient Dashboard</h1>
     </div>
-  )
+  );
 }
-
-export default Page
- 
