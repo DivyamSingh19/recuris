@@ -33,4 +33,6 @@ app.use("/api/booking",bookingRouter)
 
 //global catches
 
-app.listen("Server started on :"+port)
+app.listen(port, () => {
+    console.log(`Server started on port ${port}`);
+  });
