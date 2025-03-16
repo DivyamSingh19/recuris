@@ -15,6 +15,7 @@ model Patient {
   name     String
   password String
   appointments  Appointments[]
+  pin          Pin
 }
 
 model Hospital_Admin {
@@ -59,4 +60,11 @@ model Appointments {
   doctorId Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Pin {
+  id Int @id @default(autoincrement())
+  patientId Int @unique
+  // patient Patient @relation(fields: [patientId],references: [id])
+  
 }

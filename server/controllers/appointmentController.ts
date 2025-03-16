@@ -1,12 +1,14 @@
 import { PrismaClient } from "@prisma/client";
+import { Patient } from "../types/user";
 
 const prisma = new PrismaClient();
 
 
 
-async function addAppointment() {
+async function addAppointment(req:Request,res:Response) {
     try {
         
+         
     } catch (error) {
         
     }
