@@ -1,14 +1,11 @@
- 
-import { Sidebar } from '@/components/ui/sidebar'
 import React from 'react'
 
 const Page = () => {
   return (
     <div>
-      <Sidebar/>
+      hello imma help you nigguh
     </div>
   )
 }
 
 export default Page
- 
