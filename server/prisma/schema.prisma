@@ -11,7 +11,7 @@ datasource db {
 
 model Patient {
   id       Int    @id @default(autoincrement()) @unique
-  email    String
+  email    String @unique
   name     String
   password String
   appointments  Appointments[]
@@ -20,7 +20,7 @@ model Patient {
 model Hospital_Admin {
   id       Int    @id @default(autoincrement()) @unique
   name     String
-  email    String
+  email    String @unique
   hospital String
   password String
   h_id     String
@@ -29,7 +29,7 @@ model Hospital_Admin {
 model Doctor {
   id       Int    @id @default(autoincrement()) @unique
   name String
-  email    String
+  email    String  @unique
   hospital String
   h_id     String
   password String
@@ -42,7 +42,16 @@ model Hospital {
   location String
   h_id     String
 }
+model DiagnosticCenter {
+  id Int @id @default(autoincrement())
+  name String
+  email String @unique
+  location String
+  phoneNumber Int @unique
+  password String
+  specialization String
 
+}
 model Appointments {
   id Int @id @default(autoincrement())
   patientId Int @unique

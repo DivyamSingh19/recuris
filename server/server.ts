@@ -3,16 +3,17 @@ import cors from "cors"
 import userRouter from "./routes/userRoute";
 import appointmentRouter from "./routes/appointmentRoute";
 import bookingRouter from "./routes/bookingRoute";
-import 'dotenv/config'
+ 
+import dotenv from "dotenv"
 
 
 const app = express();
-const port = 4000
-const dotenv = require('dotenv')
+const port =process.env.PORT || 5000
+
 
 app.use(express.json())
 app.use(cors())
-app.use(dotenv())
+dotenv.config()
 
 
 
