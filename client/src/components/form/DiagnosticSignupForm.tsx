@@ -1,4 +1,5 @@
-import React from 'react';
+"use client"
+import React, { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -7,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { DiagnosticCenter, UserRole } from '@/types';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 const diagnosticFormSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
@@ -19,6 +21,7 @@ const diagnosticFormSchema = z.object({
 
 const DiagnosticSignupForm: React.FC = () => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof diagnosticFormSchema>>({
     resolver: zodResolver(diagnosticFormSchema),
     defaultValues: {
@@ -32,41 +35,44 @@ const DiagnosticSignupForm: React.FC = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof diagnosticFormSchema>) => {
-    // try {
-    //   // 1. Register the user with Supabase Auth
-    //   const supabase = createClient();
-    //   const { data: authData, error: authError } = await supabase.auth.signUp({
-    //     email: values.email,
-    //     password: values.password,
-    //   });
-
-    //   if (authError) throw authError;
-
-    //   // 2. If registration successful, add user details to the doctors table
-    //   if (authData.user) {
-    //     const doctorData: Doctor = {
-    //       ...values,
-    //     //   years_of_experience: parseInt(values.years_of_experience || '0'),
-    //       role: UserRole.DOCTOR,
-    //     };
-
-    //     const { error: profileError } = await supabase
-    //       .from('doctors')
-    //       .insert([{ 
-    //         id: authData.user.id,
-    //         ...doctorData 
-    //       }]);
-
-    //     if (profileError) throw profileError;
-
-    //     // Redirect to login or dashboard
-    //     router.push('/auth/login?registration=success');
-    //   }
-    // } catch (error) {
-    //   console.error('Error registering doctor:', error);
-    //   // Handle signup error
-    // }
-  };
+      try {
+        setIsLoading(true);
+        
+        const response = await fetch('http://localhost:4000/api/user/register-dc', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: values.name,
+            email: values.email,
+            password: values.password,
+            specialization: values.specialization,
+            phoneNumber: values.phone_number,
+            location: values.location,
+          }),
+        });
+  
+        const data = await response.json();
+  
+        if (data.success) {
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('user', JSON.stringify(data.user as DiagnosticCenter));
+          localStorage.setItem('role', UserRole.DIAGNOSTIC_CENTER);
+          toast.success("Account created successfully");
+          
+          router.push('/dashboard/diagnostic-center');
+        } else {
+          toast.error(`Error in creating account`);
+          console.error('Registration error:', data.message);
+        }
+      } catch (error: any) {
+        console.error('Registration error:', error);
+        toast.error(`Error in creating account: ${error.message}`);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
   return (
     <Form {...form}>
@@ -153,7 +159,7 @@ const DiagnosticSignupForm: React.FC = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">Sign Up as Diagnostic Center</Button>
+        <Button type="submit" disabled={isLoading} className="w-full">{isLoading ? "Loading..." : "Sign Up as Diagnostic Center"}</Button>
       </form>
     </Form>
   );
