@@ -1,4 +1,5 @@
-import React from 'react';
+"use client"
+import React, { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -7,19 +8,17 @@ import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Patient, UserRole } from '@/types';
 import { useRouter } from 'next/navigation';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { toast } from 'sonner';
 
 const patientFormSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
   email: z.string().email({ message: 'Please enter a valid email.' }),
-  password: z.string().min(8, { message: 'Password must be at least 8 characters.' }),
-  dateOfBirth: z.string().optional(),
-  bloodType: z.string().optional(),
-  allergies: z.string().optional(),
+  password: z.string().min(8, { message: 'Password must be at least 8 characters.' })
 });
 
 const PatientSignupForm: React.FC = () => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof patientFormSchema>>({
     resolver: zodResolver(patientFormSchema),
     defaultValues: {
@@ -30,39 +29,39 @@ const PatientSignupForm: React.FC = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof patientFormSchema>) => {
-    // try {
-    //   // 1. Register the user with Supabase Auth
-    //   const supabase = createClient();
-    //   const { data: authData, error: authError } = await supabase.auth.signUp({
-    //     email: values.email,
-    //     password: values.password,
-    //   });
+    try {
+      setIsLoading(true);
+      
+      const response = await fetch('http://localhost:4000/api/user/register-patient', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: values.name,
+          email: values.email,
+          password: values.password,
+        }),
+      });
 
-    //   if (authError) throw authError;
+      const data = await response.json();
 
-    //   // 2. If registration successful, add user details to the patients table
-    //   if (authData.user) {
-    //     const patientData: Patient = {
-    //       ...values,
-    //       role: UserRole.PATIENT,
-    //     };
-
-    //     const { error: profileError } = await supabase
-    //       .from('patients')
-    //       .insert([{ 
-    //         id: authData.user.id,
-    //         ...patientData 
-    //       }]);
-
-    //     if (profileError) throw profileError;
-
-    //     // Redirect to login or dashboard
-    //     router.push('/auth/login?registration=success');
-    //   }
-    // } catch (error) {
-    //   console.error('Error registering patient:', error);
-    //   // Handle signup error
-    // }
+      if (data.success) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user as Patient));
+        localStorage.setItem('role', UserRole.PATIENT);
+        toast.success("Account created successfully");
+        
+        router.push('/dashboard/patient');
+      } else {
+        toast.error("Error in creating account");
+      }
+    } catch (error: any) {
+      console.error('Registration error:', error);
+      toast.error(`Error in creating account: ${error.message}`);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -101,13 +100,13 @@ const PatientSignupForm: React.FC = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="********" {...field} />
+                <Input type="password" placeholder="••••••••" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">Sign Up as Patient</Button>
+        <Button type="submit" disabled={isLoading} className="w-full">{isLoading ? "Loading" : "Sign Up as Patient"}</Button>
       </form>
     </Form>
   );

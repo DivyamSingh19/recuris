@@ -130,12 +130,12 @@ async function loginAdmin(req:Request,res:Response) {
 }
 async function registerDoctor(req:Request,res:Response) {
     try {
-        const {name,email,password,hospital,specialization,h_id}  = req.body as Doctor
+        const {name,email,password,hospital,h_id}  = req.body as Doctor
         const exists = await prisma.doctor.findUnique({where:{email}})
         if(exists){
             return res.json({success:false,message:"User already exits"})
         }
-        if(!name || !email || !password || !hospital || !specialization || !h_id){
+        if(!name || !email || !password || !hospital || !h_id){
             return res.json({success : false, message : "All fields are required"})
 
         }
@@ -200,7 +200,7 @@ async function registerDC(req:Request,res:Response) {
         if(!validator.isEmail(email)){
             return res.json({success:false,message:"Enter a valid Email"})
         }
-        if(password.length<8){
+        if(password.length < 8){
             return res.json({success:false,message:"Password too short"})
         }
         const salt = await bcrypt.genSalt(10)
