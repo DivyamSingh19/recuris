@@ -24,6 +24,6 @@ export type DiagnosticCenter = {
     email : string,
     password : string,
     specialization : string
-    phoneNumber : number
+    phoneNumber : string
     location :string
 }

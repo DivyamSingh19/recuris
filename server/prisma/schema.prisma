@@ -7,15 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
- 
+
 
 model Patient {
   id       Int    @id @default(autoincrement()) @unique
   email    String @unique
   name     String
   password String
+
+
+
+
   appointments  Appointments[]
-  pin          Pin
+  pin          Pin?
+  profile PatientProfile?
 }
 
 model Hospital_Admin {
@@ -25,6 +30,9 @@ model Hospital_Admin {
   hospital String
   password String
   h_id     String
+
+
+  profile HospitalAdminProfile?
 }
 
 model Doctor {
@@ -34,7 +42,11 @@ model Doctor {
   hospital String
   h_id     String
   password String
-   
+
+
+  pin     Pin?
+  profile  DoctorProfile?
+  appointments Appointments[]
 }
 
 model Hospital {
@@ -48,16 +60,18 @@ model DiagnosticCenter {
   name String
   email String @unique
   location String
-  phoneNumber Int @unique
+  phoneNumber String @unique
   password String
   specialization String
-
+  profile DiagnosticCenterProfile?
+  pin Pin?
 }
 model Appointments {
   id Int @id @default(autoincrement())
   patientId Int @unique
   patient Patient  @relation(fields: [patientId],references: [id])
   doctorId Int
+  doctor Doctor @relation(fields: [doctorId],references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -65,6 +79,49 @@ model Appointments {
 model Pin {
   id Int @id @default(autoincrement())
   patientId Int @unique
-  // patient Patient @relation(fields: [patientId],references: [id])
+  patient Patient @relation(fields: [patientId],references: [id])
+  doctorId Int @unique
+  doctor Doctor @relation(fields: [doctorId],references: [id])
+  diagnosticCenterId Int @unique
+  diagnosticCenter DiagnosticCenter @relation(fields: [diagnosticCenterId],references: [id])
   
+}
+model PatientProfile {
+  id     Int    @id   @default(autoincrement())
+  profileImage  String
+  patientId Int @unique
+  patient    Patient @relation(fields: [patientId] ,references: [id])
+  location String
+  age    String
+  phoneNumber String
+  gender      String
+  metamaskconnect  Boolean @default(false)
+   
+}
+model DoctorProfile {
+  id Int @id @default(autoincrement())
+  profileImage String
+  experience Int
+  doctorId Int @unique
+  doctor Doctor @relation(fields: [doctorId],references: [id])
+  age    String
+  phoneNumber String
+  gender      String
+  metamaskconnect  Boolean @default(false)
+}
+model DiagnosticCenterProfile {
+  id Int @id @default(autoincrement())
+  profileImage String
+  experience Int
+  diagnosticCenterId Int @unique
+  diagnosticCenter DiagnosticCenter @relation(fields: [diagnosticCenterId],references: [id])
+}
+
+model HospitalAdminProfile{
+  id Int @id @default(autoincrement())
+  profileImage String
+  experience Int
+  hospitalAdminId Int @unique
+  hospitalAdmin Hospital_Admin @relation(fields: [hospitalAdminId],references: [id])
+
 }

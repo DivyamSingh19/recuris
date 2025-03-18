@@ -6,13 +6,11 @@ import { Doctor } from "../types/user";
 import { Request,Response } from "express";
 import validator from "validator"
 import bcrypt from "bcrypt"
-
+import { createToken } from "../utils/token";
 
 const prisma = new PrismaClient();
 
-const createToken = (id :string|number) => {
-    return JWT.sign({id},process.env.JWT_SECRET as string)
-}
+ 
  
 async function registerPatient(req:Request,res:Response ) {
     try {
@@ -42,7 +40,12 @@ async function registerPatient(req:Request,res:Response ) {
   
 
      const token = createToken(newPatient.id)
-     res.json({success:true,token})
+     const role :string = "Patient";
+     const metaData = {
+        name,
+        email
+     }
+     res.json({success:true,token,metaData,role})
         
     } catch (error ) {
         console.log(error);
@@ -101,7 +104,12 @@ async function registerAdmin(req:Request,res:Response) {
         }
     })
     const token = createToken(newAdmin.id)
-    return res.json({success:true , token})
+    const role :string = "Admin";
+     const metaData = {
+        name,
+        email
+     }
+    return res.json({success:true , token,metaData,role})
         
     } catch (error) {
         console.log(error);
@@ -156,8 +164,14 @@ async function registerDoctor(req:Request,res:Response) {
                 h_id
             }
         })
+
         const token = createToken(newDoctor.id)
-        return res.json({success:true , token})
+        const role :string = "Doctor";
+        const metaData = {
+          name,
+           email
+     }
+        return res.json({success:true , token,metaData,role})
         
     } catch (error) {
         console.log(error)
@@ -216,7 +230,12 @@ async function registerDC(req:Request,res:Response) {
             }
         })
         const token = createToken(newDiagCenter.id)
-        return res.json({success:true,token})
+        const role :string = "Diagnostic Center";
+        const metaData = {
+        name,
+        email
+     }
+        return res.json({success:true,token,metaData,role})
     } catch (error) {
         console.log(error)
         return res.json({success:false,message:((error as Error).message)})

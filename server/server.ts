@@ -1,10 +1,12 @@
 import express from "express"
 import cors from "cors"
 import userRouter from "./routes/userRoute";
-import appointmentRouter from "./routes/appointmentRoute";
+// import appointmentRouter from "./routes/appointmentRoute";
 import bookingRouter from "./routes/bookingRoute";
+import pinRouter from "./routes/pinRoute";
  
 import dotenv from "dotenv"
+import connectCloudinary from "./config/cloudinary";
 
 
 const app = express();
@@ -15,7 +17,7 @@ app.use(express.json())
 app.use(cors())
 dotenv.config()
 
-
+connectCloudinary()
 
 
 
@@ -24,8 +26,9 @@ dotenv.config()
 
 //api
 app.use("/api/user",userRouter)
-app.use("/api/appointment",appointmentRouter)
-app.use("/api/booking",bookingRouter)
+// app.use("/api/appointment",appointmentRouter)
+// app.use("/api/booking",bookingRouter)
+app.use("/api/pin",pinRouter)
 
 
 

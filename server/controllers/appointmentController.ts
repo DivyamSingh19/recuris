@@ -13,14 +13,14 @@ async function addAppointment(req:Request,res:Response) {
         
     }
 }
-async function editAppointment() {
+async function editAppointment(req:Request,res:Response) {
     try {
         
     } catch (error) {
         
     }
 }
-async function cancelAppointment() {
+async function cancelAppointment(req:Request,res:Response) {
     try {
         
     } catch (error) {
