@@ -1,7 +1,9 @@
+import DashboardPage from "@/components/dashboard/DashboardPage";
+
 export default function AdminPage() {
   return (
     <div>
-      <h1>Admin Dashboard</h1>
+      <DashboardPage role="admin" />
     </div>
   );
 }

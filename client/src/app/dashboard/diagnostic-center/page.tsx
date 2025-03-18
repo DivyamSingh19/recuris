@@ -1,7 +1,9 @@
+import DashboardPage from "@/components/dashboard/DashboardPage";
+
 export default function DiagnosticCenterPage() {
     return (
       <div>
-        <h1>Diagnostic Center Dashboard</h1>
+        <DashboardPage role="diagnostic_center" />
       </div>
     );
   }

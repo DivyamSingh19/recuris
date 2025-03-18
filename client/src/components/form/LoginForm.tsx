@@ -24,12 +24,12 @@ import {
 import { UserRole } from "@/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
-import { Info } from "lucide-react";
 import RoleSelector from "./RoleSelector";
 import { Separator } from "../ui/separator";
 import LoaderSpinner from "./LoaderSpinner";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/redux/userSlice";
 
 const loginFormSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email." }),
@@ -43,6 +43,7 @@ const LoginForm: React.FC = () => {
   const [authError, setAuthError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [selectedRole, setSelectedRole] = useState<UserRole>(UserRole.PATIENT);
+  const dispatch = useDispatch();
 
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
@@ -95,6 +96,16 @@ const LoginForm: React.FC = () => {
         localStorage.setItem("token", data.token);
         localStorage.setItem("userRole", selectedRole);
 
+        // Store user data in Redux
+        dispatch(
+          setUser({
+            id: data.token,
+            role: selectedRole,
+            name: data.name,
+            email: values.email,
+          })
+        );
+
         // Redirect based on role
         switch (selectedRole) {
           case UserRole.PATIENT:
@@ -124,17 +135,6 @@ const LoginForm: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const roleInfo = {
-    [UserRole.PATIENT]:
-      "Login as a patient to access your medical records and appointments.",
-    [UserRole.DOCTOR]:
-      "Login as a doctor to manage your patients and schedule.",
-    [UserRole.DIAGNOSTIC_CENTER]:
-      "Login as a diagnostic center to manage your appointments and reports.",
-    [UserRole.ADMIN]:
-      "Login as an administrator to manage hospital systems and users.",
   };
 
   return (

@@ -1,7 +1,9 @@
+import DashboardPage from "@/components/dashboard/DashboardPage";
+
 export default function PatientPage() {
   return (
     <div>
-      <h1>Patient Dashboard</h1>
+      <DashboardPage role="patient" />
     </div>
   );
 }
