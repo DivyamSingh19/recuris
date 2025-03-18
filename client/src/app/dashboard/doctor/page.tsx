@@ -1,11 +1,9 @@
-import React from 'react'
+import DashboardPage from "@/components/dashboard/DashboardPage";
 
-const page = () => {
+export default function DoctorPage() {
   return (
     <div>
-      
+      <DashboardPage role="doctor" />
     </div>
-  )
+  );
 }
-
-export default page

@@ -1,11 +1,9 @@
-import React from 'react'
+import DashboardPage from "@/components/dashboard/DashboardPage";
 
-const page = () => {
+export default function AdminPage() {
   return (
     <div>
-      
+      <DashboardPage role="admin" />
     </div>
-  )
+  );
 }
-
-export default page
