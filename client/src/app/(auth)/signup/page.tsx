@@ -9,6 +9,7 @@ import DoctorSignupForm from '@/components/form/DoctorSignupForm';
 import Link from 'next/link';
 import AdminSignupForm from '@/components/form/AdminSignupForm';
 import DiagnosticSignupForm from '@/components/form/DiagnosticSignupForm';
+import { Separator } from '@/components/ui/separator';
 
 export default function SignupPage() {
   const [selectedRole, setSelectedRole] = useState<UserRole>(UserRole.PATIENT);
@@ -29,18 +30,19 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="container flex items-center justify-center min-h-screen py-8">
-      <div className="w-full max-w-md space-y-6">
+    <div className="flex items-center justify-center min-h-screen py-8">
+      <div className="w-full max-w-lg space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>Create an Account</CardTitle>
+            <CardTitle className='text-2xl'>Create an Account</CardTitle>
             <CardDescription>Sign up to access the healthcare platform</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <RoleSelector selectedRole={selectedRole} setSelectedRole={setSelectedRole} />
+              <Separator />
               {renderFormByRole()}
-              <div className="text-sm text-center text-gray-500 pt-4">
+              <div className="text-sm text-center text-gray-500">
                 Already have an account?{' '}
                 <Link href="/auth/login" className="text-blue-600 hover:underline">
                   Login

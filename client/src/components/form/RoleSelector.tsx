@@ -1,37 +1,76 @@
-import React from 'react';
-import { UserRole } from '@/types';
-import { Card, CardContent } from '@/components/ui/card';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Label } from '@/components/ui/label';
+import React from "react";
+import { UserRole } from "@/types";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Building2,
+  CheckCircleIcon,
+  ShieldCheck,
+  Stethoscope,
+  UserIcon,
+} from "lucide-react";
+import { Label } from "../ui/label";
 
 interface RoleSelectorProps {
   selectedRole: UserRole;
   setSelectedRole: (role: UserRole) => void;
 }
 
-const RoleSelector: React.FC<RoleSelectorProps> = ({ selectedRole, setSelectedRole }) => {
+const RoleSelector: React.FC<RoleSelectorProps> = ({
+  selectedRole,
+  setSelectedRole,
+}) => {
+  const roleIcons = {
+    [UserRole.PATIENT]: <UserIcon className="h-5 w-5" />,
+    [UserRole.DOCTOR]: <Stethoscope className="h-5 w-5" />,
+    [UserRole.DIAGNOSTIC_CENTER]: <Building2 className="h-5 w-5" />,
+    [UserRole.ADMIN]: <ShieldCheck className="h-5 w-5" />,
+  };
+
   return (
-    <Card className="w-full mb-6">
-      <CardContent className="pt-6">
-        <div className="mb-4 text-center">
-          <h3 className="text-lg font-medium">Select Your Role</h3>
-        </div>
-        <RadioGroup
-          value={selectedRole}
-          onValueChange={(value: any) => setSelectedRole(value as UserRole)}
-          className="grid grid-cols-2 gap-4 sm:grid-cols-4"
-        >
-          {Object.values(UserRole).map((role) => (
-            <div key={role} className="flex items-center space-x-2">
-              <RadioGroupItem value={role} id={`role-${role}`} />
-              <Label htmlFor={`role-${role}`} className="capitalize">
+    <>
+      <Label>Select your role:</Label>
+      <div className="grid grid-cols-2 gap-3">
+        {Object.values(UserRole).map((role) => (
+          <div
+            key={role}
+            onClick={() => setSelectedRole(role as UserRole)}
+            className={`
+              relative rounded-lg border p-4 cursor-pointer transition-all
+              ${
+                selectedRole === role
+                  ? "border-green-500/50 bg-green-500/5"
+                  : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+              }
+                `}
+          >
+            {selectedRole === role && (
+              <div className="absolute top-2 right-2 text-primary">
+                <CheckCircleIcon className="h-5 w-5 text-green-500" />
+              </div>
+            )}
+
+            <div className="flex items-center gap-2">
+              <div
+                className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                  selectedRole === role
+                    ? "bg-green-500/10 text-green-500"
+                    : "bg-gray-100 text-gray-500"
+                }`}
+              >
+                {roleIcons[role]}
+              </div>
+              <span
+                className={`font-medium text-sm capitalize ${
+                  selectedRole === role ? "text-green-600" : ""
+                }`}
+              >
                 {role}
-              </Label>
+              </span>
             </div>
-          ))}
-        </RadioGroup>
-      </CardContent>
-    </Card>
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 

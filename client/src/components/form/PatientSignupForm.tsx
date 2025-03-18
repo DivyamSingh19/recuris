@@ -9,6 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Patient, UserRole } from '@/types';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import LoaderSpinner from './LoaderSpinner';
 
 const patientFormSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
@@ -106,7 +107,7 @@ const PatientSignupForm: React.FC = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={isLoading} className="w-full">{isLoading ? "Loading" : "Sign Up as Patient"}</Button>
+        <Button type="submit" disabled={isLoading} className="w-full">{isLoading ? <LoaderSpinner message="Creating..." color="white" /> : "Sign Up as Patient"}</Button>
       </form>
     </Form>
   );

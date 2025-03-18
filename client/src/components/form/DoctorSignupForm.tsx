@@ -9,6 +9,7 @@ import { Doctor, UserRole } from '@/types';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import LoaderSpinner from './LoaderSpinner';
 
 const doctorFormSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
@@ -111,7 +112,7 @@ const DoctorSignupForm: React.FC = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="********" {...field} />
+                <Input type="password" placeholder="••••••••" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -158,7 +159,7 @@ const DoctorSignupForm: React.FC = () => {
               </FormItem>
             )}
           />
-        <Button type="submit" disabled={isLoading} className="w-full">{isLoading ? "Loading..." : "Sign Up as Doctor"}</Button>
+        <Button type="submit" disabled={isLoading} className="w-full">{isLoading ? <LoaderSpinner message="Creating..." color="white" /> : "Sign Up as Doctor"}</Button>
       </form>
     </Form>
   );

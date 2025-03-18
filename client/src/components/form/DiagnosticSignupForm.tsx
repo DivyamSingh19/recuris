@@ -9,6 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { DiagnosticCenter, UserRole } from '@/types';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import LoaderSpinner from './LoaderSpinner';
 
 const diagnosticFormSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
@@ -112,7 +113,7 @@ const DiagnosticSignupForm: React.FC = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="********" {...field} />
+                <Input type="password" placeholder="••••••••" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -159,7 +160,7 @@ const DiagnosticSignupForm: React.FC = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={isLoading} className="w-full">{isLoading ? "Loading..." : "Sign Up as Diagnostic Center"}</Button>
+        <Button type="submit" disabled={isLoading} className="w-full">{isLoading ? <LoaderSpinner message="Creating..." color="white" /> : "Sign Up as Diagnostic Center"}</Button>
       </form>
     </Form>
   );

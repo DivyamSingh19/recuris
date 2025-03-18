@@ -9,6 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Admin, UserRole } from '@/types';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import LoaderSpinner from './LoaderSpinner';
 
 const adminFormSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
@@ -108,7 +109,7 @@ const AdminSignupForm: React.FC = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="********" {...field} />
+                <Input type="password" placeholder="••••••••" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -142,7 +143,7 @@ const AdminSignupForm: React.FC = () => {
             )}
           />
         </div>
-        <Button type="submit" disabled={isLoading} className="w-full">{isLoading ? "Loading..." : "Signup as Admin"}</Button>
+        <Button type="submit" disabled={isLoading} className="w-full">{isLoading ? <LoaderSpinner message="Creating..." color="white" /> : "Signup as Admin"}</Button>
       </form>
     </Form>
   );
