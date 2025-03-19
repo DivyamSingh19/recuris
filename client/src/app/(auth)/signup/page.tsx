@@ -44,7 +44,7 @@ export default function SignupPage() {
               {renderFormByRole()}
               <div className="text-sm text-center text-gray-500">
                 Already have an account?{' '}
-                <Link href="/auth/login" className="text-blue-600 hover:underline">
+                <Link href="/login" className="text-blue-600 hover:underline">
                   Login
                 </Link>
               </div>

@@ -1,6 +1,6 @@
 "use client"
 
-import { BookOpen, Brain, Building, Calendar, ChartPie, ChevronUp, ClipboardCheck, CreditCard, FilePlus, FileText, FolderOpen, Home, LifeBuoy, LogOut, User, User2, Users } from "lucide-react"
+import { BookOpen, Brain, Calendar, ChartPie, ChevronUp, ClipboardCheck, CreditCard, FilePlus, FileText, FolderOpen, Home, LifeBuoy, LogOut, User, User2, Users } from "lucide-react"
 
 import {
   Sidebar,
@@ -18,11 +18,11 @@ import {
 import Link from "next/link"
 import Image from "next/image"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
-// import { signOut } from "@/actions/auth"
 import { toast } from "sonner"
-// import { useDispatch } from "react-redux"
-// import { clearUser } from "@/store/userSlice"
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useDispatch } from "react-redux"
+import { clearUser } from "@/redux/userSlice"
+import { signOut } from "@/actions/auth"
 
 
 const navItems = {
@@ -62,14 +62,15 @@ export function AppSidebar({ user, role }: { user: any; role: string | null}) {
   const items = navItems[role as keyof typeof navItems] || [];
   const { setOpenMobile } = useSidebar();
   const pathname = usePathname();
-//   const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const router = useRouter();
 
-//   const handleLogout = () => {
-//     toast.promise(signOut(), {
-//       loading: "Logging out..."
-//     })
-//     dispatch(clearUser());
-//   }
+  const handleLogout = () => {
+    signOut();
+    toast.success("Logged out successfully");
+    router.push("/login");
+    dispatch(clearUser());
+  }
   
 
   return (
@@ -119,7 +120,7 @@ export function AppSidebar({ user, role }: { user: any; role: string | null}) {
                 <DropdownMenuItem className="flex items-center">
                   <User /> <span>My Account</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="flex items-center">
+                <DropdownMenuItem onClick={handleLogout} className="flex items-center">
                   <LogOut /> <span>Logout</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
