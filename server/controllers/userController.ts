@@ -181,6 +181,7 @@ async function registerDoctor(req:Request,res:Response) {
 async function loginDoctor(req:Request,res:Response) {
     try {
         const {email,password} = req.body as Doctor
+        const {name} = req.params as Doctor
         const doctor = await prisma.doctor.findUnique({where:{email}})
         if(!doctor){
             return res.json({success:false,message:"Doctor not registered"})
@@ -188,6 +189,7 @@ async function loginDoctor(req:Request,res:Response) {
         const isMatch = await bcrypt.compare(password,doctor.password)
         if(isMatch){
             const token = createToken(doctor.id)
+
             res.json({success:true,token})
         }else{
             res.json({success:false,message:"Invalid Credentials"})

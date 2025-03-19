@@ -1,11 +1,11 @@
-// import { PrismaClient } from "@prisma/client";
-// import { DiagnosticCenter } from "../types/user";
-// import {v2 as cloudinary} from "cloudinary"
+import { PrismaClient } from "@prisma/client";
+import { DiagnosticCenter } from "../types/user";
+import {v2 as cloudinary} from "cloudinary"
  
-// import {Patient} from "../types/user"
+import {Patient} from "../types/user"
 
  
-// const prisma = new PrismaClient()
+const prisma = new PrismaClient()
 // async function patientProfile(req:Request,res:Response){
 //     try {
      

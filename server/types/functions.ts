@@ -1,8 +1,10 @@
 export type appointment ={
     email : string,
     name : string,
-    time : Date,
+    createdAt : Date,
     patientId : number,
-    doctorId :number
+    doctorId :number,
+    diagnosticCenterId :number,
+    date: Date
     
 }

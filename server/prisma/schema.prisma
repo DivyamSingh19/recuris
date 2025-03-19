@@ -17,10 +17,14 @@ model Patient {
 
 
 
-
+  doctors       Doctor[]
   appointments  Appointments[]
   pin          Pin?
   profile PatientProfile?
+  otp       OTPPatient[]
+  diagnosticCenter DiagnosticCenter[]
+  sentMessages     Message[] @relation("SentMessages")
+  receivedMessages Message[] @relation("ReceivedMessages")
 }
 
 model Hospital_Admin {
@@ -47,6 +51,10 @@ model Doctor {
   pin     Pin?
   profile  DoctorProfile?
   appointments Appointments[]
+  patients     Patient[]
+  otp         OTPDoctor[]
+  sentMessages     Message[] @relation("SentMessages")
+  receivedMessages Message[] @relation("ReceivedMessages")
 }
 
 model Hospital {
@@ -65,13 +73,20 @@ model DiagnosticCenter {
   specialization String
   profile DiagnosticCenterProfile?
   pin Pin?
+
+  otp     OTPDiagnosticCenter[]
+  patients  Patient[]
+  appointment  Appointments[]
 }
 model Appointments {
   id Int @id @default(autoincrement())
   patientId Int @unique
   patient Patient  @relation(fields: [patientId],references: [id])
-  doctorId Int
-  doctor Doctor @relation(fields: [doctorId],references: [id])
+  doctorId Int?
+  doctor Doctor? @relation(fields: [doctorId],references: [id])
+  diagnosticCenterId  Int?
+  diagnosticCenter DiagnosticCenter? @relation(fields: [diagnosticCenterId],references: [id])
+  date      DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -124,4 +139,47 @@ model HospitalAdminProfile{
   hospitalAdminId Int @unique
   hospitalAdmin Hospital_Admin @relation(fields: [hospitalAdminId],references: [id])
 
+}
+model OTPPatient{
+  id String @id @default(uuid())
+  patientId Int @unique
+  
+  otp    String
+  expiresAt  DateTime
+  patient    Patient  @relation(fields: [patientId] ,references: [id],onDelete: Cascade)
+}
+model OTPDoctor{
+   id String @id @default(uuid())
+  doctorId Int @unique
+  
+  otp    String
+  expiresAt  DateTime
+  doctor    Doctor  @relation(fields: [doctorId] ,references: [id],onDelete: Cascade)
+}
+model OTPDiagnosticCenter{
+  id String @id @default(uuid())
+  diagnosticCenterId Int @unique
+  otp String
+  expiresAt DateTime
+  diagnosticCenter  DiagnosticCenter @relation(fields: [diagnosticCenterId],references: [id],onDelete: Cascade)
+}
+model Message {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  text String
+  senderId Int 
+  receiverId Int
+
+  senderType String
+  receiverType String
+
+  senderDoctor Doctor? @relation("SentMessages", fields: [senderId],references: [id],map: "sender_doctor")
+  senderPatient Patient? @relation("SentMessages",fields: [senderId],references: [id],map: "sender_patient")
+  receiverDoctor Doctor? @relation("ReceivedMessages",fields: [receiverId],references: [id],map: "receiver_doctor")
+  receiverPatient Patient? @relation("ReceivedMessages",fields: [receiverId],references: [id],map: "receiver_patient")
+
+  @@index([senderId,senderType])
+  @@index([receiverId,receiverType])
 }
