@@ -26,7 +26,11 @@ async function addAppointmentDoctor(req:Request,res:Response) {
         }
 
         const appointment = await prisma.appointments.create({
-            data: { patientId, doctorId, createdAt: new Date(), updatedAt: new Date() },
+            data: { patientId, 
+                    doctorId, 
+                    date :new Date(),
+                    createdAt: new Date(), 
+                    updatedAt: new Date() },
         });
 
         return res.status(201).json({ message: "Appointment booked successfully", appointment });

@@ -114,17 +114,17 @@ async function createPin(req:AuthenticatedRequest,res:Response) {
         const salt = await bcrypt.genSalt(10);
         // const hashedPin = await bcrypt.hash(newPin,salt)
         
-        const token = createToken({
-            pinId : newPin.id,
-            role: userRole,
-            userId
-        })
+        // const token = createToken({
+        //     pinId : newPin.id,
+        //     role: userRole,
+        //     userId
+        // })
         return res.json({
             success:true,
             message:"PIN created successfully",
             data:{
                 pin:newPin,
-                token
+               
             }
         })
     } catch (error) {

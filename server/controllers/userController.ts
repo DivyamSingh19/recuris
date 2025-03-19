@@ -210,7 +210,7 @@ async function registerDC(req:Request,res:Response) {
         if(exists){
             return res.json({success:false,message:"Center already registered"})
         }
-        if((phoneNumber.toString).length !=10){
+        if(phoneNumber.length !=10){
             return res.json({success:false,message:"Enter a valid Phone Number"})
         }
         if(!validator.isEmail(email)){

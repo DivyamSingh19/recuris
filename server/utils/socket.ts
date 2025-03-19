@@ -1,8 +1,13 @@
-import {Server} from "socket.io";
-import http from "http"
-import express from "express"
+// import {Server} from "socket.io";
 
-
-
-
-const io = new Server() 
+// export default function initializeSocket(server){
+//     const io = new Server(server,{
+//         cors:{
+//             origin:["*"]
+//         },
+//     })
+//     const userSocketMap = {}
+//     export function getReciverSocketId(userId){
+//         return userSocketMap[userId];
+//     }
+// }
