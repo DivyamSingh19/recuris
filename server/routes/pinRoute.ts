@@ -8,6 +8,7 @@ pinRouter.post("/create",async(req:Request,res:Response,next:NextFunction) => {
         createPin(req,res)
     } catch (error) {
         next(error)
+        console.log("API error")
     }
 });
 pinRouter.post("/change-pin",async(req:Request,res:Response,next:NextFunction)=>{
@@ -15,6 +16,7 @@ pinRouter.post("/change-pin",async(req:Request,res:Response,next:NextFunction)=>
         changePin(req,res)
     } catch (error) {
         next(error)
+        console.log("API error")
     }
      })
 

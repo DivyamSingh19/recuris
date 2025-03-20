@@ -10,7 +10,7 @@ import http from "http"
 import dotenv from "dotenv"
 import connectCloudinary from "./config/cloudinary";
 import totalPatientRouter from "./routes/totalPatients";
-
+ 
 
 const app = express();
 const port =process.env.PORT || 5000
@@ -27,13 +27,19 @@ connectCloudinary()
 
 const {io,getReceiverSocketId,getCurrentPartner} = setupSocketIO(app,server);
 export {io,getReceiverSocketId,getCurrentPartner,app,server}
+const { ethers } = require("ethers");
 
+const provider = new ethers.JsonRpcProvider(process.env.GANACHE_RPC_URL);
+const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+console.log(`Connected with address: ${wallet.address}`);
 //api
 app.use("/api/user",userRouter)
 app.use("/api/appointment",appointmentRouter)
 // app.use("/api/booking",bookingRouter)
 app.use("/api/pin",pinRouter)
 app.use("/api/total-patients",totalPatientRouter)
+
+app.use("/api/contracts",)
 
 
 

@@ -1,0 +1,219 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "C:\\fullStackProjects\\recuris\\contracts\\contracts\\DiagnosticControl.sol": {
+      "lastModificationDate": 1742483079955,
+      "contentHash": "416e110827780c66ba36601ac1e70597",
+      "sourceName": "contracts/DiagnosticControl.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.28"
+      ],
+      "artifacts": [
+        "DiagnosticCenterRecords"
+      ]
+    },
+    "C:\\fullStackProjects\\recuris\\contracts\\contracts\\DoctorManagement.sol": {
+      "lastModificationDate": 1742482692700,
+      "contentHash": "2c127ff6b58e749d7ec799ebd2548907",
+      "sourceName": "contracts/DoctorManagement.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.28"
+      ],
+      "artifacts": [
+        "HealthcareRecords"
+      ]
+    },
+    "C:\\fullStackProjects\\recuris\\contracts\\contracts\\MedAccessControl.sol": {
+      "lastModificationDate": 1742483330644,
+      "contentHash": "ca2a881951f593107702cfcf17c57922",
+      "sourceName": "contracts/MedAccessControl.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.28"
+      ],
+      "artifacts": [
+        "PatientControlledAccess"
+      ]
+    },
+    "C:\\fullStackProjects\\recuris\\contracts\\contracts\\Migrations.sol": {
+      "lastModificationDate": 1742482803521,
+      "contentHash": "4421836a8f92195a412adda2220f5afc",
+      "sourceName": "contracts/Migrations.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.28"
+      ],
+      "artifacts": []
+    },
+    "C:\\fullStackProjects\\recuris\\contracts\\contracts\\MultiSigAccess.sol": {
+      "lastModificationDate": 1742483521076,
+      "contentHash": "7d7c6f3c8adb0e79be3dae9b19d33fa0",
+      "sourceName": "contracts/MultiSigAccess.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.28"
+      ],
+      "artifacts": [
+        "PatientRecordAccess"
+      ]
+    },
+    "C:\\fullStackProjects\\recuris\\contracts\\contracts\\PatientManagement.sol": {
+      "lastModificationDate": 1742482728264,
+      "contentHash": "0bfd4f6a20d82b4b9d4d93d3597c86c2",
+      "sourceName": "contracts/PatientManagement.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.28"
+      ],
+      "artifacts": [
+        "PatientManagement"
+      ]
+    }
+  }
+}
