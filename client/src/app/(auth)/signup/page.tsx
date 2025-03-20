@@ -11,6 +11,7 @@ import AdminSignupForm from '@/components/form/AdminSignupForm';
 import DiagnosticSignupForm from '@/components/form/DiagnosticSignupForm';
 import { Separator } from '@/components/ui/separator';
 import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
 
 export default function SignupPage() {
   const [selectedRole, setSelectedRole] = useState<UserRole>(UserRole.PATIENT);
@@ -38,7 +39,10 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen py-8">
+    <div className="relative flex items-center justify-center min-h-screen py-8">
+      <Button className='absolute top-5 left-5' variant="secondary" asChild>
+        <Link href="/">Back to home</Link>
+      </Button>
       <div className="w-full max-w-lg space-y-6">
         <Card>
           <CardHeader>
