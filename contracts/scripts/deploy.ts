@@ -1,4 +1,4 @@
-
+import {ethers} from "hardhat"
 import * as dotenv from "dotenv";
 import * as fs from "fs-extra";
 
@@ -8,15 +8,15 @@ async function main() {
   const contractNames: string[] = [
     "DiagnosticControl",
     "DoctorManagement",
-    "Lock",
+ 
     "MedAccessControl",
-    "Migrations",
-    "MultiSigAccess",
+ 
+     
     "PatientManagement",
-    "PrescriptionControl",
+    
   ];
-const ethers = require("ethers")
-  // Connect to Ganache using a custom provider
+
+ 
   const provider = new ethers.JsonRpcProvider(process.env.GANACHE_RPC_URL);
   const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
 

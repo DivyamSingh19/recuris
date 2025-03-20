@@ -1,10 +1,10 @@
 //SPDX-License-Identifier:MIT
 pragma solidity ^0.8.28;
  
-contract PatientRecordAccess {
+contract MultiSigAccess {
     address public patient; // Patient's address
     mapping(address => bool) public authorizedEntities; // Mapping of authorized doctors/diagnostic centers
-    uint256 public requiredApprovals; // Number of approvals required for access
+    uint256 public requiredApprovals ; 
     mapping(address => bool) public approvers; // Approvers for multisig
     uint256 public approverCount; // Count of approvers
 

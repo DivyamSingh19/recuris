@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "C:\\fullStackProjects\\recuris\\contracts\\contracts\\DiagnosticControl.sol": {
-      "lastModificationDate": 1742483079955,
-      "contentHash": "416e110827780c66ba36601ac1e70597",
+      "lastModificationDate": 1742509004975,
+      "contentHash": "dfcb64def0f02c00a8a84e9126428a98",
       "sourceName": "contracts/DiagnosticControl.sol",
       "solcConfig": {
         "version": "0.8.28",
@@ -34,12 +34,12 @@
         "^0.8.28"
       ],
       "artifacts": [
-        "DiagnosticCenterRecords"
+        "DiagnosticControl"
       ]
     },
     "C:\\fullStackProjects\\recuris\\contracts\\contracts\\DoctorManagement.sol": {
-      "lastModificationDate": 1742482692700,
-      "contentHash": "2c127ff6b58e749d7ec799ebd2548907",
+      "lastModificationDate": 1742509057905,
+      "contentHash": "6eeeba668dbe264e790562c91cba61d1",
       "sourceName": "contracts/DoctorManagement.sol",
       "solcConfig": {
         "version": "0.8.28",
@@ -70,12 +70,12 @@
         "^0.8.28"
       ],
       "artifacts": [
-        "HealthcareRecords"
+        "DoctorManagement"
       ]
     },
     "C:\\fullStackProjects\\recuris\\contracts\\contracts\\MedAccessControl.sol": {
-      "lastModificationDate": 1742483330644,
-      "contentHash": "ca2a881951f593107702cfcf17c57922",
+      "lastModificationDate": 1742509071666,
+      "contentHash": "9f429f73542cf4f2f989bf2452ddbf70",
       "sourceName": "contracts/MedAccessControl.sol",
       "solcConfig": {
         "version": "0.8.28",
@@ -106,7 +106,7 @@
         "^0.8.28"
       ],
       "artifacts": [
-        "PatientControlledAccess"
+        "MedAccessControl"
       ]
     },
     "C:\\fullStackProjects\\recuris\\contracts\\contracts\\Migrations.sol": {
@@ -144,8 +144,8 @@
       "artifacts": []
     },
     "C:\\fullStackProjects\\recuris\\contracts\\contracts\\MultiSigAccess.sol": {
-      "lastModificationDate": 1742483521076,
-      "contentHash": "7d7c6f3c8adb0e79be3dae9b19d33fa0",
+      "lastModificationDate": 1742510851542,
+      "contentHash": "d0df4899be1773b842fdab8f80b734c6",
       "sourceName": "contracts/MultiSigAccess.sol",
       "solcConfig": {
         "version": "0.8.28",
@@ -176,7 +176,7 @@
         "^0.8.28"
       ],
       "artifacts": [
-        "PatientRecordAccess"
+        "MultiSigAccess"
       ]
     },
     "C:\\fullStackProjects\\recuris\\contracts\\contracts\\PatientManagement.sol": {

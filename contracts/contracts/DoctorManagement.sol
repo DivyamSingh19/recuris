@@ -2,7 +2,7 @@
 pragma solidity ^0.8.28;
 
  
-contract HealthcareRecords {
+contract DoctorManagement {
     
     struct HealthRecord {
         string recordHash;      

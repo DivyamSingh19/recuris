@@ -14,46 +14,46 @@ import * as Contracts from ".";
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
-      name: "DiagnosticCenterRecords",
+      name: "DiagnosticControl",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.DiagnosticCenterRecords__factory>;
+    ): Promise<Contracts.DiagnosticControl__factory>;
     getContractFactory(
-      name: "HealthcareRecords",
+      name: "DoctorManagement",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.HealthcareRecords__factory>;
+    ): Promise<Contracts.DoctorManagement__factory>;
     getContractFactory(
-      name: "PatientControlledAccess",
+      name: "MedAccessControl",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.PatientControlledAccess__factory>;
+    ): Promise<Contracts.MedAccessControl__factory>;
     getContractFactory(
-      name: "PatientRecordAccess",
+      name: "MultiSigAccess",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.PatientRecordAccess__factory>;
+    ): Promise<Contracts.MultiSigAccess__factory>;
     getContractFactory(
       name: "PatientManagement",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.PatientManagement__factory>;
 
     getContractAt(
-      name: "DiagnosticCenterRecords",
+      name: "DiagnosticControl",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
-    ): Promise<Contracts.DiagnosticCenterRecords>;
+    ): Promise<Contracts.DiagnosticControl>;
     getContractAt(
-      name: "HealthcareRecords",
+      name: "DoctorManagement",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
-    ): Promise<Contracts.HealthcareRecords>;
+    ): Promise<Contracts.DoctorManagement>;
     getContractAt(
-      name: "PatientControlledAccess",
+      name: "MedAccessControl",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
-    ): Promise<Contracts.PatientControlledAccess>;
+    ): Promise<Contracts.MedAccessControl>;
     getContractAt(
-      name: "PatientRecordAccess",
+      name: "MultiSigAccess",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
-    ): Promise<Contracts.PatientRecordAccess>;
+    ): Promise<Contracts.MultiSigAccess>;
     getContractAt(
       name: "PatientManagement",
       address: string | ethers.Addressable,
@@ -61,46 +61,46 @@ declare module "hardhat/types/runtime" {
     ): Promise<Contracts.PatientManagement>;
 
     deployContract(
-      name: "DiagnosticCenterRecords",
+      name: "DiagnosticControl",
       signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.DiagnosticCenterRecords>;
+    ): Promise<Contracts.DiagnosticControl>;
     deployContract(
-      name: "HealthcareRecords",
+      name: "DoctorManagement",
       signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.HealthcareRecords>;
+    ): Promise<Contracts.DoctorManagement>;
     deployContract(
-      name: "PatientControlledAccess",
+      name: "MedAccessControl",
       signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.PatientControlledAccess>;
+    ): Promise<Contracts.MedAccessControl>;
     deployContract(
-      name: "PatientRecordAccess",
+      name: "MultiSigAccess",
       signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.PatientRecordAccess>;
+    ): Promise<Contracts.MultiSigAccess>;
     deployContract(
       name: "PatientManagement",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.PatientManagement>;
 
     deployContract(
-      name: "DiagnosticCenterRecords",
+      name: "DiagnosticControl",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.DiagnosticCenterRecords>;
+    ): Promise<Contracts.DiagnosticControl>;
     deployContract(
-      name: "HealthcareRecords",
+      name: "DoctorManagement",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.HealthcareRecords>;
+    ): Promise<Contracts.DoctorManagement>;
     deployContract(
-      name: "PatientControlledAccess",
+      name: "MedAccessControl",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.PatientControlledAccess>;
+    ): Promise<Contracts.MedAccessControl>;
     deployContract(
-      name: "PatientRecordAccess",
+      name: "MultiSigAccess",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.PatientRecordAccess>;
+    ): Promise<Contracts.MultiSigAccess>;
     deployContract(
       name: "PatientManagement",
       args: any[],
