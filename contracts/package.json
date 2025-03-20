@@ -13,5 +13,8 @@
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^3.0.0",
     "hardhat": "^2.22.19"
+  },
+  "dependencies": {
+    "@safe-global/sdk-starter-kit": "^2.0.1"
   }
 }

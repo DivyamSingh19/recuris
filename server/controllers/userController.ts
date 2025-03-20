@@ -42,7 +42,7 @@ async function registerPatient(req:Request,res:Response ) {
   
 
      const token = createToken(newPatient.id)
-     const role :string = "Patient";
+     const role :string = "patient";
      const metaData = {
         name,
         email,
@@ -58,7 +58,7 @@ async function registerPatient(req:Request,res:Response ) {
  
 async function loginPatient(req:Request,res:Response) {
     try {
-        const {email,password} = req.body as Patient
+        const {email,password,walletAddress} = req.body as Patient
         const patient = await prisma.patient.findUnique({where:{email},select:{id:true,password:true ,name:true,walletAddress:true}});
 
         if(!patient){
@@ -181,7 +181,7 @@ async function registerDoctor(req:Request,res:Response) {
         })
 
         const token = createToken(newDoctor.id)
-        const role :string = "Doctor";
+        const role :string = "doctor";
         const metaData = {
           name,
           email,
@@ -254,7 +254,7 @@ async function registerDC(req:Request,res:Response) {
             }
         })
         const token = createToken(newDiagCenter.id)
-        const role :string = "Diagnostic Center";
+        const role :string = "diagnostic_center";
         const metaData = {
         name,
         email,
