@@ -10,6 +10,9 @@ Medical records are encrypted and stored on IPFS, with blockchain-based access c
 Smart contracts regulate access, ensuring only authorized hospitals, doctors, or insurers can view records with patient consent.
 Emergency MultiSig Access Mechanism allows hospitals to retrieve records in critical cases with multi-party approval.
 Cross-Border Health Data Access via Decentralized Identity (DID) enables seamless treatment globally.
+
+
+
 🔹 Key Benefits:
 ✅ Enhanced Security: Blockchain ensures tamper-proof records and prevents unauthorized modifications.
 ✅ Patient-Centric: Patients have full control over who can access their medical history.
