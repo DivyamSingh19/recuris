@@ -5,37 +5,54 @@ import * as fs from "fs-extra";
 dotenv.config();
 
 async function main() {
-    const contractNames: string[] = [
-        "DiagnosticControl",
-        "DoctorManagement",
-        "Lock",
-        "MedAccessControl",
-        "Migrations",
-        "MultiSigAccess",
-        "PatientManagement",
-        "PrescriptionControl"
-    ];
+  const contractNames: string[] = [
+    "DiagnosticControl",
+    "DoctorManagement",
+    "Lock",
+    "MedAccessControl",
+    "Migrations",
+    "MultiSigAccess",
+    "PatientManagement",
+    "PrescriptionControl"
+  ];
 
-    let envData = "";
+  
+  let existingEnvData = "";
+  try {
+    existingEnvData = fs.readFileSync(".env", "utf8");
+  } catch (error) {
+   
+  }
 
-    for (const contractName of contractNames) {
-        const Contract = await ethers.getContractFactory(contractName);
-        const contract = await Contract.deploy();
-        await contract.deployed();
+  let newEnvData = "";
 
-        console.log(`${contractName} deployed at: ${contract.address}`);
-        envData += `${contractName.toUpperCase()}_ADDRESS=${contract.address}\n`;
+  for (const contractName of contractNames) {
+    try {
+      const Contract = await ethers.getContractFactory(contractName);
+      const contract = await Contract.deploy();
+      await contract.waitForDeployment();  
+
+       
+      const address = await contract.getAddress();
+      
+      console.log(`${contractName} deployed at: ${address}`);
+      newEnvData += `${contractName.toUpperCase()}_ADDRESS=${address}\n`;
+    } catch (error) {
+      console.error(`Error deploying ${contractName}:`, error);
+      throw error;  
     }
+  }
 
-    // Write contract addresses to .env file
-    fs.writeFileSync(".env", envData);
-    console.log("\n✅ All contract addresses saved to .env!");
+ 
+  const updatedEnvData = existingEnvData + "\n" + newEnvData;
+  
+  fs.writeFileSync(".env", updatedEnvData);
+  console.log("\n✅ All contract addresses saved to .env!");
 }
 
-// Run deployment
 main()
-    .then(() => process.exit(0))
-    .catch((error) => {
-        console.error("❌ Deployment failed:", error);
-        process.exit(1);
-    });
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error("❌ Deployment failed:", error);
+    process.exit(1);
+  });

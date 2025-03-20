@@ -2,13 +2,27 @@ import { PrismaClient } from "@prisma/client";
 import { createToken } from "../utils/token";
 import { Request,Response } from "express";
 import bcrypt from "bcrypt"
+import crypto from "crypto"
 const prisma = new PrismaClient();
 
 interface AuthenticatedRequest extends Request{
     user?:{
         id:number;
-        role:"Patient" | "Doctor" | "DiagnosticCenter"
+        role:"patient" | "doctor" | "diagnostic_center"
     };
+}
+const algorithm = "aes-256-cbc"
+const secretKey = crypto.randomBytes(32);
+const iv = crypto.randomBytes(16);
+
+const encrypt = (text:string) =>{
+    const cipher = crypto.createCipheriv(algorithm,secretKey,id);
+    let encrypted = cipher.update(text,"utf8","hex");
+    encrypted += cipher.final("hex");
+    return {iv:iv.toString("hex"),encryptedData:encrypted}
+}
+const decrypt = (text:string)=>{
+    
 }
 
 async function createPin(req:AuthenticatedRequest,res:Response) {
@@ -23,7 +37,7 @@ async function createPin(req:AuthenticatedRequest,res:Response) {
          const userRole = req.user.role
          const userId = req.user.id;
          let userVerified = false
-         if(userRole === "Patient"){
+         if(userRole === "patient"){
             const patient = await prisma.patient.findUnique({where:{id:userId}})
             userVerified = !!patient
             if(!userVerified ||userId!==patientId){
@@ -33,7 +47,7 @@ async function createPin(req:AuthenticatedRequest,res:Response) {
                 })
             }
          }
-         else if(userRole === "Doctor"){
+         else if(userRole === "doctor"){
             const doctor = await prisma.doctor.findUnique({where:{id:userId}});
             userVerified = !!doctor
             if(!userVerified||userId!==doctorId){
@@ -43,7 +57,7 @@ async function createPin(req:AuthenticatedRequest,res:Response) {
                 })
             }
          }
-         else if (userRole === "DiagnosticCenter"){
+         else if (userRole === "diagnostic_center"){
             const diagnosticCenter = await prisma.diagnosticCenter.findUnique({where:{id:userId}})
             userVerified = !!diagnosticCenter
             if(!userVerified || userId!==diagnosticCenterId){
@@ -60,7 +74,7 @@ async function createPin(req:AuthenticatedRequest,res:Response) {
 
             })
         }
-        if(userRole !== "Patient"){
+        if(userRole !== "patient"){
             const patient = await prisma.patient.findUnique({where:{id:patientId}})
             if(!patient){
                 return res.status(404).json({
@@ -69,7 +83,7 @@ async function createPin(req:AuthenticatedRequest,res:Response) {
                 })
             }
         }
-        if(userRole !== "Doctor"){
+        if(userRole !== "doctor"){
             const doctor = await prisma.doctor.findUnique({where:{id:doctorId}})
             if(!doctor){
                 return res.status(404).json({
@@ -78,7 +92,7 @@ async function createPin(req:AuthenticatedRequest,res:Response) {
                 })
             }
         }
-        if(userRole !== "DiagnosticCenter"){
+        if(userRole !== "diagnostic_center"){
             const diagnosticCenter = await prisma.diagnosticCenter.findUnique({where:{id:diagnosticCenterId}})
             if(!diagnosticCenter){
                 return res.status(404).json({
@@ -112,18 +126,15 @@ async function createPin(req:AuthenticatedRequest,res:Response) {
             }
         })
         const salt = await bcrypt.genSalt(10);
-        // const hashedPin = await bcrypt.hash(newPin,salt)
+        const hashedPin = await bcrypt.hash(newPin,salt)
         
-        // const token = createToken({
-        //     pinId : newPin.id,
-        //     role: userRole,
-        //     userId
-        // })
+        const token = createToken(newPin.id,)
         return res.json({
             success:true,
             message:"PIN created successfully",
             data:{
                 pin:newPin,
+                token
                
             }
         })

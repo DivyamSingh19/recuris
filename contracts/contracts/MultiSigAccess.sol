@@ -1,2 +1,66 @@
-//SPDX-Liscence-Identifier : MIT
-pragma solidity ^0.8.4;
+//SPDX-License-Identifier:MIT
+pragma solidity ^0.8.28;
+ 
+contract PatientRecordAccess {
+    address public patient; // Patient's address
+    mapping(address => bool) public authorizedEntities; // Mapping of authorized doctors/diagnostic centers
+    uint256 public requiredApprovals; // Number of approvals required for access
+    mapping(address => bool) public approvers; // Approvers for multisig
+    uint256 public approverCount; // Count of approvers
+
+    event AccessGranted(address indexed entity);
+    event AccessRevoked(address indexed entity);
+    event ApproverAdded(address indexed approver);
+    event ApproverRemoved(address indexed approver);
+
+    modifier onlyPatient() {
+        require(msg.sender == patient, "Only the patient can perform this action");
+        _;
+    }
+
+    modifier onlyApprover() {
+        require(approvers[msg.sender], "Only an approver can perform this action");
+        _;
+    }
+
+    constructor(uint256 _requiredApprovals) {
+        patient = msg.sender; // Set the patient as the contract deployer
+        requiredApprovals = _requiredApprovals;
+    }
+
+    // Add an approver (e.g., trusted family member or legal representative)
+    function addApprover(address _approver) external onlyPatient {
+        require(!approvers[_approver], "Approver already exists");
+        approvers[_approver] = true;
+        approverCount++;
+        emit ApproverAdded(_approver);
+    }
+
+    // Remove an approver
+    function removeApprover(address _approver) external onlyPatient {
+        require(approvers[_approver], "Approver does not exist");
+        approvers[_approver] = false;
+        approverCount--;
+        emit ApproverRemoved(_approver);
+    }
+
+    // Grant access to a doctor or diagnostic center
+    function grantAccess(address _entity) external onlyApprover {
+        require(!authorizedEntities[_entity], "Entity already has access");
+        require(approverCount >= requiredApprovals, "Not enough approvals to grant access");
+        authorizedEntities[_entity] = true;
+        emit AccessGranted(_entity);
+    }
+
+    // Revoke access from a doctor or diagnostic center
+    function revokeAccess(address _entity) external onlyApprover {
+        require(authorizedEntities[_entity], "Entity does not have access");
+        authorizedEntities[_entity] = false;
+        emit AccessRevoked(_entity);
+    }
+
+    // Check if an entity has access
+    function hasAccess(address _entity) external view returns (bool) {
+        return authorizedEntities[_entity];
+    }
+}
