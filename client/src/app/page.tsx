@@ -8,6 +8,7 @@ import { Poppins } from 'next/font/google';
 import ContactPage from "@/components/landing/contact";
 import Model from "@/components/Model";
 import GradientButton from "@/components/landing/GradientButton";
+import FeatureSection from "@/components/landing/FeatureCard";
 
 
 const lato = Lato({ subsets: ['latin'], weight: ['400', '700'] });
@@ -42,7 +43,7 @@ export default function Home() {
       </section>
 
       <section id="features" className="relative min-h-screen flex justify-center flex-col items-center py-20" >
-        <h3 className={`font-semibold text-6xl  text-center ${poppins.className}`}>
+        <h3 className={`font-semibold text-5xl  text-center ${poppins.className}`}>
           Our Features
         </h3>
         <Image src="/assets/features.svg" width={900} height={900} alt="Hero Pills" />
@@ -59,19 +60,67 @@ export default function Home() {
           <p className="font-bold text-2xl text-center">Emergency Care Approval </p> <br /><p className="font-semibold text-lg text-center">Authorized emergency access for critical care.</p>
           </div> 
       </section>
-      {/* <section id="discover" className="relative min-h-screen bg-lime-800">
-      <Button className={`absolute left-6 top-7 text-3xl p-10 font-semibold rounded-md rounded-tl-3xl rounded-br-3xl ${poppins.className}`} size="lg" asChild>
-            <Link href="/login">Discover More</Link>
-          </Button>
-          <h3 className={`absolute top-28 left-96 p-8 font-semibold text-5xl text-center ${poppins.className}`}>Dashboard</h3>
-          <p className="absolute font-bold text-3xl top-32 left-16 text-center">Your Smart Dashboard, <br /> Your Control Hub</p>
-          <div className="absolute left-10 top-52 bg-gray-300/20 backdrop-blur-md w-96 p-3 rounded-3xl">
-          <p className="font-bold text-xl text-left">For Doctors:  </p> <br /><p className="font-semibold text-lg text-left">Track patient records, appointments & insights in one place.</p>
+      <FeatureSection />
+      {
+      <section id="dashboard" className="relative min-h-screen bg-white px-10 py-20">
+        {/* Dashboard Heading */}
+        <h3 className={`text-center font-semibold  text-5xl text-black ${poppins.className}`}>Dashboard</h3>
+
+        {/* Subheading */}
+        <p className={`"text-5xl font-bold text-black text-center mt-4" ${lato.className} absolute top-32 left-12`}>
+      Your Smart Dashboard, <br /> Your Control Hub
+        </p>
+
+        {/* Left Side Content (User Benefits) */}
+        <div className="absolute left-10 top-52 w-96 space-y-6 z-10">
+        {/* For Doctors */}
+        <div className="bg-gray-100/60 shadow-lg p-4 rounded-2xl backdrop-blur">
+          <p className="font-bold text-xl text-black">For Doctors:</p>
+          <p className="font-semibold text-lg text-gray-700">
+            Track patient records, appointments & insights in one place.
+          </p>
+        </div>
+
+        {/* For Patients */}
+        <div className="bg-gray-100/60 shadow-lg p-4 rounded-2xl backdrop-blur">
+          <p className="font-bold text-xl text-black">For Patients:</p>
+          <p className="font-semibold text-lg text-gray-700">
+            View prescriptions, reports & upcoming consultations.
+          </p>
+        </div>
+
+        {/* For Admins */}
+        <div className="bg-gray-100/60 shadow-lg p-4 rounded-2xl backdrop-blur">
+          <p className="font-bold text-xl text-black">For Admins:</p>
+          <p className="font-semibold text-lg text-gray-700">
+            Manage users, workflows & reports with ease.
+          </p>
+        </div>
+        
+        
+        
+      </div>
+      <div className="absolute -bottom-24 left-16 ">
+        <Image src="/assets/dashboard_pill.svg" width={400} height={400} alt="Hero Pills"/>
+        </div>
+
+        {/* Right Side - Illustration & Dashboard */}
+        <div className="absolute right-12 top-2 bottom-4 flex flex-col items-center">
+          <div>
+            <Image src="/assets/dashboarddoc.svg" width={500} height={500} alt="Hero Pills" className="-mt-28" />
           </div>
-          <div className="absolute left-10 top-96 bg-gray-300/20 backdrop-blur-md w-96 p-3 rounded-3xl">
-          <p className="font-bold text-xl text-left">For Doctors:  </p> <br /><p className="font-semibold text-lg text-left">Track patient records, appointments & insights in one place.</p>
+          <div>
+            <Image src="/assets/dashboard.svg" width={600} height={600} alt="Hero Pills" className="-mt-72"/>
           </div>
-      </section> */}
+        </div>
+
+        {/* CTA Button */}
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
+        <button className="bg-[#8C4BB8] text-white text-xl font-semibold py-3 px-8 rounded-xl shadow-md hover:bg-[#773AA6]">
+          Explore Dashboard
+        </button>
+        </div>
+      </section>}
       <section id="appointments" className="min-h-screen flex flex-col bg-sidebar items-center justify-center gap-4 py-16">
         <h3 className={`font-semibold text-5xl text-center ${poppins.className}`}>
           Appointments
