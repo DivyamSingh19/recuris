@@ -1,64 +1,141 @@
-  
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.17;
 
-contract ElectronicHealthRecords {
-    address public owner;
-
-    struct Record {
-        address patient;
-        address doctor;
-        string details;
-        uint256 timestamp;
+ 
+contract HealthcareRecords {
+    
+    struct HealthRecord {
+        string recordHash;      
+        uint256 timestamp;      
+        address doctorAddress;  
+        bool isActive;          
     }
-
+    
+    // Struct for prescriptions
     struct Prescription {
-        address patient;
-        address doctor;
-        string medication;
-        uint256 timestamp;
+        string medication;     //name
+        string dosage;          // Dosage  
+        string frequency;       // How often to take
+        uint256 startDate;      // When to start taking
+        uint256 endDate;        // When to stop taking
+        address doctorAddress;  // Doctor who created the prescription
+        bool isActive;          // If the prescription is active
     }
-
-    mapping(address => Record[]) private records;
-    mapping(address => Prescription[]) private prescriptions;
-
-    event RecordViewed(address indexed doctor, address indexed patient);
-    event PrescriptionAdded(address indexed doctor, address indexed patient, string medication);
-
+    
+    // Mapping from patient address to their records
+    mapping(address => HealthRecord[]) private patientRecords;
+    
+   
+    mapping(address => Prescription[]) private patientPrescriptions;
+    
+   
+    mapping(address => bool) private authorizedDoctors;
+     
+    mapping(address => mapping(address => bool)) private doctorPatientAuth;
+    
+    
+    address private owner;
+    
+  
+    event RecordViewed(address indexed doctor, address indexed patient, uint256 timestamp);
+    event PrescriptionAdded(address indexed doctor, address indexed patient, string medication, uint256 timestamp);
+    
+ 
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner can perform this action");
+        _;
+    }
+    
+    modifier onlyDoctor() {
+        require(authorizedDoctors[msg.sender], "Only authorized doctors can perform this action");
+        _;
+    }
+    
+    modifier isAuthorizedForPatient(address patient) {
+        require(doctorPatientAuth[msg.sender][patient], "Doctor not authorized for this patient");
+        _;
+    }
+    
+    // Constructor
     constructor() {
         owner = msg.sender;
     }
-
     
-    function viewRecords(address patient) public view returns (Record[] memory) {
-        require(records[patient].length > 0, "No records found for this patient");
-        return records[patient];
+    
+    function authorizeDoctor(address doctor) external onlyOwner {
+        authorizedDoctors[doctor] = true;
+    }
+    
+    function deauthorizeDoctor(address doctor) external onlyOwner {
+        authorizedDoctors[doctor] = false;
+    }
+    
+    function authorizeDocterForPatient(address doctor) external {
+        require(authorizedDoctors[doctor], "Address is not an authorized doctor");
+        doctorPatientAuth[doctor][msg.sender] = true;
+    }
+    
+    function deauthorizeDoctorForPatient(address doctor) external {
+        doctorPatientAuth[doctor][msg.sender] = false;
     }
 
-     
-    function addPrescription(address patient, string memory medication) public {
+    function viewPatientRecords(address patient) 
+        external 
+        onlyDoctor 
+        isAuthorizedForPatient(patient) 
+        returns (HealthRecord[] memory) 
+    {
+        emit RecordViewed(msg.sender, patient, block.timestamp);
+        return patientRecords[patient];
+    }
+    
+    
+    function createPrescription(
+        address patient,
+        string calldata medication,
+        string calldata dosage,
+        string calldata frequency,
+        uint256 durationDays
+    ) 
+        external 
+        onlyDoctor 
+        isAuthorizedForPatient(patient) 
+    {
+        uint256 startDate = block.timestamp;
+        uint256 endDate = startDate + (durationDays * 1 days);
+        
         Prescription memory newPrescription = Prescription({
-            patient: patient,
-            doctor: msg.sender,
             medication: medication,
-            timestamp: block.timestamp
+            dosage: dosage,
+            frequency: frequency,
+            startDate: startDate,
+            endDate: endDate,
+            doctorAddress: msg.sender,
+            isActive: true
         });
-
-        prescriptions[patient].push(newPrescription);
-        emit PrescriptionAdded(msg.sender, patient, medication);
+        
+        patientPrescriptions[patient].push(newPrescription);
+        
+        emit PrescriptionAdded(msg.sender, patient, medication, block.timestamp);
     }
-
     
-    function addRecord(address patient, string memory details) public {
-        require(msg.sender == owner, "Only owner can add records");
-
-        Record memory newRecord = Record({
-            patient: patient,
-            doctor: msg.sender,
-            details: details,
-            timestamp: block.timestamp
-        });
-
-        records[patient].push(newRecord);
+     
+    function getPatientPrescriptions(address patient) 
+        external 
+        view 
+        onlyDoctor 
+        isAuthorizedForPatient(patient) 
+        returns (Prescription[] memory) 
+    {
+        return patientPrescriptions[patient];
+    }
+    
+     
+    function viewMyRecords() external view returns (HealthRecord[] memory) {
+        return patientRecords[msg.sender];
+    }
+     
+    function viewMyPrescriptions() external view returns (Prescription[] memory) {
+        return patientPrescriptions[msg.sender];
     }
 }
