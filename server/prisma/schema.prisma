@@ -14,7 +14,7 @@ model Patient {
   email    String @unique
   name     String
   password String
-
+  walletAddress String @unique 
 
 
   doctors       Doctor[]
@@ -46,7 +46,7 @@ model Doctor {
   hospital String
   h_id     String
   password String
-
+  walletAddress String @unique  
 
   pin     Pin?
   profile  DoctorProfile?
@@ -71,6 +71,7 @@ model DiagnosticCenter {
   phoneNumber String @unique
   password String
   specialization String
+  walletAddress  String @unique  
   profile DiagnosticCenterProfile?
   pin Pin?
 
@@ -110,7 +111,7 @@ model PatientProfile {
   age    String
   phoneNumber String
   gender      String
-  metamaskconnect  Boolean @default(false)
+   
    
 }
 model DoctorProfile {
@@ -122,7 +123,7 @@ model DoctorProfile {
   age    String
   phoneNumber String
   gender      String
-  metamaskconnect  Boolean @default(false)
+   
 }
 model DiagnosticCenterProfile {
   id Int @id @default(autoincrement())
