@@ -56,14 +56,19 @@ async function registerPatient(req:Request,res:Response ) {
 async function loginPatient(req:Request,res:Response) {
     try {
         const {email,password} = req.body as Patient
-        const patient = await prisma.patient.findUnique({where:{email}});
+        const patient = await prisma.patient.findUnique({where:{email},select:{id:true,password:true ,name:true}});
+
         if(!patient){
             return res.json({success:false,message:"Patient not registered"})
         }
         const isMatch = await bcrypt.compare(password,patient.password);
         if(isMatch){
             const token = createToken(patient.id)
-            res.json({success:true,token})
+            const metaData={
+                name:patient.name,
+                email
+            }
+            res.json({success:true,token,metaData})
         }else{
             res.json({success:false,message:"Invalid Credentials"})
         }
@@ -120,14 +125,19 @@ async function registerAdmin(req:Request,res:Response) {
 async function loginAdmin(req:Request,res:Response) {
     try {
         const {email,password} = req.body as Admin
-        const admin = await prisma.hospital_Admin.findUnique({where:{email}})
+         
+        const admin = await prisma.hospital_Admin.findUnique({where:{email},select:{id:true,password:true ,name:true}})
         if(!admin){
             return res.json({success:false,message:"Admin not registered"})
         }
         const isMatch = await bcrypt.compare(password,admin.password)
         if(isMatch){
             const token = createToken(admin.id)
-             res.json({success:true,token})
+            const metaData={
+                name:admin.name,
+                email
+            }
+             res.json({success:true,token,metaData})
         }else{
             res.json({success:false,message:"Invalid Credentials"})
         }
@@ -181,16 +191,19 @@ async function registerDoctor(req:Request,res:Response) {
 async function loginDoctor(req:Request,res:Response) {
     try {
         const {email,password} = req.body as Doctor
-        const {name} = req.params as Doctor
-        const doctor = await prisma.doctor.findUnique({where:{email}})
+         
+        const doctor = await prisma.doctor.findUnique({where:{email},select:{id:true,password:true ,name:true}})
         if(!doctor){
             return res.json({success:false,message:"Doctor not registered"})
         }
         const isMatch = await bcrypt.compare(password,doctor.password)
         if(isMatch){
             const token = createToken(doctor.id)
-
-            res.json({success:true,token})
+            const metaData={
+                name:doctor.name,
+                email
+            }
+            res.json({success:true,token,metaData})
         }else{
             res.json({success:false,message:"Invalid Credentials"})
         }
@@ -246,14 +259,18 @@ async function registerDC(req:Request,res:Response) {
 async function loginDC(req:Request,res:Response) {
     try {
         const {email,password} = req.body as DiagnosticCenter
-        const diagnosticCenter = await prisma.diagnosticCenter.findUnique({where:{email}})
+        const diagnosticCenter = await prisma.diagnosticCenter.findUnique({where:{email},select:{id:true,password:true ,name:true}})
         if(!diagnosticCenter){
             return res.json({success:false,message:"Diagnostic Center not registered"})
         }
         const isMatch = await bcrypt.compare(password,diagnosticCenter.password)
         if(isMatch){
             const token = createToken(diagnosticCenter.id)
-            res.json({success:true,token})
+            const metaData={
+                name:diagnosticCenter.name,
+                email
+            }
+            res.json({success:true,token,metaData})
         }else{
             res.json({success:false,message:"Invalid Credentials"})
         }
