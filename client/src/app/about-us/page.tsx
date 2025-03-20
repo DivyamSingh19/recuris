@@ -2,8 +2,8 @@ import React from 'react'
 
 const Page = () => {
   return (
-    <div>
-      hello imma help you nigguh
+    <div className='text-center text-3xl font-medium mt-24'>
+      About Us Page
     </div>
   )
 }

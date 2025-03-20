@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { UserRole } from '@/types';
 import RoleSelector from '@/components/form/RoleSelector';
@@ -10,9 +10,17 @@ import Link from 'next/link';
 import AdminSignupForm from '@/components/form/AdminSignupForm';
 import DiagnosticSignupForm from '@/components/form/DiagnosticSignupForm';
 import { Separator } from '@/components/ui/separator';
+import { useRouter } from 'next/navigation';
 
 export default function SignupPage() {
   const [selectedRole, setSelectedRole] = useState<UserRole>(UserRole.PATIENT);
+  const router = useRouter();
+  
+    useEffect(() => {
+      if (localStorage.getItem("token")) {
+        router.push("/");
+      }
+    }, [])
 
   const renderFormByRole = () => {
     switch (selectedRole) {

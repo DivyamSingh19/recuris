@@ -4,13 +4,7 @@ import { useEffect } from "react";
 
 export default function PatientPage() {
 
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!localStorage.getItem("userRole")) {
-      router.push("/login");
-    }
-  }, [])
+  
   
 
     return (
