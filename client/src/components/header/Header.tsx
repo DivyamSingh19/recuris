@@ -61,11 +61,11 @@ const Header = () => {
 
   return (
     <>
-    <header className='sticky top-0 flex items-center gap-8 p-3 shadow bg-white/30 z-50 backdrop-blur-md'>
+    <header className='fixed w-full top-0 flex items-center gap-8 py-3 px-6 shadow bg-white/40 z-50 backdrop-blur-md'>
         <div className='container mx-auto flex items-center justify-between'>
             <Link href='/' className='rounded-full flex items-center gap-2'>
-                <Image src={"/logo.png"} width={30} height={30} alt='Logo' />
-                <span className='font-bold text-primary'>RECURIS</span>
+                <Image src={"/logo.png"} width={35} height={35} alt='Logo' />
+                <span className='font-bold text-purple-800 text-xl'>RECURIS</span>
             </Link>
             <nav className='flex items-center gap-4 rounded-full pl-16'>
                 {navItems.map((item, index) => {
@@ -73,7 +73,7 @@ const Header = () => {
                         <Link 
                         key={index} 
                         href={item.link}
-                        className='p-2 text-muted-foreground hover:text-foreground'
+                        className='p-2 text-gray-700 hover:text-foreground'
                         >
                         {item.name}
                         </Link>
