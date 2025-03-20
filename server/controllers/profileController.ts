@@ -1,20 +1,54 @@
 import { PrismaClient } from "@prisma/client";
 import { DiagnosticCenter } from "../types/user";
 import {v2 as cloudinary} from "cloudinary"
+import { Request,Response } from "express";
  
 import {Patient} from "../types/user"
 
  
 const prisma = new PrismaClient()
-// async function patientProfile(req:Request,res:Response){
-//     try {
-     
-        
-//     } catch (error) {
-//         console.log(error)
-//         res.json({success:false,message:(error as Error).message})
-//     }
-// }
+async function patientProfile(req:Request,res:Response){
+    try {
+        try {
+                const { profileImage, patientId, location, age, phoneNumber, gender } = req.body;
+                
+                 
+                const patientExists = await prisma.patient.findUnique({
+                  where: { id: Number(patientId) }
+                });
+                
+                if (!patientExists) {
+                  return res.status(404).json({ message: 'Patient not found' });
+                }
+                
+                // Check if profile already exists for this patient
+                const existingProfile = await prisma.patientProfile.findUnique({
+                  where: { patientId: Number(patientId) }
+                });
+                
+                if (existingProfile) {
+                  return res.status(400).json({ message: 'Profile already exists for this patient' });
+                }
+                
+                const newProfile = await prisma.patientProfile.create({
+                  data: {
+                    profileImage,
+                    patientId: Number(patientId),
+                    location,
+                    age,
+                    phoneNumber,
+                    gender
+                  }
+                });
+
+                
+       
+          res.status(201).json(newProfile);
+    } catch (error) {
+        console.log(error)
+        res.json({success:false,message:(error as Error).message})
+    }
+}
 
 // async function doctorProfile(req:Request,res:Response) {
 //     try {

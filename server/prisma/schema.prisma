@@ -10,7 +10,7 @@ datasource db {
 
 
 model Patient {
-  id       Int    @id @default(autoincrement()) @unique
+  id       Int    @id @default(autoincrement()) @unique 
   email    String @unique
   name     String
   password String

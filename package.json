@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/DivyamSingh19/recuris/issues"
   },
-  "homepage": "https://github.com/DivyamSingh19/recuris#readme"
+  "homepage": "https://github.com/DivyamSingh19/recuris#readme",
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.2.0"
+  }
 }
