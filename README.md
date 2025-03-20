@@ -1,13 +1,11 @@
-🔹 Project Name: Recuris– Blockchain-Powered EHR System
-
-🔹 Problem Statement:
+🔹 Recuris– Blockchain-Powered EHR and Health Eco-system
 
 Current EHR systems suffer from data silos, security risks, and lack of interoperability between hospitals.
 Patients lack control over their medical records and face difficulties accessing data across hospitals or borders.
 Cybersecurity threats and data breaches in healthcare are rising, making privacy and data integrity a major concern.
-🔹 Proposed Solution:
+ 
 
-A decentralized, blockchain-based EHR system that ensures data privacy, interoperability, and patient ownership.
+Recuris is a decentralized, blockchain-based EHR system that ensures data privacy, interoperability, and patient ownership.
 Medical records are encrypted and stored on IPFS, with blockchain-based access control for security.
 Smart contracts regulate access, ensuring only authorized hospitals, doctors, or insurers can view records with patient consent.
 Emergency MultiSig Access Mechanism allows hospitals to retrieve records in critical cases with multi-party approval.
