@@ -1,0 +1,7 @@
+import heropills from "./heropills.svg"
+export const assets={
+  heropills,
+  
+
+}
+                                                                   
