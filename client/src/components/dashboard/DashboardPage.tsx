@@ -1,9 +1,12 @@
+"use client"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { RootState } from "@/redux/store";
 import { Brain, Calendar, ChartPie, ClipboardCheck, FilePlus, FileText, Stethoscope } from "lucide-react";
+import { useSelector } from "react-redux";
 
 const DashboardPage = ({ role }: { role: string }) => {
   //   const session = useSession();
-  const userName = "User";
+  const user = useSelector((state: RootState) => state.user);
 
   const roleData:any = {
     patient: {
@@ -54,7 +57,7 @@ const DashboardPage = ({ role }: { role: string }) => {
       </div>
       <div className="bg-sidebar border border-primary/30 p-4 rounded-xl h-44 w-1/2">
         <h2 className="font-semibold text-2xl">
-          Good Day, <span className="capitalize font-bold">{userName} 👋</span>
+          Good Day, <span className="capitalize font-bold">{user.name} 👋</span>
         </h2>
         <p>Here are your daily overview and key updates</p>
       </div>

@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ethers } from "ethers";
+import Image from 'next/image';
 import {
   Card,
   CardContent,
@@ -30,10 +32,12 @@ import { Separator } from "../ui/separator";
 import LoaderSpinner from "./LoaderSpinner";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/userSlice";
+import { toast } from "sonner";
 
 const loginFormSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email." }),
   password: z.string().min(1, { message: "Password is required." }),
+  walletAddress: z.string().min(42, { message: "Invalid wallet address." })
 });
 
 const LoginForm: React.FC = () => {
@@ -50,8 +54,28 @@ const LoginForm: React.FC = () => {
     defaultValues: {
       email: "",
       password: "",
+      walletAddress: ""
     },
   });
+
+  // Function to connect to MetaMask
+  const connectMetaMask = async () => {
+    if (!window.ethereum) {
+      toast.error("MetaMask not detected. Please install it.");
+      return;
+    }
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const accounts = await provider.send("eth_requestAccounts", []);
+      if (accounts.length > 0) {
+        form.setValue("walletAddress", accounts[0]);
+        toast.success(`Connected: ${accounts[0]}`);
+      }
+    } catch (error) {
+      console.error("MetaMask connection error:", error);
+      toast.error("Failed to connect to MetaMask.");
+    }
+  };
 
   const onSubmit = async (values: z.infer<typeof loginFormSchema>) => {
     try {
@@ -86,6 +110,7 @@ const LoginForm: React.FC = () => {
         body: JSON.stringify({
           email: values.email,
           password: values.password,
+          walletAddress: values.walletAddress,
         }),
       });
 
@@ -93,16 +118,21 @@ const LoginForm: React.FC = () => {
 
       if (data.success) {
         // Store the auth token
+        console.log(data);
         localStorage.setItem("token", data.token);
-        localStorage.setItem("userRole", selectedRole);
+        localStorage.setItem("role", selectedRole);
+        localStorage.setItem("walletAddress", data.metaData.walletAddress);
+        localStorage.setItem("email", data.metaData.email);
+        localStorage.setItem("name", data.metaData.name);
 
         // Store user data in Redux
         dispatch(
           setUser({
             id: data.token,
             role: selectedRole,
-            name: data.name,
-            email: values.email,
+            name: data.metaData.name,
+            email: data.metaData.email,
+            walletAddress: data.metaData.walletAddress,
           })
         );
 
@@ -198,6 +228,30 @@ const LoginForm: React.FC = () => {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="walletAddress"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Wallet Address</FormLabel>
+                  <FormControl>
+                    <Input type="text" readOnly {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* MetaMask Wallet Connection */}
+            <div className="flex flex-col items-center gap-2">
+              <Button type="button" variant="secondary" onClick={connectMetaMask} className="w-full">
+                {form.getValues("walletAddress") ? `Connected: ${form.getValues("walletAddress").slice(0, 6)}...${form.getValues("walletAddress").slice(-4)}` : (
+                  <div className="flex items-center gap-2">
+                    <span>Connect to MetaMask</span>
+                    <Image src="/metamask.svg" width={15} height={15} alt="Metamask Logo" />
+                  </div>
+                )}
+              </Button>
+            </div>
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? <LoaderSpinner message="Logging in..." color="white" /> : `Login as ${selectedRole}`}
             </Button>
