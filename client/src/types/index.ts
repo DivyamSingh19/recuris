@@ -31,7 +31,7 @@ export type DiagnosticCenter = {
 export enum UserRole {
     PATIENT = "patient",
     DOCTOR = "doctor",
-    DIAGNOSTIC_CENTER = "diagnostic center",
+    DIAGNOSTIC_CENTER = "diagnostic_center",
     ADMIN = "admin",
 }
 

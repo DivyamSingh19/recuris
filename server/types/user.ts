@@ -1,7 +1,8 @@
 export type Patient={
     name: string,
     email:string,
-    password: string
+    password: string,
+    walletAddress :string
 }
 
 export type Doctor={ 
@@ -11,6 +12,7 @@ export type Doctor={
     h_id :string ,
     hospital : string,
     specialization :string
+    walletAddress :string
 }
 export type Admin={
     name : string,
@@ -23,7 +25,9 @@ export type DiagnosticCenter = {
     name : string,
     email : string,
     password : string,
-    specialization : string
-    phoneNumber : string
-    location :string
+    specialization : string,
+    phoneNumber : string,
+    location :string,
+    walletAddress :string
+
 }

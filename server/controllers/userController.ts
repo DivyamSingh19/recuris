@@ -14,7 +14,7 @@ const prisma = new PrismaClient();
  
 async function registerPatient(req:Request,res:Response ) {
     try {
-    const {name,email,password} = req.body as Patient
+    const {name,email,password,walletAddress} = req.body as Patient
     const exists = await prisma.patient.findUnique({where:{email}})
     if(exists){
         return res.json({success : false,message : "User already exists"})
@@ -25,7 +25,7 @@ async function registerPatient(req:Request,res:Response ) {
     if(password.length<8){
         return res.json({success:false,message : "Password length is too short"})
     }
-    if(!name || !email || !password){
+    if(!name || !email || !password || !walletAddress){
         return res.json({success:false,message : "All fields are required"})
     }
     const salt = await bcrypt.genSalt(10);
@@ -34,16 +34,19 @@ async function registerPatient(req:Request,res:Response ) {
         data :{
             name ,
             email,
-            password :hashedPassword
+            password :hashedPassword,
+            walletAddress
+
         }
      })
   
 
      const token = createToken(newPatient.id)
-     const role :string = "Patient";
+     const role :string = "patient";
      const metaData = {
         name,
-        email
+        email,
+        walletAddress
      }
      res.json({success:true,token,metaData,role})
         
@@ -55,8 +58,8 @@ async function registerPatient(req:Request,res:Response ) {
  
 async function loginPatient(req:Request,res:Response) {
     try {
-        const {email,password} = req.body as Patient
-        const patient = await prisma.patient.findUnique({where:{email},select:{id:true,password:true ,name:true}});
+        const {email,password,walletAddress} = req.body as Patient
+        const patient = await prisma.patient.findUnique({where:{email},select:{id:true,password:true ,name:true,walletAddress:true}});
 
         if(!patient){
             return res.json({success:false,message:"Patient not registered"})
@@ -66,7 +69,8 @@ async function loginPatient(req:Request,res:Response) {
             const token = createToken(patient.id)
             const metaData={
                 name:patient.name,
-                email
+                email,
+                walletAddress:patient.walletAddress
             }
             res.json({success:true,token,metaData})
         }else{
@@ -148,12 +152,12 @@ async function loginAdmin(req:Request,res:Response) {
 }
 async function registerDoctor(req:Request,res:Response) {
     try {
-        const {name,email,password,hospital,h_id}  = req.body as Doctor
+        const {name,email,password,hospital,h_id,walletAddress}  = req.body as Doctor
         const exists = await prisma.doctor.findUnique({where:{email}})
         if(exists){
             return res.json({success:false,message:"User already exits"})
         }
-        if(!name || !email || !password || !hospital || !h_id){
+        if(!name || !email || !password || !hospital || !h_id||!walletAddress) {
             return res.json({success : false, message : "All fields are required"})
 
         }
@@ -171,15 +175,17 @@ async function registerDoctor(req:Request,res:Response) {
                 email,
                 password : hashedPassword,
                 hospital,
-                h_id
+                h_id,
+                walletAddress
             }
         })
 
         const token = createToken(newDoctor.id)
-        const role :string = "Doctor";
+        const role :string = "doctor";
         const metaData = {
           name,
-           email
+          email,
+          walletAddress
      }
         return res.json({success:true , token,metaData,role})
         
@@ -192,7 +198,7 @@ async function loginDoctor(req:Request,res:Response) {
     try {
         const {email,password} = req.body as Doctor
          
-        const doctor = await prisma.doctor.findUnique({where:{email},select:{id:true,password:true ,name:true}})
+        const doctor = await prisma.doctor.findUnique({where:{email},select:{id:true,password:true ,name:true,walletAddress:true}})
         if(!doctor){
             return res.json({success:false,message:"Doctor not registered"})
         }
@@ -201,7 +207,9 @@ async function loginDoctor(req:Request,res:Response) {
             const token = createToken(doctor.id)
             const metaData={
                 name:doctor.name,
-                email
+                email,
+                walletAddress:doctor.walletAddress
+            
             }
             res.json({success:true,token,metaData})
         }else{
@@ -215,9 +223,9 @@ async function loginDoctor(req:Request,res:Response) {
 }
 async function registerDC(req:Request,res:Response) {
     try {
-        const {name,email,password,specialization,phoneNumber,location} = req.body as DiagnosticCenter
+        const {name,email,password,specialization,phoneNumber,location,walletAddress} = req.body as DiagnosticCenter
         const exists = await prisma.diagnosticCenter.findUnique({where:{email,phoneNumber}})
-        if(!name ||!email||!specialization||!password||!phoneNumber||!location){
+        if(!name ||!email||!specialization||!password||!phoneNumber||!location ||!walletAddress){
             return res.json({success:false,message:"All fields are mandatory"})
         }
         if(exists){
@@ -241,14 +249,16 @@ async function registerDC(req:Request,res:Response) {
                 password:hashedPassword,
                 phoneNumber,
                 specialization,
-                location
+                location,
+                walletAddress
             }
         })
         const token = createToken(newDiagCenter.id)
-        const role :string = "Diagnostic Center";
+        const role :string = "diagnostic_center";
         const metaData = {
         name,
-        email
+        email,
+        walletAddress
      }
         return res.json({success:true,token,metaData,role})
     } catch (error) {
