@@ -9,6 +9,7 @@ appointmentRouter.post("/appointment-doc",async(req:Request,res:Response,next:Ne
       await addAppointmentDoctor(req,res)
     } catch (error) {
         next(error)
+        console.log("API error")
     }
 })
 appointmentRouter.post("/appointment-dc",async(req:Request,res:Response,next:NextFunction)=>{
@@ -16,6 +17,7 @@ appointmentRouter.post("/appointment-dc",async(req:Request,res:Response,next:Nex
       await addAppointmentDiagnosticCenter(req,res)
     } catch (error) {
         next(error)
+        console.log("API error")
     }
 })
  
@@ -23,12 +25,14 @@ appointmentRouter.post("/editAppointment",async(req:Request,res:Response,next:Ne
    await editAppointment(req,res)
 } catch (error) {
     next(error)
+    console.log("API error")
 }} )
 appointmentRouter.post("/cancelAppointment",async(req:Request,res:Response,next:NextFunction)=>{
     try {
         await cancelAppointment(req,res)
     } catch (error) {
         next(error)
+        console.log("API error")
     }
 })
 

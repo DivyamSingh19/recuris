@@ -7,7 +7,7 @@ import { Lato } from 'next/font/google';
 import { Poppins } from 'next/font/google';
 import ContactPage from "@/components/landing/contact";
 import Model from "@/components/Model";
-import GradientButton from "@/components/landing/GradientButton";
+ 
 
 
 const lato = Lato({ subsets: ['latin'], weight: ['400', '700'] });
