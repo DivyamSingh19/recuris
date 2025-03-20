@@ -72,6 +72,21 @@ export function AppSidebar({ user, role }: { user: any; role: string | null}) {
     dispatch(clearUser());
   }
   
+  const handleManageProfile = () => {
+    const role = localStorage.getItem("role");
+    if (role === "patient") {
+      router.push("/dashboard/patient/manage-profile");
+    }
+    if (role === "doctor") {
+      router.push("/dashboard/doctor/manage-profile");
+    }
+    if (role === "diagnostic_center") {
+      router.push("/dashboard/diagnostic-center/manage-profile");
+    }
+    if (role === "admin") {
+      router.push("/dashboard/admin/manage-profile");
+    }
+  }
 
   return (
     <Sidebar className=""> 
@@ -117,7 +132,7 @@ export function AppSidebar({ user, role }: { user: any; role: string | null}) {
                 side="top"
                 className="w-[--radix-popper-anchor-width]"
               >
-                <DropdownMenuItem className="flex items-center">
+                <DropdownMenuItem onClick={handleManageProfile} className="flex items-center">
                   <User /> <span>My Account</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={handleLogout} className="flex items-center">

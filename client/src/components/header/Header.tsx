@@ -15,7 +15,7 @@ const Header = () => {
     const router = useRouter();
 
     useEffect(() => {
-        setUserRole(localStorage.getItem('userRole'));
+        setUserRole(localStorage.getItem('role'));
     }, []);
 
     const navItems = [
@@ -92,24 +92,24 @@ const Header = () => {
     </header>
     {/* 🔹 Logout Confirmation Dialog */}
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>Are you absolutely sure?</DialogTitle>
-                    </DialogHeader>
-                    <p className="text-muted-foreground">
-                        This action will log you out from your account.
-                    </p>
-                    <DialogFooter>
-                        <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
-                            Cancel
-                        </Button>
-                        <Button variant="destructive" onClick={handleLogout}>
-                            Logout
-                        </Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
-                </>
+        <DialogContent>
+            <DialogHeader>
+                <DialogTitle>Are you absolutely sure?</DialogTitle>
+            </DialogHeader>
+            <p className="text-muted-foreground">
+                This action will log you out from your account.
+            </p>
+            <DialogFooter>
+                <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+                    Cancel
+                </Button>
+                <Button variant="destructive" onClick={handleLogout}>
+                    Logout
+                </Button>
+            </DialogFooter>
+        </DialogContent>
+    </Dialog>
+</>
   )
 }
 

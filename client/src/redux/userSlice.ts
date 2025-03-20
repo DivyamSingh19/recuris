@@ -5,6 +5,7 @@ interface UserState {
     name: string | null;
     email: string | null | undefined;
     role: string | null;
+    walletAddress: string | null;
 }
 
 const initialState: UserState = {
@@ -12,6 +13,7 @@ const initialState: UserState = {
     name: null,
     email: null,
     role: null,
+    walletAddress: null,
 };
 
 const userSlice = createSlice({
@@ -23,12 +25,14 @@ const userSlice = createSlice({
             state.name = action.payload.name;
             state.email = action.payload.email;
             state.role = action.payload.role;
+            state.walletAddress = action.payload.walletAddress;
         },
         clearUser: (state) => {
             state.id = undefined;
             state.name = null;
             state.email = null;
             state.role = null;
+            state.walletAddress = null;
         },
     },
 });

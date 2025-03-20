@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/redux/userSlice";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function DashboardLayout({
   children,
@@ -19,7 +21,7 @@ export default function DashboardLayout({
     if (!user.email) {
       // Check localStorage for user data
       const storedToken = localStorage.getItem("token");
-      const storedUserRole = localStorage.getItem("userRole");
+      const storedUserRole = localStorage.getItem("role");
 
       if (!storedToken || !storedUserRole) {
         router.push("/login");
@@ -27,7 +29,15 @@ export default function DashboardLayout({
       }
 
       // Update Redux state with user data from localStorage
-      // dispatch(setUser({ email: "user@example.com", role: storedUserRole })); 
+      dispatch(
+        setUser({
+          id: localStorage.getItem("token")!,
+          role: storedUserRole,
+          name: localStorage.getItem("name"),
+          email: localStorage.getItem("email"),
+          walletAddress: localStorage.getItem("walletAddress"),
+        })
+      );
     }
   }, [user.email, dispatch, router]);
 
@@ -57,7 +67,12 @@ export default function DashboardLayout({
         <main className="flex-1 p-2">
           <div className="flex items-center justify-between pb-4 pt-2 border-b border-accent">
             <SidebarTrigger />
-            <Badge className="uppercase">{user?.role}</Badge>
+            <div className="flex gap-2">
+              <Link href="/" className="text-sm bg-sidebar hover:underline py-2 px-4 text-primary rounded flex items-center gap-2">
+                <span className="flex items-center gap-2"><Image src="/metamask.svg" width={15} height={15} alt="" />{user.walletAddress?.slice(0,6)}...{user.walletAddress?.slice(-4)}</span>
+              </Link>
+              <Badge className="uppercase">{user?.role}</Badge>
+            </div>
           </div>
           <section className="p-4">{children}</section>
         </main>
