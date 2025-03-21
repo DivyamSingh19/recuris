@@ -67,7 +67,7 @@ const Header = () => {
                 <Image src={"/logo.png"} width={35} height={35} alt='Logo' />
                 <span className='font-bold text-purple-800 text-xl'>RECURIS</span>
             </Link>
-            <nav className='flex items-center gap-4 rounded-full pl-16'>
+            <nav className='flex items-center gap-4 rounded-full'>
                 {navItems.map((item, index) => {
                     return (    
                         <Link 

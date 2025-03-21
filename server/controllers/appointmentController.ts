@@ -128,4 +128,24 @@ async function viewAppointments(req:Request,res:Response) {
     }
 }
 
-export {addAppointmentDoctor,editAppointment,cancelAppointment,viewAppointments,addAppointmentDiagnosticCenter}
+async function fetchDoctors(req:Request,res:Response){
+    try {
+        const doctors = await prisma.doctor.findMany();
+        return res.status(200).json(doctors);
+    } catch (error) {
+        console.error("Error fetching doctors:", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+}
+
+async function fetchDiagnosticCenters(req:Request,res:Response){
+    try {
+        const diagnosticCenters = await prisma.diagnosticCenter.findMany();
+        return res.status(200).json(diagnosticCenters);
+    } catch (error) {
+        console.error("Error fetching diagnostic centers:", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+}
+
+export {addAppointmentDoctor,editAppointment,cancelAppointment,viewAppointments,addAppointmentDiagnosticCenter, fetchDoctors, fetchDiagnosticCenters}
