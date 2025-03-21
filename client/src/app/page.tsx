@@ -67,12 +67,12 @@ export default function Home() {
         <h3 className={`text-center font-semibold  text-5xl text-black ${poppins.className}`}>Dashboard</h3>
 
         {/* Subheading */}
-        <p className={`"text-5xl font-bold text-black text-center mt-4" ${lato.className} absolute top-32 left-12`}>
+        <p className={`"text-5xl font-bold text-black text-center mt-4" ${lato.className} absolute top-32 left-40`}>
       Your Smart Dashboard, <br /> Your Control Hub
         </p>
 
         {/* Left Side Content (User Benefits) */}
-        <div className="absolute left-10 top-52 w-96 space-y-6 z-10">
+        <div className="absolute left-24 top-52 w-96 space-y-6 z-10">
         {/* For Doctors */}
         <div className="bg-gray-100/60 shadow-lg p-4 rounded-2xl backdrop-blur">
           <p className="font-bold text-xl text-black">For Doctors:</p>
@@ -105,7 +105,7 @@ export default function Home() {
         </div>
 
         {/* Right Side - Illustration & Dashboard */}
-        <div className="absolute right-12 top-2 bottom-4 flex flex-col items-center">
+        <div className="absolute right-24 top-2 bottom-4 flex flex-col items-center">
           <div>
             <Image src="/assets/dashboarddoc.svg" width={500} height={500} alt="Hero Pills" className="-mt-28" />
           </div>
@@ -117,7 +117,7 @@ export default function Home() {
         {/* CTA Button */}
         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
         <button className="bg-[#8C4BB8] text-white text-xl font-semibold py-3 px-8 rounded-xl shadow-md hover:bg-[#773AA6]">
-          Explore Dashboard
+          <Link href="/login">Explore Dashboard</Link>
         </button>
         </div>
       </section>}

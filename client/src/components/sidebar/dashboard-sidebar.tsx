@@ -1,6 +1,6 @@
 "use client"
 
-import { BookOpen, Brain, Calendar, ChartPie, ChevronUp, ClipboardCheck, CreditCard, FilePlus, FileText, FolderOpen, Home, LifeBuoy, LogOut, User, User2, Users } from "lucide-react"
+import { Book, BookOpen, Brain, Calendar, ChartPie, ChevronUp, ClipboardCheck, CreditCard, FilePlus, FileText, FolderOpen, Home, LifeBuoy, LogOut, User, User2, Users } from "lucide-react"
 
 import {
   Sidebar,
@@ -29,7 +29,9 @@ const navItems = {
   patient: [
     { href: "/dashboard/patient", label: "Dashboard", icon: Home },
     { href: "/dashboard/patient/manage-docs", label: "Manage Docs", icon: FileText },
-    { href: "/dashboard/patient/ai-insights", label: "AI Insights based on Report", icon: Brain },
+    { href: "/dashboard/patient/book-appointment", label: "Book Appointment", icon: Book },
+    { href: "/dashboard/patient/appointments", label: "My Appointments", icon: Calendar },
+    // { href: "/dashboard/patient/ai-insights", label: "AI Insights based on Report", icon: Brain },
     { href: "/dashboard/patient/help-support", label: "Help & Support", icon: LifeBuoy },
     { href: "/dashboard/patient/transactions", label: "Transactions", icon: CreditCard },
     { href: "/dashboard/patient/manage-profile", label: "Manage Profile", icon: User }
