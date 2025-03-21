@@ -89,6 +89,7 @@ const DoctorSignupForm: React.FC = () => {
           localStorage.setItem("walletAddress", data.metaData.walletAddress);
           localStorage.setItem("email", data.metaData.email);
           localStorage.setItem("name", data.metaData.name);
+          localStorage.setItem("id", data.id);
           toast.success("Account created successfully");
           
           router.push('/dashboard/doctor');

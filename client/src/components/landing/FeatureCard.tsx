@@ -1,21 +1,21 @@
-// FeatureSection.jsx
 import React from 'react';
 import { CircleArrowUp } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const FeatureCard = ({ title, subtitle, icon }: any) => {
   return (
-    <div className="bg-white rounded-3xl shadow-md overflow-hidden max-w-xs mx-auto transition-transform duration-300 hover:transform hover:scale-105">
+    <div className="bg-white rounded-3xl shadow-md overflow-hidden w-96 mx-auto transition-transform duration-300 hover:transform hover:scale-105">
       <div className="p-6 flex flex-col items-center text-center">
         <div className="mb-6">
           {icon}
         </div>
         <h3 className="text-2xl font-bold text-gray-900 mb-3">{title}</h3>
         <p className="text-gray-600 mb-6">{subtitle}</p>
-        <button className="w-full py-4 px-6 bg-primary text-white rounded-full flex items-end justify-items-end justify-center gap-2 text-lg font-semibold hover:bg-primary/80 transition-colors duration-300">
+        <Link href="/login" className="w-full py-4 px-6 bg-primary text-white rounded-full flex items-center justify-items-end justify-between gap-2 text-lg font-semibold hover:bg-primary/80 transition-colors duration-300">
           <span>Explore Now</span>
-          <CircleArrowUp className='rotate-45'/>
-        </button>
+          <CircleArrowUp size={28} className='rotate-45'/>
+        </Link>
       </div>
     </div>
   );
@@ -24,7 +24,7 @@ const FeatureCard = ({ title, subtitle, icon }: any) => {
 const FeatureSection = () => {
   const features = [
     {
-      title: "Electronic Health Records (EHR)",
+      title: "Electronic Health Records",
       subtitle: "Your Medical History, Anytime, Anywhere",
       icon: (
         <div className="relative w-64 h-64">
@@ -37,7 +37,7 @@ const FeatureSection = () => {
     },
     {
       title: "Smart OPD Booking System",
-      subtitle: "Book Appointments And OPD On Your Fingertips",
+      subtitle: "Book Appointments On Your Fingertips",
       icon: (
         <div className="relative w-64 h-64">
           <div className="absolute inset-0 z-20">
