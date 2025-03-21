@@ -56,16 +56,7 @@ contract PatientManagement {
         _;
     }
     
-    // Register a patient
-    function registerPatient() public {
-        require(!patients[msg.sender].exists, "Patient already registered");
-        patients[msg.sender].exists = true;
-        patients[msg.sender].recordCount = 0;
-    }
-    
-    // Core Patient Functions
-    
-    // Upload a medical record
+   
     function uploadRecord(bytes memory recordHash) public onlyPatient {
         uint256 recordId = patients[msg.sender].recordCount;
         records[msg.sender][recordId] = Record({

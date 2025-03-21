@@ -2,8 +2,8 @@
 pragma solidity ^0.8.28;
  
  
-contract DiagnosticCenterRecords {
-    // Struct for diagnostic reports
+contract DiagnosticControl {
+     
     struct DiagnosticReport {
         string reportHash;        // IPFS CID from NFT.Storage
         string reportMetadata;    // JSON metadata about the report (type, date, etc.)

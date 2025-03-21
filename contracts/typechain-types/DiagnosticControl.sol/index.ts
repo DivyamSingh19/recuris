@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { DiagnosticCenterRecords } from "./DiagnosticCenterRecords";
+export type { DiagnosticControl } from "./DiagnosticControl";

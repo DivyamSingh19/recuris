@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export { DiagnosticCenterRecords__factory } from "./DiagnosticCenterRecords__factory";
+export { DiagnosticControl__factory } from "./DiagnosticControl__factory";
