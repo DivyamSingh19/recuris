@@ -278,7 +278,7 @@ async function registerDC(req:Request,res:Response) {
 async function loginDC(req:Request,res:Response) {
     try {
         const {email,password} = req.body as DiagnosticCenter
-        const diagnosticCenter = await prisma.diagnosticCenter.findUnique({where:{email},select:{id:true,password:true ,name:true}})
+        const diagnosticCenter = await prisma.diagnosticCenter.findUnique({where:{email},select:{id:true,password:true ,name:true,walletAddress:true}})
         if(!diagnosticCenter){
             return res.json({success:false,message:"Diagnostic Center not registered"})
         }
@@ -287,9 +287,10 @@ async function loginDC(req:Request,res:Response) {
             const token = createToken(diagnosticCenter.id)
             const metaData={
                 name:diagnosticCenter.name,
-                email
+                email,
+                walletAddress:diagnosticCenter.walletAddress
             }
-            const diagnosticCenterId= diagnosticCenter.id
+            const diagnosticCenterId = diagnosticCenter.id
             res.json({success:true,token,metaData,diagnosticCenterId})
         }else{
             res.json({success:false,message:"Invalid Credentials"})
