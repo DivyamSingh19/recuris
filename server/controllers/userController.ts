@@ -42,11 +42,13 @@ async function registerPatient(req:Request,res:Response ) {
   
 
      const token = createToken(newPatient.id)
+     const patientId = newPatient.id
      const role :string = "patient";
      const metaData = {
         name,
         email,
-        walletAddress
+        walletAddress,
+        patientId
      }
      res.json({success:true,token,metaData,role})
         
@@ -70,9 +72,11 @@ async function loginPatient(req:Request,res:Response) {
             const metaData={
                 name:patient.name,
                 email,
-                walletAddress:patient.walletAddress
+                walletAddress:patient.walletAddress,
+                 
             }
-            res.json({success:true,token,metaData})
+        const patientId = patient.id
+            res.json({success:true,token,metaData,patientId})
         }else{
             res.json({success:false,message:"Invalid Credentials"})
         }
@@ -185,9 +189,11 @@ async function registerDoctor(req:Request,res:Response) {
         const metaData = {
           name,
           email,
-          walletAddress
+          walletAddress,
+          
      }
-        return res.json({success:true , token,metaData,role})
+        const doctorId = newDoctor.id
+        return res.json({success:true , token,metaData,role,doctorId})
         
     } catch (error) {
         console.log(error)
@@ -210,8 +216,10 @@ async function loginDoctor(req:Request,res:Response) {
                 email,
                 walletAddress:doctor.walletAddress
             
+
             }
-            res.json({success:true,token,metaData})
+            const doctorId = doctor.id
+            res.json({success:true,token,metaData,doctorId})
         }else{
             res.json({success:false,message:"Invalid Credentials"})
         }
@@ -253,6 +261,7 @@ async function registerDC(req:Request,res:Response) {
                 walletAddress
             }
         })
+        const diagnosticCenterId = newDiagCenter.id;
         const token = createToken(newDiagCenter.id)
         const role :string = "diagnostic_center";
         const metaData = {
@@ -260,7 +269,7 @@ async function registerDC(req:Request,res:Response) {
         email,
         walletAddress
      }
-        return res.json({success:true,token,metaData,role})
+        return res.json({success:true,token,metaData,role,diagnosticCenterId})
     } catch (error) {
         console.log(error)
         return res.json({success:false,message:((error as Error).message)})
@@ -269,7 +278,7 @@ async function registerDC(req:Request,res:Response) {
 async function loginDC(req:Request,res:Response) {
     try {
         const {email,password} = req.body as DiagnosticCenter
-        const diagnosticCenter = await prisma.diagnosticCenter.findUnique({where:{email},select:{id:true,password:true ,name:true}})
+        const diagnosticCenter = await prisma.diagnosticCenter.findUnique({where:{email},select:{id:true,password:true ,name:true,walletAddress:true}})
         if(!diagnosticCenter){
             return res.json({success:false,message:"Diagnostic Center not registered"})
         }
@@ -278,9 +287,11 @@ async function loginDC(req:Request,res:Response) {
             const token = createToken(diagnosticCenter.id)
             const metaData={
                 name:diagnosticCenter.name,
-                email
+                email,
+                walletAddress:diagnosticCenter.walletAddress
             }
-            res.json({success:true,token,metaData})
+            const diagnosticCenterId = diagnosticCenter.id
+            res.json({success:true,token,metaData,diagnosticCenterId})
         }else{
             res.json({success:false,message:"Invalid Credentials"})
         }

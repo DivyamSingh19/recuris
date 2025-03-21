@@ -39,7 +39,7 @@ app.use("/api/appointment",appointmentRouter)
 app.use("/api/pin",pinRouter)
 app.use("/api/total-patients",totalPatientRouter)
 
-// app.use("/api/contracts",)
+
 
 
 

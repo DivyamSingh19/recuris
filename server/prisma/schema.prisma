@@ -25,6 +25,31 @@ model Patient {
   diagnosticCenter DiagnosticCenter[]
   sentMessages     Message[] @relation("SentMessages")
   receivedMessages Message[] @relation("ReceivedMessages")
+  data      Encrypted[]
+}
+model Encrypted{
+  id  String @id @unique @default(uuid())
+  patientId Int?
+  patient Patient? @relation(fields: [patientId],references: [id])
+  
+  walletAddress  String
+  fileName    String
+  fileSize    String
+  createdAt   DateTime @default(now())
+
+
+}
+model EncryptedDiagnosticCenter{
+  id  String @id @unique @default(uuid())
+  diagnosticCenterId Int?
+  diagnosticCenter  DiagnosticCenter? @relation(fields: [diagnosticCenterId],references: [id])
+  walletAddressDc  String
+  walletAddressPatient  String
+  fileName    String
+  fileSize    String
+  createdAt   DateTime @default(now())
+  
+
 }
 
 model Hospital_Admin {
@@ -78,6 +103,7 @@ model DiagnosticCenter {
   otp     OTPDiagnosticCenter[]
   patients  Patient[]
   appointment  Appointments[]
+  data      EncryptedDiagnosticCenter[]
 }
 model Appointments {
   id Int @id @default(autoincrement())
