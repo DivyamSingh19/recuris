@@ -34,7 +34,6 @@ export interface PatientManagementInterface extends Interface {
       | "owner"
       | "patients"
       | "records"
-      | "registerPatient"
       | "revokeAccess"
       | "uploadRecord"
       | "viewPatientRecords"
@@ -80,10 +79,6 @@ export interface PatientManagementInterface extends Interface {
     values: [AddressLike, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "registerPatient",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
     functionFragment: "revokeAccess",
     values: [AddressLike]
   ): string;
@@ -123,10 +118,6 @@ export interface PatientManagementInterface extends Interface {
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "patients", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "records", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "registerPatient",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "revokeAccess",
     data: BytesLike
@@ -313,8 +304,6 @@ export interface PatientManagement extends BaseContract {
     "view"
   >;
 
-  registerPatient: TypedContractMethod<[], [void], "nonpayable">;
-
   revokeAccess: TypedContractMethod<
     [entity: AddressLike],
     [void],
@@ -385,9 +374,6 @@ export interface PatientManagement extends BaseContract {
     ],
     "view"
   >;
-  getFunction(
-    nameOrSignature: "registerPatient"
-  ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "revokeAccess"
   ): TypedContractMethod<[entity: AddressLike], [void], "nonpayable">;

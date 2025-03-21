@@ -18,7 +18,7 @@ async function main() {
 
  
   const provider = new ethers.JsonRpcProvider(process.env.GANACHE_RPC_URL);
-  const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+  const wallet = new ethers.Wallet(process.env.PRIVATE_KEY as string, provider);
 
   let existingEnvData = "";
   try {
