@@ -177,8 +177,9 @@ export default function BookAppointmentPage() {
   }
 
   return (
-    <div className="container mx-auto py-10">
-      <h1 className="text-3xl font-bold mb-6">Book an Appointment</h1>
+    <div className="container mx-auto">
+      <h1 className="text-3xl font-bold mb-1">Book an Appointment</h1>
+      <p className='text-muted-foreground mb-6'>Select a doctor or a diagnostic center and book your appointment</p>
       
       <Tabs defaultValue="doctor" className="w-full">
         <TabsList className="grid w-full grid-cols-2 mb-8">
@@ -265,7 +266,7 @@ export default function BookAppointmentPage() {
                           onSelect={field.onChange}
                           disabled={(date) => 
                             date < new Date() || 
-                            date > new Date(new Date().setMonth(new Date().getMonth() + 3))
+                            date > new Date(new Date().setMonth(new Date().getMonth() + 1))
                           }
                           className="rounded-md border"
                         />
