@@ -120,6 +120,7 @@ const LoginForm: React.FC = () => {
         // Store the auth token
         console.log(data);
         localStorage.setItem("token", data.token);
+        localStorage.setItem("id", data.id);
         localStorage.setItem("role", selectedRole);
         localStorage.setItem("walletAddress", data.metaData.walletAddress);
         localStorage.setItem("email", data.metaData.email);

@@ -76,7 +76,7 @@ interface DiagnosticCenter {
 
 export default function BookAppointmentPage() {
   const router = useRouter();
-  const patientId = 10;
+  const patientId = localStorage.getItem("id");
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [diagnosticCenters, setDiagnosticCenters] = useState<DiagnosticCenter[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -130,7 +130,7 @@ export default function BookAppointmentPage() {
     try {
       const response = await axios.post('http://localhost:4000/api/appointment/appointment-doc', {
         patientId: 10,
-        doctorId: 1,
+        doctorId: parseInt(data.doctorId),
         date: data.date,
         name: data.name,
         email: data.email

@@ -83,7 +83,6 @@ const Header = () => {
         <div className='flex items-center'>
             {userRole ? 
             <div className='flex gap-2'>
-                <Button variant="link">Emergency SOS</Button>
                 <Button variant="outline" onClick={handleDashboardRedirect}>Dashboard</Button>
                 <Button variant="destructive" onClick={() => setIsDialogOpen(true)}>Logout</Button>
             </div> : <Button className='rounded-full' asChild><Link href="/login">Login</Link></Button>}
