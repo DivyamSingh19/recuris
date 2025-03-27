@@ -69,7 +69,7 @@ export default function IPFSUploader({ onClose }: IPFSUploaderProps) {
         toast.success('Upload successful!');
         setUploadStatus('Upload successful!');
 
-       
+      onClose();
       const backendResponse = await fetch('http://localhost:4000/api/patient/records', {
         method: 'POST',
         headers: {
