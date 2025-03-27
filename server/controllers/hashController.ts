@@ -12,7 +12,7 @@
 //     hashCode:string,
 //     fileSize :string,
 //     patientId :number,
-//     diagnosticCenterId:number
+    
 
 // }
 // interface DataDC{
@@ -80,7 +80,6 @@
 //                 fileName,
 //                 fileSize,
 //                 patientId,
-//                 diagnosticCenterId,
 //                 walletAddress,
 //                 createdAt
 //             }
@@ -109,15 +108,18 @@
   
 // async function hashControllerDC(req:Request,res:Response) {
 //     try {
-//         const {hashCode,fileName,fileSize,walletAddress,createdAt,patientId,diagnosticCenterId} = req.body as DataDC
+//         const {hashCode,fileName,fileSize,walletAddressDc,walletAddressPatient,createdAt,patientId,diagnosticCenterId} = req.body as DataDC
 //         if(!hashCode){
 //             return res.json({success:false,message:"No hash code provided"})
 //         }
 //         if(!fileName){
 //             return res.json({success:false,message:"No name provided"})
 //         }
-//         if(!walletAddress){
+//         if(!walletAddressDc){
 //             return res.json({success:false,message:"Wallet address not provided"})
+//         }
+//         if(!walletAddressPatient){
+//             return res.json({success:false,message:"Patient Wallet address not provided"})
 //         }
        
 //         const ENCRYPTION_KEY = process.env.HASH_ENCRYPTION_KEY;  
@@ -138,7 +140,8 @@
 //                 fileSize,
 //                 patientId,
 //                 diagnosticCenterId,
-//                 walletAddress,
+//                 walletAddressPatient
+//                 walletAddressDc,
 //                 createdAt
 //             }
 //         })

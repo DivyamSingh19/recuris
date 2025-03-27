@@ -5,11 +5,11 @@ pragma solidity ^0.8.28;
 contract DiagnosticControl {
      
     struct DiagnosticReport {
-        string reportHash;        // IPFS CID from NFT.Storage
-        string reportMetadata;    // JSON metadata about the report (type, date, etc.)
-        uint256 timestamp;        // When the report was added
-        address diagnosticCenter; // Which diagnostic center added this report
-        bool isActive;            // If the report is active or archived
+        string reportHash;         
+        string reportMetadata;    
+        uint256 timestamp;        
+        address diagnosticCenter;  
+        bool isActive;            
     }
     
   

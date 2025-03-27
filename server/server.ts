@@ -10,7 +10,7 @@ import http from "http"
 import dotenv from "dotenv"
 import connectCloudinary from "./config/cloudinary";
 import totalPatientRouter from "./routes/totalPatients";
- 
+import patientRoutes from "./routes/contractRoutes/patientRoute"
 
 const app = express();
 const port =process.env.PORT || 5000
@@ -40,7 +40,7 @@ app.use("/api/pin",pinRouter)
 app.use("/api/total-patients",totalPatientRouter)
 
 
-
+app.use('/api/patient', patientRoutes);
 
 
 
