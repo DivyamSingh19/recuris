@@ -2,7 +2,7 @@ import express from "express"
 import cors from "cors"
 import userRouter from "./routes/userRoute";
 import appointmentRouter from "./routes/appointmentRoute";
- 
+import insuranceRouter from "./routes/contractRoutes/insuranceProviderRoutes";
 import pinRouter from "./routes/pinRoute";
 import { NextFunction,Request,Response } from "express";
 import { setupSocketIO } from "./utils/socket";
@@ -43,7 +43,7 @@ app.use('/api/patient', patientRoutes);
 app.use('/api/doctor',doctorRouter);
 app.use('/api/diagnostic-control',diagnosticRouter);
 
-
+app.use('/api/insurance',insuranceRouter)
 
 //global catches
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {

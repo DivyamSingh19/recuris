@@ -22,6 +22,14 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.DoctorManagement__factory>;
     getContractFactory(
+      name: "InsuranceAgentRecordManagement",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.InsuranceAgentRecordManagement__factory>;
+    getContractFactory(
+      name: "InsuranceProvider",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.InsuranceProvider__factory>;
+    getContractFactory(
       name: "MedAccessControl",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MedAccessControl__factory>;
@@ -45,6 +53,16 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.DoctorManagement>;
     getContractAt(
+      name: "InsuranceAgentRecordManagement",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.InsuranceAgentRecordManagement>;
+    getContractAt(
+      name: "InsuranceProvider",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.InsuranceProvider>;
+    getContractAt(
       name: "MedAccessControl",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
@@ -69,6 +87,14 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.DoctorManagement>;
     deployContract(
+      name: "InsuranceAgentRecordManagement",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.InsuranceAgentRecordManagement>;
+    deployContract(
+      name: "InsuranceProvider",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.InsuranceProvider>;
+    deployContract(
       name: "MedAccessControl",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.MedAccessControl>;
@@ -91,6 +117,16 @@ declare module "hardhat/types/runtime" {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.DoctorManagement>;
+    deployContract(
+      name: "InsuranceAgentRecordManagement",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.InsuranceAgentRecordManagement>;
+    deployContract(
+      name: "InsuranceProvider",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.InsuranceProvider>;
     deployContract(
       name: "MedAccessControl",
       args: any[],

@@ -13,7 +13,7 @@ class PatientManagementController {
      this.contractAddress = process.env.PATIENTMANAGEMENT_ADDRESS as string; 
      this.contract = new this.web3.eth.Contract(PatientManagement.abi, this.contractAddress);
 
-     // Bind methods to maintain 'this' context
+     
      this.uploadRecord = this.uploadRecord.bind(this);
      this.grantAccess = this.grantAccess.bind(this);
      this.viewRecords = this.viewRecords.bind(this);

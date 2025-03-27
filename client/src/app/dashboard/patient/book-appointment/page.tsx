@@ -40,6 +40,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from 'sonner';
 
+
 // Define form schemas
 const doctorAppointmentSchema = z.object({
   doctorId: z.string().min(1, { message: "Please select a doctor" }),
@@ -90,6 +91,10 @@ export default function BookAppointmentPage() {
       email: "",
     },
   });
+
+  const handleSubmit = async() => {
+    
+  }
 
   const diagnosticForm = useForm<DiagnosticAppointmentFormValues>({
     resolver: zodResolver(diagnosticAppointmentSchema),
@@ -275,7 +280,7 @@ export default function BookAppointmentPage() {
                     )}
                   />
                   
-                  <Button type="submit" className="w-full" disabled={isLoading}>
+                  <Button onSubmit={handleSubmit} type="submit" className="w-full" disabled={isLoading}>
                     {isLoading ? "Booking..." : "Book Doctor Appointment"}
                   </Button>
                 </form>

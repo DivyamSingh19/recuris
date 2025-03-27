@@ -8,7 +8,7 @@ async function main() {
   const contractNames: string[] = [
     "DiagnosticControl",
     "DoctorManagement",
- 
+    "InsuranceProvider",
     "MedAccessControl",
  
      
