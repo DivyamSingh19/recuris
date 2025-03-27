@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "C:\\fullStackProjects\\recuris\\contracts\\contracts\\DiagnosticControl.sol": {
-      "lastModificationDate": 1742976089946,
-      "contentHash": "c9a3eada54282e95c2c232a55d15ba26",
+      "lastModificationDate": 1743057989494,
+      "contentHash": "bd21999b89e82d296bf196f4cb98e0c7",
       "sourceName": "contracts/DiagnosticControl.sol",
       "solcConfig": {
         "version": "0.8.28",

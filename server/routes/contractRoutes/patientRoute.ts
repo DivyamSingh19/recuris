@@ -1,18 +1,18 @@
 import express from 'express';
 import PatientManagementController from '../../controllers/contractControllers/patientController';
 
-const router = express.Router();
+const patientRouter = express.Router();
 
-// Record Upload Route
-router.post('/records', PatientManagementController.uploadRecord.bind(PatientManagementController));
+ 
+patientRouter.post('/records', PatientManagementController.uploadRecord.bind(PatientManagementController));
 
-// Grant Access Route
-router.post('/access', PatientManagementController.grantAccess.bind(PatientManagementController));
+ 
+patientRouter.post('/access', PatientManagementController.grantAccess.bind(PatientManagementController));
 
-// View Records Route
-router.get('/records', PatientManagementController.viewRecords.bind(PatientManagementController));
+ 
+patientRouter.get('/view-records', PatientManagementController.viewRecords.bind(PatientManagementController));
 
-// Get Access List Route
-router.get('/access-list/:patientAddress', PatientManagementController.getAccessList.bind(PatientManagementController));
+ 
+patientRouter.get('/access-list/:patientAddress', PatientManagementController.getAccessList.bind(PatientManagementController));
 
-export default router;
+export default patientRouter;

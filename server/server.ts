@@ -2,7 +2,7 @@ import express from "express"
 import cors from "cors"
 import userRouter from "./routes/userRoute";
 import appointmentRouter from "./routes/appointmentRoute";
-import bookingRouter from "./routes/bookingRoute";
+ 
 import pinRouter from "./routes/pinRoute";
 import { NextFunction,Request,Response } from "express";
 import { setupSocketIO } from "./utils/socket";
@@ -11,7 +11,8 @@ import dotenv from "dotenv"
 import connectCloudinary from "./config/cloudinary";
 import totalPatientRouter from "./routes/totalPatients";
 import patientRoutes from "./routes/contractRoutes/patientRoute"
-
+import doctorRouter from "./routes/contractRoutes/doctorRoute";
+import diagnosticRouter from "./routes/contractRoutes/diagnosticRoute";
 const app = express();
 const port =process.env.PORT || 5000
 const server :http.Server=http.createServer(app)
@@ -27,20 +28,20 @@ connectCloudinary()
 
 const {io,getReceiverSocketId,getCurrentPartner} = setupSocketIO(app,server);
 export {io,getReceiverSocketId,getCurrentPartner,app,server}
-const { ethers } = require("ethers");
+ 
 
-// const provider = new ethers.JsonRpcProvider(process.env.GANACHE_RPC_URL);
-// const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
-// console.log(`Connected with address: ${wallet.address}`);
+ 
 //api
 app.use("/api/user",userRouter)
 app.use("/api/appointment",appointmentRouter)
-// app.use("/api/booking",bookingRouter)
+ 
 app.use("/api/pin",pinRouter)
 app.use("/api/total-patients",totalPatientRouter)
 
 
 app.use('/api/patient', patientRoutes);
+app.use('/api/doctor',doctorRouter);
+app.use('/api/diagnostic-control',diagnosticRouter);
 
 
 

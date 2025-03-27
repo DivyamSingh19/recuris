@@ -57,12 +57,19 @@ export interface DiagnosticControlInterface extends Interface {
       | "deauthorizeDiagnosticCenter"
       | "isCenterAuthorized"
       | "isCenterAuthorizedForPatient"
+      | "owner"
+      | "renounceOwnership"
       | "viewMyReports"
       | "viewPatientReports"
   ): FunctionFragment;
 
   getEvent(
-    nameOrSignatureOrTopic: "ReportAdded" | "ReportViewed"
+    nameOrSignatureOrTopic:
+      | "CenterAuthorized"
+      | "CenterDeauthorized"
+      | "CenterPatientAuthorizationChanged"
+      | "ReportAdded"
+      | "ReportViewed"
   ): EventFragment;
 
   encodeFunctionData(
@@ -92,6 +99,11 @@ export interface DiagnosticControlInterface extends Interface {
   encodeFunctionData(
     functionFragment: "isCenterAuthorizedForPatient",
     values: [AddressLike, AddressLike]
+  ): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "renounceOwnership",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "viewMyReports",
@@ -130,6 +142,11 @@ export interface DiagnosticControlInterface extends Interface {
     functionFragment: "isCenterAuthorizedForPatient",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "renounceOwnership",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "viewMyReports",
     data: BytesLike
@@ -138,6 +155,52 @@ export interface DiagnosticControlInterface extends Interface {
     functionFragment: "viewPatientReports",
     data: BytesLike
   ): Result;
+}
+
+export namespace CenterAuthorizedEvent {
+  export type InputTuple = [center: AddressLike];
+  export type OutputTuple = [center: string];
+  export interface OutputObject {
+    center: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace CenterDeauthorizedEvent {
+  export type InputTuple = [center: AddressLike];
+  export type OutputTuple = [center: string];
+  export interface OutputObject {
+    center: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace CenterPatientAuthorizationChangedEvent {
+  export type InputTuple = [
+    center: AddressLike,
+    patient: AddressLike,
+    authorized: boolean
+  ];
+  export type OutputTuple = [
+    center: string,
+    patient: string,
+    authorized: boolean
+  ];
+  export interface OutputObject {
+    center: string;
+    patient: string;
+    authorized: boolean;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
 
 export namespace ReportAddedEvent {
@@ -272,6 +335,10 @@ export interface DiagnosticControl extends BaseContract {
     "view"
   >;
 
+  owner: TypedContractMethod<[], [string], "view">;
+
+  renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
+
   viewMyReports: TypedContractMethod<
     [],
     [DiagnosticControl.DiagnosticReportStructOutput[]],
@@ -318,6 +385,12 @@ export interface DiagnosticControl extends BaseContract {
     "view"
   >;
   getFunction(
+    nameOrSignature: "owner"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "renounceOwnership"
+  ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
     nameOrSignature: "viewMyReports"
   ): TypedContractMethod<
     [],
@@ -332,6 +405,27 @@ export interface DiagnosticControl extends BaseContract {
     "nonpayable"
   >;
 
+  getEvent(
+    key: "CenterAuthorized"
+  ): TypedContractEvent<
+    CenterAuthorizedEvent.InputTuple,
+    CenterAuthorizedEvent.OutputTuple,
+    CenterAuthorizedEvent.OutputObject
+  >;
+  getEvent(
+    key: "CenterDeauthorized"
+  ): TypedContractEvent<
+    CenterDeauthorizedEvent.InputTuple,
+    CenterDeauthorizedEvent.OutputTuple,
+    CenterDeauthorizedEvent.OutputObject
+  >;
+  getEvent(
+    key: "CenterPatientAuthorizationChanged"
+  ): TypedContractEvent<
+    CenterPatientAuthorizationChangedEvent.InputTuple,
+    CenterPatientAuthorizationChangedEvent.OutputTuple,
+    CenterPatientAuthorizationChangedEvent.OutputObject
+  >;
   getEvent(
     key: "ReportAdded"
   ): TypedContractEvent<
@@ -348,6 +442,39 @@ export interface DiagnosticControl extends BaseContract {
   >;
 
   filters: {
+    "CenterAuthorized(address)": TypedContractEvent<
+      CenterAuthorizedEvent.InputTuple,
+      CenterAuthorizedEvent.OutputTuple,
+      CenterAuthorizedEvent.OutputObject
+    >;
+    CenterAuthorized: TypedContractEvent<
+      CenterAuthorizedEvent.InputTuple,
+      CenterAuthorizedEvent.OutputTuple,
+      CenterAuthorizedEvent.OutputObject
+    >;
+
+    "CenterDeauthorized(address)": TypedContractEvent<
+      CenterDeauthorizedEvent.InputTuple,
+      CenterDeauthorizedEvent.OutputTuple,
+      CenterDeauthorizedEvent.OutputObject
+    >;
+    CenterDeauthorized: TypedContractEvent<
+      CenterDeauthorizedEvent.InputTuple,
+      CenterDeauthorizedEvent.OutputTuple,
+      CenterDeauthorizedEvent.OutputObject
+    >;
+
+    "CenterPatientAuthorizationChanged(address,address,bool)": TypedContractEvent<
+      CenterPatientAuthorizationChangedEvent.InputTuple,
+      CenterPatientAuthorizationChangedEvent.OutputTuple,
+      CenterPatientAuthorizationChangedEvent.OutputObject
+    >;
+    CenterPatientAuthorizationChanged: TypedContractEvent<
+      CenterPatientAuthorizationChangedEvent.InputTuple,
+      CenterPatientAuthorizationChangedEvent.OutputTuple,
+      CenterPatientAuthorizationChangedEvent.OutputObject
+    >;
+
     "ReportAdded(address,address,string,uint256)": TypedContractEvent<
       ReportAddedEvent.InputTuple,
       ReportAddedEvent.OutputTuple,

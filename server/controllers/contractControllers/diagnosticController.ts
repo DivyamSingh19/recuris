@@ -12,7 +12,7 @@ class DiagnosticControlController {
         this.web3 = new Web3('http://127.0.0.1:7545');
 
         
-        this.contractAddress = '0x790b9e2310672beea784949121b2B150A4365a10'; //locally deployed on ganache
+        this.contractAddress = '0xb5e62524Da8e30Bf550b3462Ab76b3302115432e'; //locally deployed on ganache
 
         
         this.contract = new this.web3.eth.Contract(
@@ -26,11 +26,11 @@ class DiagnosticControlController {
         try {
             const { center, accountIndex = 0 } = req.body;
 
-            // Get accounts from Ganache
+             
             const accounts = await this.web3.eth.getAccounts();
             const sender = accounts[accountIndex];
 
-            // Send transaction
+            
             const tx = await this.contract.methods
                 .authorizeDiagnosticCenter(center)
                 .send({ from: sender, gas: 300000 });

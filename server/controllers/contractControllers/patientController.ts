@@ -8,7 +8,7 @@ class PatientManagementController {
    private contractAddress: string;
 
    constructor() {
-     // Connect to local Ganache blockchain
+     
      this.web3 = new Web3('http://127.0.0.1:7545');
      this.contractAddress = '0x7C7fd0e88976E8626d483ADB78eacfF064b32180'; // locally deployed using Ganache
      this.contract = new this.web3.eth.Contract(PatientManagement.abi, this.contractAddress);
@@ -45,6 +45,7 @@ class PatientManagementController {
          });
 
        res.status(200).json({
+         success :true,
          message: 'Access granted successfully',
          transactionHash: tx.transactionHash
        });
