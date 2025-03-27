@@ -8,20 +8,20 @@ class DiagnosticControlController {
     private contractAddress: string;
 
     constructor() {
-        // Connect to local Ganache blockchain
+       
         this.web3 = new Web3('http://127.0.0.1:7545');
 
-        // Contract address (replace with your deployed contract address)
-        this.contractAddress = '0x...'; // Paste your actual deployed contract address here
+        
+        this.contractAddress = '0x790b9e2310672beea784949121b2B150A4365a10'; //locally deployed on ganache
 
-        // Create contract instance
+        
         this.contract = new this.web3.eth.Contract(
             DiagnosticControlABI.abi, 
             this.contractAddress
         );
     }
 
-    // Authorize a Diagnostic Center
+    
     async authorizeDiagnosticCenter(req: Request, res: Response) {
         try {
             const { center, accountIndex = 0 } = req.body;

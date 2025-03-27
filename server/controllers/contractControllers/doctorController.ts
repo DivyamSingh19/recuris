@@ -1,130 +1,193 @@
-// import express, { Request, Response, NextFunction } from 'express';
-// import { ethers, Contract, Wallet, providers } from 'ethers';
-// import dotenv from 'dotenv';
-// import fs from 'fs';
+import { Request, Response } from 'express';
+import Web3 from 'web3';
+import DoctorManagement from '../../abi/DoctorManagement.json';
 
- 
-// dotenv.config();
+class DoctorManagementController {
+   private web3: Web3;
+   private contract: any;
+   private contractAddress: string;
 
- 
-// interface HealthRecord {
-//     recordHash: string;
-//     timestamp: string;
-//     doctorAddress: string;
-//     isActive: boolean;
-// }
+   constructor() {
+      
+     this.web3 = new Web3('http://127.0.0.1:7545');
+     this.contractAddress = '0xe3E5DE517064c72c08cFd1CbD49Aa7900C15700b'; // locally deployed using Ganache
+     this.contract = new this.web3.eth.Contract(DoctorManagement.abi, this.contractAddress);
+   }
 
-// interface Prescription {
-//     medication: string;
-//     dosage: string;
-//     frequency: string;
-//     startDate: string;
-//     endDate: string;
-//     doctorAddress: string;
-//     isActive: boolean;
-// }
+   async authorizeDoctor(req: Request, res: Response) {
+     try {
+       const { doctorAddress, walletAddress } = req.body;
 
-// interface CreatePrescriptionBody {
-//     patientAddress: string;
-//     medication: string;
-//     dosage: string;
-//     frequency: string;
-//     durationDays: number;
-//     doctorPrivateKey: string;
-// }
+       const tx = await this.contract.methods.authorizeDoctor(doctorAddress)
+         .send({ 
+           from: walletAddress, 
+           gas: 300000 
+         });
 
-// const createContractInstance = (
-//     rpcUrl: string, 
-//     contractAddress: string, 
-//     abiPath: string
-// ): Contract => {
-//     const abiContent = JSON.parse(fs.readFileSync(abiPath, 'utf8'));
-//     const contractABI = abiContent.abi || abiContent;
+       res.status(200).json({
+         message: 'Doctor authorized successfully',
+         transactionHash: tx.transactionHash
+       });
+     } catch (error) {
+       this.handleError(res, error);
+     }
+   }
 
-//     const provider = new providers.JsonRpcProvider(rpcUrl);
-    
-   
-//     return new ethers.Contract(contractAddress, contractABI, provider);
-// };
+   async deauthorizeDoctor(req: Request, res: Response) {
+     try {
+       const { doctorAddress, walletAddress } = req.body;
 
-// const validateEthereumAddress = (
-//     req: Request, 
-//     res: Response, 
-//     next: NextFunction
-// ) => {
-//     const addressRegex = /^0x[a-fA-F0-9]{40}$/;
-//     const address = 
-//         req.params.address || 
-//         req.body.address || 
-//         req.body.patientAddress ||
-//         req.body.doctorAddress;
-    
-//     if (!address || !addressRegex.test(address)) {
-//         return res.status(400).json({ error: 'Invalid Ethereum address' });
-//     }
-//     next();
-// };
+       const tx = await this.contract.methods.deauthorizeDoctor(doctorAddress)
+         .send({ 
+           from: walletAddress, 
+           gas: 300000 
+         });
 
-// class DoctorManagementController {
-//     private contract: Contract;
-//     private provider: providers.Provider;
+       res.status(200).json({
+         message: 'Doctor deauthorized successfully',
+         transactionHash: tx.transactionHash
+       });
+     } catch (error) {
+       this.handleError(res, error);
+     }
+   }
 
-//     constructor(contract: Contract) {
-//         this.contract = contract;
-//         // Ensure the provider is correctly assigned
-//         this.provider = contract.provider;
-//     }
- 
-//     authorizeDoctor = async (req: Request, res: Response) => {
-//         try {
-//             // Get owner's wallet 
-//             const ownerWallet = new Wallet(
-//                 process.env.OWNER_PRIVATE_KEY!, 
-//                 this.provider
-//             );
-//             const contractWithSigner = this.contract.connect(ownerWallet);
+   async authorizeDocterForPatient(req: Request, res: Response) {
+     try {
+       const { doctorAddress, walletAddress } = req.body;
 
-//             const tx = await contractWithSigner.authorizeDoctor(req.body.doctorAddress);
-//             await tx.wait();
+       const tx = await this.contract.methods.authorizeDocterForPatient(doctorAddress)
+         .send({ 
+           from: walletAddress, 
+           gas: 300000 
+         });
 
-//             res.status(200).json({ 
-//                 message: 'Doctor authorized successfully', 
-//                 transactionHash: tx.hash 
-//             });
-//         } catch (error) {
-//             this.handleError(res, error, 'Failed to authorize doctor');
-//         }
-//     };
+       res.status(200).json({
+         message: 'Doctor authorized for patient successfully',
+         transactionHash: tx.transactionHash
+       });
+     } catch (error) {
+       this.handleError(res, error);
+     }
+   }
 
-    
+   async deauthorizeDoctorForPatient(req: Request, res: Response) {
+     try {
+       const { doctorAddress, walletAddress } = req.body;
 
-//     private handleError(res: Response, error: unknown, message: string) {
-//         console.error(error);
-//         res.status(500).json({ 
-//             error: message, 
-//             details: error instanceof Error ? error.message : String(error)
-//         });
-//     }
+       const tx = await this.contract.methods.deauthorizeDoctorForPatient(doctorAddress)
+         .send({ 
+           from: walletAddress, 
+           gas: 300000 
+         });
 
-//     setupRoutes(app: express.Application) {
-//         app.post('/doctor/authorize', this.authorizeDoctor);
-        
-//         app.post('/patient/authorize-doctor', 
-//             validateEthereumAddress, 
-//             this.authorizeDoctorForPatient
-//         );
-//         app.get('/patient/:address/records', 
-//             validateEthereumAddress, 
-//             this.viewPatientRecords
-//         );
-        
-//         app.post('/prescription/create', this.createPrescription);
-//         app.get('/my-prescriptions', this.getMyPrescriptions);
-//     }
-// }
+       res.status(200).json({
+         message: 'Doctor deauthorized for patient successfully',
+         transactionHash: tx.transactionHash
+       });
+     } catch (error) {
+       this.handleError(res, error);
+     }
+   }
 
-// export {
-//     DoctorManagementController,
-//     createContractInstance,
-//     validateEthereumAddress
-// };
+   async viewPatientRecords(req: Request, res: Response) {
+     try {
+       const { patientAddress, walletAddress } = req.body;
+
+       const records = await this.contract.methods.viewPatientRecords(patientAddress)
+         .call({ from: walletAddress });
+
+       res.status(200).json({
+         records: records
+       });
+     } catch (error) {
+       this.handleError(res, error);
+     }
+   }
+
+   async createPrescription(req: Request, res: Response) {
+     try {
+       const { 
+         patientAddress, 
+         medication, 
+         dosage, 
+         frequency, 
+         durationDays,
+         walletAddress 
+       } = req.body;
+
+       const tx = await this.contract.methods.createPrescription(
+         patientAddress,
+         medication,
+         dosage,
+         frequency,
+         durationDays
+       ).send({ 
+         from: walletAddress, 
+         gas: 300000 
+       });
+
+       res.status(201).json({
+         message: 'Prescription created successfully',
+         transactionHash: tx.transactionHash
+       });
+     } catch (error) {
+       this.handleError(res, error);
+     }
+   }
+
+   async getPatientPrescriptions(req: Request, res: Response) {
+     try {
+       const { patientAddress, walletAddress } = req.body;
+
+       const prescriptions = await this.contract.methods.getPatientPrescriptions(patientAddress)
+         .call({ from: walletAddress });
+
+       res.status(200).json({
+         prescriptions: prescriptions
+       });
+     } catch (error) {
+       this.handleError(res, error);
+     }
+   }
+
+   async viewMyRecords(req: Request, res: Response) {
+     try {
+       const { walletAddress } = req.body;
+
+       const records = await this.contract.methods.viewMyRecords()
+         .call({ from: walletAddress });
+
+       res.status(200).json({
+         records: records
+       });
+     } catch (error) {
+       this.handleError(res, error);
+     }
+   }
+
+   async viewMyPrescriptions(req: Request, res: Response) {
+     try {
+       const { walletAddress } = req.body;
+
+       const prescriptions = await this.contract.methods.viewMyPrescriptions()
+         .call({ from: walletAddress });
+
+       res.status(200).json({
+         prescriptions: prescriptions
+       });
+     } catch (error) {
+       this.handleError(res, error);
+     }
+   }
+
+   private handleError(res: Response, error: any) {
+     console.error('Error:', error);
+     res.status(500).json({
+       message: 'An error occurred',
+       error: error.toString()
+     });
+   }
+}
+
+export default new DoctorManagementController();

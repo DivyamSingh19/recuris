@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "C:\\fullStackProjects\\recuris\\contracts\\contracts\\DiagnosticControl.sol": {
-      "lastModificationDate": 1742509004975,
-      "contentHash": "dfcb64def0f02c00a8a84e9126428a98",
+      "lastModificationDate": 1742976089946,
+      "contentHash": "c9a3eada54282e95c2c232a55d15ba26",
       "sourceName": "contracts/DiagnosticControl.sol",
       "solcConfig": {
         "version": "0.8.28",
@@ -109,43 +109,9 @@
         "MedAccessControl"
       ]
     },
-    "C:\\fullStackProjects\\recuris\\contracts\\contracts\\Migrations.sol": {
-      "lastModificationDate": 1742482803521,
-      "contentHash": "4421836a8f92195a412adda2220f5afc",
-      "sourceName": "contracts/Migrations.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "evmVersion": "paris",
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.28"
-      ],
-      "artifacts": []
-    },
     "C:\\fullStackProjects\\recuris\\contracts\\contracts\\MultiSigAccess.sol": {
-      "lastModificationDate": 1742510851542,
-      "contentHash": "d0df4899be1773b842fdab8f80b734c6",
+      "lastModificationDate": 1743001458619,
+      "contentHash": "a6115c946c8da67436ae7de6e6e13dbc",
       "sourceName": "contracts/MultiSigAccess.sol",
       "solcConfig": {
         "version": "0.8.28",
@@ -180,8 +146,8 @@
       ]
     },
     "C:\\fullStackProjects\\recuris\\contracts\\contracts\\PatientManagement.sol": {
-      "lastModificationDate": 1742524231474,
-      "contentHash": "e1ae6f55c7616e708b6dfb2a1276067e",
+      "lastModificationDate": 1743001000010,
+      "contentHash": "af53a0a52cb1bcf1bda13ad9eb691bbe",
       "sourceName": "contracts/PatientManagement.sol",
       "solcConfig": {
         "version": "0.8.28",
