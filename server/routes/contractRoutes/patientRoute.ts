@@ -10,7 +10,7 @@ patientRoutes.post('/records', PatientManagementController.uploadRecord as Reque
 patientRoutes.post('/access', PatientManagementController.grantAccess as RequestHandler);
 
  
-patientRoutes.get('/view-records', PatientManagementController.viewRecords as RequestHandler);
+patientRoutes.post('/view-records', PatientManagementController.viewRecords as RequestHandler);
 
  
 patientRoutes.get('/access-list/:patientAddress', PatientManagementController.getAccessList as RequestHandler);

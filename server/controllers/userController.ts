@@ -302,4 +302,50 @@ async function loginDC(req:Request,res:Response) {
     }
 }
 
+async function registerInsuranceProvider(req:Request,res:Response ) {
+    try {
+    const {name,email,password,walletAddress} = req.body as Patient
+    const exists = await prisma.patient.findUnique({where:{email}})
+    if(exists){
+        return res.json({success : false,message : "User already exists"})
+    }
+    if(!validator.isEmail(email)){
+        return res.json({success:false,message:"Enter a valid email"})
+    }
+    if(password.length<8){
+        return res.json({success:false,message : "Password length is too short"})
+    }
+    if(!name || !email || !password || !walletAddress){
+        return res.json({success:false,message : "All fields are required"})
+    }
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password,salt)
+    const newPatient = await prisma.patient.create({
+        data :{
+            name ,
+            email,
+            password :hashedPassword,
+            walletAddress
+
+        }
+     })
+  
+
+     const token = createToken(newPatient.id)
+     const patientId = newPatient.id
+     const role :string = "patient";
+     const metaData = {
+        name,
+        email,
+        walletAddress,
+        patientId
+     }
+     res.json({success:true,token,metaData,role})
+        
+    } catch (error ) {
+        console.log(error);
+        res.json({success:false,message:(error as Error).message})
+    }
+}
+
 export {loginDC,loginAdmin,loginDoctor,loginPatient,registerAdmin,registerDC,registerDoctor,registerPatient}

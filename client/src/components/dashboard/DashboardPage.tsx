@@ -44,6 +44,7 @@ const DashboardPage = ({ role }: { role: string }) => {
         { title: "Manage Doctors", desc: "View and update doctor details.", icon: Stethoscope },
       ],
     },
+    
   };
 
   const { title, subtitle, cards } = roleData[role] || roleData.patient;

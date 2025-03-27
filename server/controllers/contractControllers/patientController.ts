@@ -26,8 +26,8 @@ class PatientManagementController {
   
    async uploadRecord(req: Request, res: Response) {
      try {
-       const { recordHash, walletAddress } = req.body;
-       const encryption = {};
+       const { recordHash, walletAddress ,name } = req.body;
+        
        
        if (!this.web3.utils.isAddress(walletAddress)) {
          return res.status(400).json({
@@ -41,6 +41,12 @@ class PatientManagementController {
            success: false,
            message: 'Record hash is required'
          });
+       }
+       if(!name){
+        return res.status(400).json({
+          success:false,
+          message:"name is required"
+        })
        }
 
        const hexRecordHash = this.web3.utils.asciiToHex(recordHash);
