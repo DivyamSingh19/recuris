@@ -67,11 +67,12 @@ export default function DashboardLayout({
         <main className="flex-1 p-2">
           <div className="flex items-center justify-between pb-4 pt-2 border-b border-accent">
             <SidebarTrigger />
-            <div className="flex gap-2">
+            <div className="flex items-center gap-2">
+              <p>Connected Wallet:</p>
               <Link href="/" className="text-sm bg-sidebar hover:underline py-2 px-4 text-primary rounded flex items-center gap-2">
                 <span className="flex items-center gap-2"><Image src="/metamask.svg" width={15} height={15} alt="" />{user.walletAddress?.slice(0,6)}...{user.walletAddress?.slice(-4)}</span>
               </Link>
-              <Badge className="uppercase">{user?.role}</Badge>
+              <Badge className="uppercase py-2">{user?.role}</Badge>
             </div>
           </div>
           <section className="p-4">{children}</section>

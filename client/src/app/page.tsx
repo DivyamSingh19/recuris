@@ -31,15 +31,14 @@ export default function Home() {
         </div>
       <Model />
       <div className="absolute left-0 bottom-0 bg-gray-300/20 backdrop-blur-md w-full p-14">
-          <p className={`pl-72 text-xl text-gray-600 font-semibold ${lato.className}`}>
-            Recuris is built to modernize healthcare by making medical data secure, accessible, and intelligent. 
-            With blockchain-powered trust and AI-driven efficiency, it bridges the gap between patients, doctors, and hospitals—ensuring seamless collaboration without compromising privacy. 
-            Recuris transforms how healthcare works—faster, smarter, and safer.
-          </p>
-          <div className="absolute left-12 -bottom-36 flex items-center">
-            <Image src="/assets/heropills.svg" width={300} height={300} alt="Hero Pills" />
-          </div>
+        <p className={`pl-72 text-xl text-gray-600 font-semibold ${lato.className}`}>
+          With blockchain-powered trust and AI-driven efficiency, it bridges the gap between patients, doctors, and hospitals—ensuring seamless collaboration without compromising privacy. 
+          Recuris transforms how healthcare works—faster, smarter, and safer.
+        </p>
+        <div className="absolute left-20 -bottom-32 flex items-center">
+          <Image src="/assets/heropills.svg" width={250} height={250} alt="Hero Pills" />
         </div>
+      </div>
       </section>
 
       <section id="features" className="relative min-h-screen flex justify-center flex-col items-center py-20" >
@@ -50,10 +49,10 @@ export default function Home() {
         <p className={`pl-72 text-5xl font-semibold ${lato.className} absolute right-16 top-96`}>
             Healthcare,<br /> Simplified.
           </p>
-          <div className="absolute left-56 top-56 bg-gray-300/20 backdrop-blur-md w-96 p-8 rounded-3xl">
+          <div className="absolute left-72 top-56 bg-gray-300/20 backdrop-blur-md w-96 p-8 rounded-3xl">
           <p className="font-bold text-2xl text-center">Electronic Health Records (EHR) </p> <br /><p className="font-semibold text-lg text-center">Your Medical History. <br /> Anytime, Anywhere</p>
           </div>
-          <div className="absolute left-12 bottom-16 bg-gray-300/20 backdrop-blur-md w-96 p-8 rounded-3xl">
+          <div className="absolute left-14 bottom-20 bg-gray-300/20 backdrop-blur-md w-96 p-8 rounded-3xl">
           <p className="font-bold text-2xl text-center"> Smart Booking</p> <br /><p className="font-semibold text-lg text-center">Book Doctor Visits <br /> in a Tap</p>
           </div>  
           <div className="absolute right-12 bottom-16 bg-gray-300/20 backdrop-blur-md w-96 p-8 rounded-3xl">

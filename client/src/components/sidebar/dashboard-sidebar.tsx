@@ -31,9 +31,9 @@ const navItems = {
     { href: "/dashboard/patient/manage-docs", label: "Manage Docs", icon: FileText },
     { href: "/dashboard/patient/book-appointment", label: "Book Appointment", icon: Book },
     { href: "/dashboard/patient/appointments", label: "My Appointments", icon: Calendar },
-    // { href: "/dashboard/patient/ai-insights", label: "AI Insights based on Report", icon: Brain },
-    { href: "/dashboard/patient/help-support", label: "Help & Support", icon: LifeBuoy },
-    { href: "/dashboard/patient/transactions", label: "Transactions", icon: CreditCard },
+    { href: "/dashboard/patient/ai-insights", label: "AI Insights", icon: Brain },
+    // { href: "/dashboard/patient/help-support", label: "Help & Support", icon: LifeBuoy },
+    // { href: "/dashboard/patient/transactions", label: "Transactions", icon: CreditCard },
     { href: "/dashboard/patient/manage-profile", label: "Manage Profile", icon: User }
   ],
   doctor: [
