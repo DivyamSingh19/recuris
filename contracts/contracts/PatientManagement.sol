@@ -11,17 +11,14 @@ contract PatientManagement {
     }
     
     struct Patient {
-        bool exists;
         uint256 recordCount;
         mapping(address => bool) authorizedEntities;
         mapping(address => bool) emergencyAccess;
         address[] accessList;
     }
     
-     
     mapping(address => Patient) public patients;
     mapping(address => mapping(uint256 => Record)) public records;
-    
     
     event RecordUploaded(address indexed patient, uint256 recordId, uint256 timestamp);
     event AccessGranted(address indexed patient, address indexed entity);
@@ -29,19 +26,12 @@ contract PatientManagement {
     event EmergencyAccessGranted(address indexed patient, address indexed entity);
     event ReportAdded(address indexed patient, address indexed doctor, uint256 recordId);
     
-     
     constructor() {
         owner = msg.sender;
     }
     
-     
     modifier onlyOwner() {
         require(msg.sender == owner, "Only owner can perform this action");
-        _;
-    }
-    
-    modifier onlyPatient() {
-        require(patients[msg.sender].exists || msg.sender == owner, "Only registered patients can perform this action");
         _;
     }
     
@@ -56,8 +46,7 @@ contract PatientManagement {
         _;
     }
     
-   
-    function uploadRecord(bytes memory recordHash) public onlyPatient {
+    function uploadRecord(bytes memory recordHash) public {
         uint256 recordId = patients[msg.sender].recordCount;
         records[msg.sender][recordId] = Record({
             recordHash: recordHash,
@@ -70,7 +59,7 @@ contract PatientManagement {
     }
     
     // Grant access to a doctor or diagnostic center
-    function grantAccess(address entity) public onlyPatient {
+    function grantAccess(address entity) public {
         require(entity != address(0), "Invalid address");
         require(!patients[msg.sender].authorizedEntities[entity], "Entity already has access");
         
@@ -81,7 +70,7 @@ contract PatientManagement {
     }
     
     // Revoke access from a doctor or diagnostic center
-    function revokeAccess(address entity) public onlyPatient {
+    function revokeAccess(address entity) public onlyAuthorized(msg.sender) {
         require(patients[msg.sender].authorizedEntities[entity], "Entity does not have access");
         
         patients[msg.sender].authorizedEntities[entity] = false;
@@ -101,7 +90,7 @@ contract PatientManagement {
     }
     
     // View patient's own records
-    function viewRecords() public view onlyPatient returns (bytes[] memory) {
+    function viewRecords() public view onlyAuthorized(msg.sender) returns (bytes[] memory) {
         uint256 count = patients[msg.sender].recordCount;
         bytes[] memory patientRecords = new bytes[](count);
         
@@ -140,7 +129,7 @@ contract PatientManagement {
     }
     
    
-    function grantEmergencyAccess(address entity) public onlyPatient {
+    function grantEmergencyAccess(address entity) public onlyAuthorized(msg.sender) {
         require(entity != address(0), "Invalid address");
         require(!patients[msg.sender].emergencyAccess[entity], "Entity already has emergency access");
         

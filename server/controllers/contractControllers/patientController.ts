@@ -8,28 +8,50 @@ class PatientManagementController {
    private contractAddress: string;
 
    constructor() {
-     
      this.web3 = new Web3('http://127.0.0.1:7545');
-     this.contractAddress = '0x7C7fd0e88976E8626d483ADB78eacfF064b32180'; // locally deployed using Ganache
+     this.contractAddress = process.env.PATIENTMANAGEMENT_ADDRESS as string; 
      this.contract = new this.web3.eth.Contract(PatientManagement.abi, this.contractAddress);
+
+     // Bind methods to maintain 'this' context
+     this.uploadRecord = this.uploadRecord.bind(this);
+     this.grantAccess = this.grantAccess.bind(this);
+     this.viewRecords = this.viewRecords.bind(this);
+     this.getAccessList = this.getAccessList.bind(this);
    }
 
    async uploadRecord(req: Request, res: Response) {
      try {
        const { recordHash, walletAddress } = req.body;
 
-       const tx = await this.contract.methods.uploadRecord(
-         this.web3.utils.asciiToHex(recordHash)
-       ).send({ 
-         from: walletAddress, 
-         gas: 300000 
-       });
+       if (!this.web3.utils.isAddress(walletAddress)) {
+         return res.status(400).json({
+           success: false,
+           message: 'Invalid wallet address'
+         });
+       }
+
+       if (!recordHash) {
+         return res.status(400).json({
+           success: false,
+           message: 'Record hash is required'
+         });
+       }
+
+       const hexRecordHash = this.web3.utils.asciiToHex(recordHash);
+
+       const tx = await this.contract.methods.uploadRecord(hexRecordHash)
+         .send({ 
+           from: walletAddress,
+           gas: 300000,
+           gasPrice: await this.web3.eth.getGasPrice()
+         });
 
        res.status(201).json({
+         success: true,
          message: 'Record uploaded successfully',
          transactionHash: tx.transactionHash
        });
-     } catch (error) {
+     } catch (error: any) {
        this.handleError(res, error);
      }
    }
@@ -38,18 +60,33 @@ class PatientManagementController {
      try {
        const { entityAddress, walletAddress } = req.body;
 
+       if (!this.web3.utils.isAddress(walletAddress)) {
+         return res.status(400).json({
+           success: false,
+           message: 'Invalid wallet address'
+         });
+       }
+
+       if (!this.web3.utils.isAddress(entityAddress)) {
+         return res.status(400).json({
+           success: false,
+           message: 'Invalid entity address'
+         });
+       }
+
        const tx = await this.contract.methods.grantAccess(entityAddress)
          .send({ 
-           from: walletAddress, 
-           gas: 300000 
+           from: walletAddress,
+           gas: 300000,
+           gasPrice: await this.web3.eth.getGasPrice()
          });
 
        res.status(200).json({
-         success :true,
+         success: true,
          message: 'Access granted successfully',
          transactionHash: tx.transactionHash
        });
-     } catch (error) {
+     } catch (error: any) {
        this.handleError(res, error);
      }
    }
@@ -58,15 +95,23 @@ class PatientManagementController {
      try {
        const { walletAddress } = req.body;
 
+       if (!this.web3.utils.isAddress(walletAddress)) {
+         return res.status(400).json({
+           success: false,
+           message: 'Invalid wallet address'
+         });
+       }
+
        const records = await this.contract.methods.viewRecords()
          .call({ from: walletAddress });
 
        res.status(200).json({
+         success: true,
          records: records.map((record: string) => 
            this.web3.utils.hexToAscii(record)
          )
        });
-     } catch (error) {
+     } catch (error: any) {
        this.handleError(res, error);
      }
    }
@@ -76,22 +121,48 @@ class PatientManagementController {
        const { patientAddress } = req.params;
        const { walletAddress } = req.body;
 
+       if (!this.web3.utils.isAddress(walletAddress)) {
+         return res.status(400).json({
+           success: false,
+           message: 'Invalid wallet address'
+         });
+       }
+
+       if (!this.web3.utils.isAddress(patientAddress)) {
+         return res.status(400).json({
+           success: false,
+           message: 'Invalid patient address'
+         });
+       }
+
        const accessList = await this.contract.methods.getAccessList(patientAddress)
          .call({ from: walletAddress });
 
        res.status(200).json({
+         success: true,
          accessList: accessList
        });
-     } catch (error) {
+     } catch (error: any) {
        this.handleError(res, error);
      }
    }
 
    private handleError(res: Response, error: any) {
      console.error('Error:', error);
+     
+     if (error.message && error.message.includes('VM Exception while processing transaction')) {
+       return res.status(400).json({
+         success: false,
+         message: 'Transaction failed',
+         error: error.message
+       });
+     }
+
+     // Default error response
      res.status(500).json({
+       success: false,
        message: 'An error occurred',
-       error: error.toString()
+       error: error.message || error.toString()
      });
    }
 }
