@@ -5,8 +5,8 @@ contract MultiSigAccess {
     address public patient; // Patient's address
     mapping(address => bool) public authorizedEntities; // Mapping of authorized doctors/diagnostic centers
     uint256 public requiredApprovals ; 
-    mapping(address => bool) public approvers; // Approvers for multisig
-    uint256 public approverCount; // Count of approvers
+    mapping(address => bool) public approvers;  
+    uint256 public approverCount;  
 
     event AccessGranted(address indexed entity);
     event AccessRevoked(address indexed entity);

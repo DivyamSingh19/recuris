@@ -126,7 +126,7 @@ contract PatientManagement {
         return patientRecords;
     }
     
-    // Add a medical report (if authorized)
+    
     function addMedicalReport(address patient, bytes memory reportHash) public onlyAuthorized(patient) {
         uint256 recordId = patients[patient].recordCount;
         records[patient][recordId] = Record({
@@ -139,9 +139,7 @@ contract PatientManagement {
         emit ReportAdded(patient, msg.sender, recordId);
     }
     
-    // Emergency & Security Functions
-    
-    // Grant emergency access
+   
     function grantEmergencyAccess(address entity) public onlyPatient {
         require(entity != address(0), "Invalid address");
         require(!patients[msg.sender].emergencyAccess[entity], "Entity already has emergency access");

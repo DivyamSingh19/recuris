@@ -97,7 +97,7 @@ export function setupSocketIO(app: Application, server: HttpServer) {
       const partnerId = activeConversations[userId];
       
       if (partnerId) {
-        // Remove both conversation entries
+        
         delete activeConversations[userId];
         delete activeConversations[partnerId];
         
