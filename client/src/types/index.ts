@@ -32,7 +32,7 @@ export enum UserRole {
   PATIENT = "patient",
   DOCTOR = "doctor",
   DIAGNOSTIC_CENTER = "diagnostic_center",
-  ADMIN = "admin",
+  // ADMIN = "admin",
 }
 
 export interface Appointment {

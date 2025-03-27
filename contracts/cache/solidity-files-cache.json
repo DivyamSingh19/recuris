@@ -37,8 +37,8 @@
         "DiagnosticControl"
       ]
     },
-    "C:\\fullStackProjects\\recuris\\contracts\\contracts\\DoctorManagement.sol": {
-      "lastModificationDate": 1742509057905,
+    "F:\\Hackathon\\H2C\\cloned-repo\\recuris\\contracts\\contracts\\DoctorManagement.sol": {
+      "lastModificationDate": 1742528884591,
       "contentHash": "6eeeba668dbe264e790562c91cba61d1",
       "sourceName": "contracts/DoctorManagement.sol",
       "solcConfig": {
@@ -73,8 +73,8 @@
         "DoctorManagement"
       ]
     },
-    "C:\\fullStackProjects\\recuris\\contracts\\contracts\\MedAccessControl.sol": {
-      "lastModificationDate": 1742509071666,
+    "F:\\Hackathon\\H2C\\cloned-repo\\recuris\\contracts\\contracts\\MedAccessControl.sol": {
+      "lastModificationDate": 1742528884592,
       "contentHash": "9f429f73542cf4f2f989bf2452ddbf70",
       "sourceName": "contracts/MedAccessControl.sol",
       "solcConfig": {

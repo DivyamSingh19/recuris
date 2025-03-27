@@ -31,8 +31,8 @@ export default function SignupPage() {
         return <DoctorSignupForm />;
       case UserRole.DIAGNOSTIC_CENTER:
         return <DiagnosticSignupForm />;
-      case UserRole.ADMIN:
-        return <AdminSignupForm />;
+      // case UserRole.ADMIN:
+      //   return <AdminSignupForm />;
       default:
         return <PatientSignupForm />;
     }
@@ -43,7 +43,7 @@ export default function SignupPage() {
       <Button className='absolute top-5 left-5' variant="secondary" asChild>
         <Link href="/">Back to home</Link>
       </Button>
-      <div className="w-full max-w-lg space-y-6">
+      <div className="w-full max-w-3xl space-y-6">
         <Card>
           <CardHeader>
             <CardTitle className='text-2xl'>Create an Account</CardTitle>

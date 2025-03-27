@@ -94,9 +94,9 @@ const LoginForm: React.FC = () => {
         case UserRole.DIAGNOSTIC_CENTER:
           endpoint = "/api/user/login-dc";
           break;
-        case UserRole.ADMIN:
-          endpoint = "/api/user/login-admin";
-          break;
+        // case UserRole.ADMIN:
+        //   endpoint = "/api/user/login-admin";
+        //   break;
         default:
           endpoint = "/api/user/login-patient";
       }
@@ -148,9 +148,9 @@ const LoginForm: React.FC = () => {
           case UserRole.DIAGNOSTIC_CENTER:
             router.push("/dashboard/diagnostic-center");
             break;
-          case UserRole.ADMIN:
-            router.push("/dashboard/admin");
-            break;
+          // case UserRole.ADMIN:
+          //   router.push("/dashboard/admin");
+          //   break;
           default:
             router.push("/");
         }
@@ -169,7 +169,10 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <Card className="w-full max-w-lg mx-auto">
+    <Card className="relative w-full max-w-3xl mx-auto">
+      <div className='absolute -top-[136px] left-[70%]'>
+        <Image src="/assets/logindoc.svg" width={150} height={150} alt="Doctor Illustration" />
+      </div>
       <CardHeader>
         <CardTitle className="text-2xl">Login</CardTitle>
         <CardDescription>
@@ -199,11 +202,13 @@ const LoginForm: React.FC = () => {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
+
             <FormField
               control={form.control}
               name="email"
               render={({ field }) => (
-                  <FormItem>
+                <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
@@ -220,7 +225,7 @@ const LoginForm: React.FC = () => {
               control={form.control}
               name="password"
               render={({ field }) => (
-                  <FormItem>
+                <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input type="password" placeholder="••••••••" {...field} />
@@ -228,7 +233,10 @@ const LoginForm: React.FC = () => {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+              />
+              </div>
+              <div className="grid grid-cols-1 items-end md:grid-cols-2 gap-4">
+
             <FormField
               control={form.control}
               name="walletAddress"
@@ -253,6 +261,7 @@ const LoginForm: React.FC = () => {
                 )}
               </Button>
             </div>
+                </div>
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? <LoaderSpinner message="Logging in..." color="white" /> : `Login as ${selectedRole}`}
             </Button>

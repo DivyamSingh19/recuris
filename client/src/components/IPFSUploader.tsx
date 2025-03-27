@@ -1,9 +1,12 @@
 // components/IPFSUploader.tsx
 "use client"
 import { useState, useEffect, ChangeEvent } from 'react';
+import { Input } from './ui/input';
+import { toast } from 'sonner';
 
 export default function IPFSUploader() {
   const [file, setFile] = useState<File | null>(null);
+  const [description, setDescription] = useState("");
   const [walletAddress, setWalletAddress] = useState<string>('');
   const [uploadStatus, setUploadStatus] = useState<string>('');
   const [ipfsHash, setIpfsHash] = useState<string>('');
@@ -29,6 +32,11 @@ export default function IPFSUploader() {
       return;
     }
 
+    if (!description) {
+      toast.info("Please enter a description");
+      return;
+    }
+
     setIsUploading(true);
     setUploadStatus('Uploading to IPFS...');
 
@@ -43,6 +51,8 @@ export default function IPFSUploader() {
       });
 
       const data = await response.json();
+
+      console.log(data);
 
       if (response.ok) {
         setIpfsHash(data.IpfsHash);
@@ -81,12 +91,12 @@ export default function IPFSUploader() {
   };
 
   return (
-    <div className="max-w-md mx-auto p-4 bg-gray-50 rounded-lg shadow">
+    <div className="max-w-md mx-auto p-6 bg-sidebar/50 rounded-lg shadow">
       <h2 className="text-xl font-bold mb-4">Upload to IPFS via Pinata</h2>
       
       <div className="mb-4">
         <p className="text-sm text-gray-600 mb-2">Connected Wallet:</p>
-        <p className="text-sm font-mono bg-gray-100 p-2 rounded overflow-hidden text-ellipsis">
+        <p className="text-sm font-mono bg-white border p-2 rounded overflow-hidden text-ellipsis">
           {walletAddress || 'No wallet connected'}
         </p>
       </div>
@@ -98,7 +108,21 @@ export default function IPFSUploader() {
         <input
           type="file"
           onChange={handleFileChange}
-          className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+          className="block w-full text-sm text-primary file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
+        />
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Description *
+        </label>
+        <Input
+          type="text"
+          placeholder="Enter the file description"
+          className='bg-white'
+          name='description'
+          id='description'
+          onChange={(e) => setDescription(e.target.value)}
         />
       </div>
 
@@ -111,7 +135,7 @@ export default function IPFSUploader() {
       <button
         onClick={uploadToPinata}
         disabled={!file || isUploading}
-        className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 disabled:bg-gray-400"
+        className="w-full py-2 px-4 bg-primary text-white font-semibold rounded-lg shadow-md hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-75 disabled:bg-primary/40"
       >
         {isUploading ? 'Uploading...' : 'Upload to IPFS'}
       </button>
@@ -127,7 +151,7 @@ export default function IPFSUploader() {
                 href={`https://gateway.pinata.cloud/ipfs/${ipfsHash}`} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-blue-600 hover:underline text-sm block mt-2"
+                className="text-primary hover:underline text-sm block mt-2"
               >
                 View on IPFS Gateway
               </a>
