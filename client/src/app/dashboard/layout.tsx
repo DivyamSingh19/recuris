@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/redux/userSlice";
 import Link from "next/link";
 import Image from "next/image";
+import CopyableWalletAddress from "@/components/copyableWalletAdd";
 
 export default function DashboardLayout({
   children,
@@ -69,9 +70,10 @@ export default function DashboardLayout({
             <SidebarTrigger />
             <div className="flex items-center gap-2">
               <p>Connected Wallet:</p>
-              <Link href="/" className="text-sm bg-sidebar hover:underline py-2 px-4 text-primary rounded flex items-center gap-2">
+              {/* <Link href="/" className="text-sm bg-sidebar hover:underline py-2 px-4 text-primary rounded flex items-center gap-2">
                 <span className="flex items-center gap-2"><Image src="/metamask.svg" width={15} height={15} alt="" />{user.walletAddress?.slice(0,6)}...{user.walletAddress?.slice(-4)}</span>
-              </Link>
+              </Link> */}
+              <CopyableWalletAddress walletAddress={user.walletAddress} />
               <Badge className="uppercase py-2">{user?.role}</Badge>
             </div>
           </div>

@@ -31,7 +31,7 @@ const ManageDocs = () => {
       }
 
       const data = await response.json()
-      setRecords(data)
+      setRecords(data.records)
     } catch (error) {
       console.error('Error fetching records:', error)
       // Optionally, add error toast or notification
@@ -86,7 +86,7 @@ const ManageDocs = () => {
                   <Button 
                     variant="outline" 
                     size="sm"
-                    onClick={() => window.open(`https://ipfs.io/ipfs/${record.ipfsHash}`, '_blank')}
+                    onClick={() => window.open(`https://gateway.pinata.cloud/ipfs/${record.ipfsHash}`, '_blank')}
                   >
                     View
                   </Button>
