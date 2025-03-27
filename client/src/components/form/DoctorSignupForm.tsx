@@ -205,7 +205,7 @@ const DoctorSignupForm: React.FC = () => {
             <FormItem>
               <FormLabel>Wallet Address</FormLabel>
               <FormControl>
-                <Input type="text" readOnly {...field} />
+                <Input type="text" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
