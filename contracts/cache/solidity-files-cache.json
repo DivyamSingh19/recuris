@@ -1,8 +1,8 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "C:\\fullStackProjects\\recuris\\contracts\\contracts\\DiagnosticControl.sol": {
-      "lastModificationDate": 1742509004975,
+    "F:\\Hackathon\\H2C\\cloned-repo\\recuris\\contracts\\contracts\\DiagnosticControl.sol": {
+      "lastModificationDate": 1742528884590,
       "contentHash": "dfcb64def0f02c00a8a84e9126428a98",
       "sourceName": "contracts/DiagnosticControl.sol",
       "solcConfig": {
@@ -37,8 +37,8 @@
         "DiagnosticControl"
       ]
     },
-    "C:\\fullStackProjects\\recuris\\contracts\\contracts\\DoctorManagement.sol": {
-      "lastModificationDate": 1742509057905,
+    "F:\\Hackathon\\H2C\\cloned-repo\\recuris\\contracts\\contracts\\DoctorManagement.sol": {
+      "lastModificationDate": 1742528884591,
       "contentHash": "6eeeba668dbe264e790562c91cba61d1",
       "sourceName": "contracts/DoctorManagement.sol",
       "solcConfig": {
@@ -73,8 +73,8 @@
         "DoctorManagement"
       ]
     },
-    "C:\\fullStackProjects\\recuris\\contracts\\contracts\\MedAccessControl.sol": {
-      "lastModificationDate": 1742509071666,
+    "F:\\Hackathon\\H2C\\cloned-repo\\recuris\\contracts\\contracts\\MedAccessControl.sol": {
+      "lastModificationDate": 1742528884592,
       "contentHash": "9f429f73542cf4f2f989bf2452ddbf70",
       "sourceName": "contracts/MedAccessControl.sol",
       "solcConfig": {
@@ -109,42 +109,8 @@
         "MedAccessControl"
       ]
     },
-    "C:\\fullStackProjects\\recuris\\contracts\\contracts\\Migrations.sol": {
-      "lastModificationDate": 1742482803521,
-      "contentHash": "4421836a8f92195a412adda2220f5afc",
-      "sourceName": "contracts/Migrations.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "evmVersion": "paris",
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.28"
-      ],
-      "artifacts": []
-    },
-    "C:\\fullStackProjects\\recuris\\contracts\\contracts\\MultiSigAccess.sol": {
-      "lastModificationDate": 1742510851542,
+    "F:\\Hackathon\\H2C\\cloned-repo\\recuris\\contracts\\contracts\\MultiSigAccess.sol": {
+      "lastModificationDate": 1742528884593,
       "contentHash": "d0df4899be1773b842fdab8f80b734c6",
       "sourceName": "contracts/MultiSigAccess.sol",
       "solcConfig": {
@@ -179,8 +145,8 @@
         "MultiSigAccess"
       ]
     },
-    "C:\\fullStackProjects\\recuris\\contracts\\contracts\\PatientManagement.sol": {
-      "lastModificationDate": 1742524231474,
+    "F:\\Hackathon\\H2C\\cloned-repo\\recuris\\contracts\\contracts\\PatientManagement.sol": {
+      "lastModificationDate": 1742528884594,
       "contentHash": "e1ae6f55c7616e708b6dfb2a1276067e",
       "sourceName": "contracts/PatientManagement.sol",
       "solcConfig": {

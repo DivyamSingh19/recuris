@@ -103,6 +103,8 @@ const PatientSignupForm: React.FC = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
         <FormField
           control={form.control}
           name="name"
@@ -128,7 +130,10 @@ const PatientSignupForm: React.FC = () => {
               <FormMessage />
             </FormItem>
           )}
-        />
+          />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
         <FormField
           control={form.control}
           name="password"
@@ -141,7 +146,7 @@ const PatientSignupForm: React.FC = () => {
               <FormMessage />
             </FormItem>
           )}
-        />
+          />
 
         <FormField
           control={form.control}
@@ -155,7 +160,8 @@ const PatientSignupForm: React.FC = () => {
               <FormMessage />
             </FormItem>
           )}
-        />
+          />
+          </div>
 
         {/* MetaMask Wallet Connection */}
         <div className="flex flex-col items-center gap-2">

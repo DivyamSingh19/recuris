@@ -25,7 +25,7 @@ export default function Home() {
           <h2 className={`text-xl text-gray-700 font-semibold mb-8 ${lato.className}`}>
           Recuris is built to modernize healthcare by making medical data secure, accessible, and intelligent.
           </h2>
-          <Button className={`text-lg p-7 px-10 font-medium rounded-md rounded-tl-3xl rounded-br-3xl ${poppins.className} transition-transform duration-350 shadow-lg hover:shadow-xl hover:-translate-y-2`} size="lg" asChild>
+          <Button className={`text-lg p-7 px-10 font-medium rounded-md rounded-tl-3xl rounded-br-3xl ${poppins.className} transition-transform duration-450 ease-in-out shadow-lg hover:shadow-xl hover:-translate-y-2`} size="lg" asChild>
             <Link href="/login">Get Started</Link>
           </Button>
         </div>

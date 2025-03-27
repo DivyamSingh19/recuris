@@ -23,13 +23,13 @@ const RoleSelector: React.FC<RoleSelectorProps> = ({
     [UserRole.PATIENT]: <UserIcon className="h-5 w-5" />,
     [UserRole.DOCTOR]: <Stethoscope className="h-5 w-5" />,
     [UserRole.DIAGNOSTIC_CENTER]: <Building2 className="h-5 w-5" />,
-    [UserRole.ADMIN]: <ShieldCheck className="h-5 w-5" />,
+    // [UserRole.ADMIN]: <ShieldCheck className="h-5 w-5" />,
   };
 
   return (
     <>
       <Label>Select your role:</Label>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
         {Object.values(UserRole).map((role) => (
           <div
             key={role}
