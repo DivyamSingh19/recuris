@@ -18,6 +18,7 @@ class PatientManagementController {
      this.grantAccess = this.grantAccess.bind(this);
      this.viewRecords = this.viewRecords.bind(this);
      this.getAccessList = this.getAccessList.bind(this);
+     this.getPrescriptions = this.getPrescriptions.bind(this);
    }
   
 
@@ -143,6 +144,30 @@ class PatientManagementController {
        res.status(200).json({
          success: true,
          accessList: accessList
+       });
+     } catch (error: any) {
+       this.handleError(res, error);
+     }
+   }
+
+   async getPrescriptions(req: Request, res: Response) {
+     try {
+       const { walletAddress } = req.body;
+
+       if (!this.web3.utils.isAddress(walletAddress)) {
+         return res.status(400).json({
+           success: false,
+           message: 'Invalid wallet address'
+         });
+       }
+
+       // Call the contract method to get prescriptions
+       const prescriptions = await this.contract.methods.viewMyPrescriptions()
+         .call({ from: walletAddress });
+
+       res.status(200).json({
+         success: true,
+         prescriptions: prescriptions
        });
      } catch (error: any) {
        this.handleError(res, error);

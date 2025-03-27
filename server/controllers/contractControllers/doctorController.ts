@@ -7,10 +7,18 @@ class DoctorManagementController {
    private contract: any;
    private contractAddress: string;
 
+   private handleError(res: Response, error: Error) {
+    console.error('Prescription Creation Error:', error);
+    res.status(500).json({
+      message: 'Failed to create prescription',
+      error: error.message
+    });
+  }
+
    constructor() {
       
      this.web3 = new Web3('http://127.0.0.1:7545');
-     this.contractAddress = '0xb1B37aDb35991Fe3e95ac7A4c811B2310a131a20'; // locally deployed using Ganache
+     this.contractAddress = process.env.DOCTORMANAGEMENT_ADDRESS as string;  
      this.contract = new this.web3.eth.Contract(DoctorManagement.abi, this.contractAddress);
    }
 
@@ -29,7 +37,7 @@ class DoctorManagementController {
          transactionHash: tx.transactionHash
        });
      } catch (error) {
-       this.handleError(res, error);
+       this.handleError(res, (error as Error));
      }
    }
 
@@ -48,7 +56,7 @@ class DoctorManagementController {
          transactionHash: tx.transactionHash
        });
      } catch (error) {
-       this.handleError(res, error);
+       this.handleError(res, (error as Error));
      }
    }
 
@@ -67,7 +75,7 @@ class DoctorManagementController {
          transactionHash: tx.transactionHash
        });
      } catch (error) {
-       this.handleError(res, error);
+       this.handleError(res, (error as Error));
      }
    }
 
@@ -86,22 +94,22 @@ class DoctorManagementController {
          transactionHash: tx.transactionHash
        });
      } catch (error) {
-       this.handleError(res, error);
+       this.handleError(res, (error as Error));
      }
    }
 
    async viewPatientRecords(req: Request, res: Response) {
      try {
-       const { patientAddress, walletAddress } = req.body;
+       const {   walletAddress,  doctorWalletAddress } = req.body;
 
-       const records = await this.contract.methods.viewPatientRecords(patientAddress)
-         .call({ from: walletAddress });
+       const records = await this.contract.methods.viewPatientRecords(walletAddress)
+         .call({ from: doctorWalletAddress });
 
        res.status(200).json({
          records: records
        });
      } catch (error) {
-       this.handleError(res, error);
+       this.handleError(res, (error as Error));
      }
    }
 
@@ -132,7 +140,7 @@ class DoctorManagementController {
          transactionHash: tx.transactionHash
        });
      } catch (error) {
-       this.handleError(res, error);
+       this.handleError(res, (error as Error));
      }
    }
 
@@ -147,7 +155,7 @@ class DoctorManagementController {
          prescriptions: prescriptions
        });
      } catch (error) {
-       this.handleError(res, error);
+       this.handleError(res, (error as Error));
      }
    }
 
@@ -162,7 +170,7 @@ class DoctorManagementController {
          records: records
        });
      } catch (error) {
-       this.handleError(res, error);
+       this.handleError(res, (error as Error));
      }
    }
 
@@ -177,17 +185,11 @@ class DoctorManagementController {
          prescriptions: prescriptions
        });
      } catch (error) {
-       this.handleError(res, error);
+       this.handleError(res, (error as Error));
      }
    }
 
-   private handleError(res: Response, error: any) {
-     console.error('Error:', error);
-     res.status(500).json({
-       message: 'An error occurred',
-       error: error.toString()
-     });
-   }
+   
 }
 
 export default new DoctorManagementController();
