@@ -15,4 +15,7 @@ patientRoutes.get('/view-records', PatientManagementController.viewRecords as Re
 // Get Access List Route
 patientRoutes.get('/access-list/:patientAddress', PatientManagementController.getAccessList as RequestHandler);
 
+// Get Prescriptions Route
+patientRoutes.get('/prescriptions', PatientManagementController.getPrescriptions as RequestHandler);
+
 export default patientRoutes;
