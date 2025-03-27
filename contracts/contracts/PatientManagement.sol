@@ -14,6 +14,7 @@ contract PatientManagement {
         uint256 recordCount;
         mapping(address => bool) authorizedEntities;
         mapping(address => bool) emergencyAccess;
+        mapping(address => uint256) insuranceAgentAccess; // Timestamp when access expires
         address[] accessList;
     }
     
@@ -25,6 +26,8 @@ contract PatientManagement {
     event AccessRevoked(address indexed patient, address indexed entity);
     event EmergencyAccessGranted(address indexed patient, address indexed entity);
     event ReportAdded(address indexed patient, address indexed doctor, uint256 recordId);
+    event InsuranceAgentAccessGranted(address indexed patient, address indexed agent, uint256 expiryTime);
+    event InsuranceAgentAccessExpired(address indexed patient, address indexed agent);
     
     constructor() {
         owner = msg.sender;
@@ -38,12 +41,19 @@ contract PatientManagement {
     modifier onlyAuthorized(address patient) {
         require(
             patients[patient].authorizedEntities[msg.sender] || 
-            patients[patient].emergencyAccess[msg.sender] || 
+            patients[patient].emergencyAccess[msg.sender] ||
+            isInsuranceAgentAuthorized(patient, msg.sender) ||
             msg.sender == patient || 
             msg.sender == owner, 
             "Not authorized to access this patient's records"
         );
         _;
+    }
+    
+    // Helper function to check if insurance agent access is valid and not expired
+    function isInsuranceAgentAuthorized(address patient, address agent) internal view returns (bool) {
+        uint256 expiryTime = patients[patient].insuranceAgentAccess[agent];
+        return expiryTime > 0 && expiryTime > block.timestamp;
     }
     
     function uploadRecord(bytes memory recordHash) public {
@@ -67,6 +77,26 @@ contract PatientManagement {
         patients[msg.sender].accessList.push(entity);
         
         emit AccessGranted(msg.sender, entity);
+    }
+    
+    // Grant time-limited access to insurance agents (8 hours)
+    function grantInsuranceAgentAccess(address agent) public {
+        require(agent != address(0), "Invalid address");
+        
+        // Set expiry time to current time + 8 hours
+        uint256 expiryTime = block.timestamp + 8 hours;
+        patients[msg.sender].insuranceAgentAccess[agent] = expiryTime;
+        
+        emit InsuranceAgentAccessGranted(msg.sender, agent, expiryTime);
+    }
+    
+    // Revoke insurance agent access before expiry
+    function revokeInsuranceAgentAccess(address agent) public {
+        require(patients[msg.sender].insuranceAgentAccess[agent] > 0, "Agent does not have access");
+        
+        delete patients[msg.sender].insuranceAgentAccess[agent];
+        
+        emit InsuranceAgentAccessExpired(msg.sender, agent);
     }
     
     // Revoke access from a doctor or diagnostic center
@@ -115,6 +145,13 @@ contract PatientManagement {
         return patientRecords;
     }
     
+    // Check if an insurance agent still has valid access
+    function checkInsuranceAgentAccess(address patient, address agent) public view returns (bool, uint256) {
+        uint256 expiryTime = patients[patient].insuranceAgentAccess[agent];
+        bool hasAccess = expiryTime > 0 && expiryTime > block.timestamp;
+        
+        return (hasAccess, expiryTime);
+    }
     
     function addMedicalReport(address patient, bytes memory reportHash) public onlyAuthorized(patient) {
         uint256 recordId = patients[patient].recordCount;
@@ -128,7 +165,6 @@ contract PatientManagement {
         emit ReportAdded(patient, msg.sender, recordId);
     }
     
-   
     function grantEmergencyAccess(address entity) public onlyAuthorized(msg.sender) {
         require(entity != address(0), "Invalid address");
         require(!patients[msg.sender].emergencyAccess[entity], "Entity already has emergency access");
@@ -154,7 +190,7 @@ contract PatientManagement {
         emit EmergencyAccessGranted(patient, msg.sender);
     }
     
-    // Get list of entities with access to a patient's records
+    
     function getAccessList(address patient) public view onlyAuthorized(patient) returns (address[] memory) {
         return patients[patient].accessList;
     }

@@ -27,14 +27,17 @@ export interface PatientManagementInterface extends Interface {
   getFunction(
     nameOrSignature:
       | "addMedicalReport"
+      | "checkInsuranceAgentAccess"
       | "getAccessList"
       | "grantAccess"
       | "grantEmergencyAccess"
+      | "grantInsuranceAgentAccess"
       | "multiSigUnlock"
       | "owner"
       | "patients"
       | "records"
       | "revokeAccess"
+      | "revokeInsuranceAgentAccess"
       | "uploadRecord"
       | "viewPatientRecords"
       | "viewRecords"
@@ -45,6 +48,8 @@ export interface PatientManagementInterface extends Interface {
       | "AccessGranted"
       | "AccessRevoked"
       | "EmergencyAccessGranted"
+      | "InsuranceAgentAccessExpired"
+      | "InsuranceAgentAccessGranted"
       | "RecordUploaded"
       | "ReportAdded"
   ): EventFragment;
@@ -52,6 +57,10 @@ export interface PatientManagementInterface extends Interface {
   encodeFunctionData(
     functionFragment: "addMedicalReport",
     values: [AddressLike, BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "checkInsuranceAgentAccess",
+    values: [AddressLike, AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "getAccessList",
@@ -63,6 +72,10 @@ export interface PatientManagementInterface extends Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "grantEmergencyAccess",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "grantInsuranceAgentAccess",
     values: [AddressLike]
   ): string;
   encodeFunctionData(
@@ -83,6 +96,10 @@ export interface PatientManagementInterface extends Interface {
     values: [AddressLike]
   ): string;
   encodeFunctionData(
+    functionFragment: "revokeInsuranceAgentAccess",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
     functionFragment: "uploadRecord",
     values: [BytesLike]
   ): string;
@@ -100,6 +117,10 @@ export interface PatientManagementInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "checkInsuranceAgentAccess",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "getAccessList",
     data: BytesLike
   ): Result;
@@ -112,6 +133,10 @@ export interface PatientManagementInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "grantInsuranceAgentAccess",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "multiSigUnlock",
     data: BytesLike
   ): Result;
@@ -120,6 +145,10 @@ export interface PatientManagementInterface extends Interface {
   decodeFunctionResult(functionFragment: "records", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "revokeAccess",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "revokeInsuranceAgentAccess",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -168,6 +197,41 @@ export namespace EmergencyAccessGrantedEvent {
   export interface OutputObject {
     patient: string;
     entity: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace InsuranceAgentAccessExpiredEvent {
+  export type InputTuple = [patient: AddressLike, agent: AddressLike];
+  export type OutputTuple = [patient: string, agent: string];
+  export interface OutputObject {
+    patient: string;
+    agent: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace InsuranceAgentAccessGrantedEvent {
+  export type InputTuple = [
+    patient: AddressLike,
+    agent: AddressLike,
+    expiryTime: BigNumberish
+  ];
+  export type OutputTuple = [
+    patient: string,
+    agent: string,
+    expiryTime: bigint
+  ];
+  export interface OutputObject {
+    patient: string;
+    agent: string;
+    expiryTime: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -264,6 +328,12 @@ export interface PatientManagement extends BaseContract {
     "nonpayable"
   >;
 
+  checkInsuranceAgentAccess: TypedContractMethod<
+    [patient: AddressLike, agent: AddressLike],
+    [[boolean, bigint]],
+    "view"
+  >;
+
   getAccessList: TypedContractMethod<
     [patient: AddressLike],
     [string[]],
@@ -274,6 +344,12 @@ export interface PatientManagement extends BaseContract {
 
   grantEmergencyAccess: TypedContractMethod<
     [entity: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+
+  grantInsuranceAgentAccess: TypedContractMethod<
+    [agent: AddressLike],
     [void],
     "nonpayable"
   >;
@@ -306,6 +382,12 @@ export interface PatientManagement extends BaseContract {
     "nonpayable"
   >;
 
+  revokeInsuranceAgentAccess: TypedContractMethod<
+    [agent: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+
   uploadRecord: TypedContractMethod<
     [recordHash: BytesLike],
     [void],
@@ -332,6 +414,13 @@ export interface PatientManagement extends BaseContract {
     "nonpayable"
   >;
   getFunction(
+    nameOrSignature: "checkInsuranceAgentAccess"
+  ): TypedContractMethod<
+    [patient: AddressLike, agent: AddressLike],
+    [[boolean, bigint]],
+    "view"
+  >;
+  getFunction(
     nameOrSignature: "getAccessList"
   ): TypedContractMethod<[patient: AddressLike], [string[]], "view">;
   getFunction(
@@ -340,6 +429,9 @@ export interface PatientManagement extends BaseContract {
   getFunction(
     nameOrSignature: "grantEmergencyAccess"
   ): TypedContractMethod<[entity: AddressLike], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "grantInsuranceAgentAccess"
+  ): TypedContractMethod<[agent: AddressLike], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "multiSigUnlock"
   ): TypedContractMethod<
@@ -370,6 +462,9 @@ export interface PatientManagement extends BaseContract {
     nameOrSignature: "revokeAccess"
   ): TypedContractMethod<[entity: AddressLike], [void], "nonpayable">;
   getFunction(
+    nameOrSignature: "revokeInsuranceAgentAccess"
+  ): TypedContractMethod<[agent: AddressLike], [void], "nonpayable">;
+  getFunction(
     nameOrSignature: "uploadRecord"
   ): TypedContractMethod<[recordHash: BytesLike], [void], "nonpayable">;
   getFunction(
@@ -399,6 +494,20 @@ export interface PatientManagement extends BaseContract {
     EmergencyAccessGrantedEvent.InputTuple,
     EmergencyAccessGrantedEvent.OutputTuple,
     EmergencyAccessGrantedEvent.OutputObject
+  >;
+  getEvent(
+    key: "InsuranceAgentAccessExpired"
+  ): TypedContractEvent<
+    InsuranceAgentAccessExpiredEvent.InputTuple,
+    InsuranceAgentAccessExpiredEvent.OutputTuple,
+    InsuranceAgentAccessExpiredEvent.OutputObject
+  >;
+  getEvent(
+    key: "InsuranceAgentAccessGranted"
+  ): TypedContractEvent<
+    InsuranceAgentAccessGrantedEvent.InputTuple,
+    InsuranceAgentAccessGrantedEvent.OutputTuple,
+    InsuranceAgentAccessGrantedEvent.OutputObject
   >;
   getEvent(
     key: "RecordUploaded"
@@ -447,6 +556,28 @@ export interface PatientManagement extends BaseContract {
       EmergencyAccessGrantedEvent.InputTuple,
       EmergencyAccessGrantedEvent.OutputTuple,
       EmergencyAccessGrantedEvent.OutputObject
+    >;
+
+    "InsuranceAgentAccessExpired(address,address)": TypedContractEvent<
+      InsuranceAgentAccessExpiredEvent.InputTuple,
+      InsuranceAgentAccessExpiredEvent.OutputTuple,
+      InsuranceAgentAccessExpiredEvent.OutputObject
+    >;
+    InsuranceAgentAccessExpired: TypedContractEvent<
+      InsuranceAgentAccessExpiredEvent.InputTuple,
+      InsuranceAgentAccessExpiredEvent.OutputTuple,
+      InsuranceAgentAccessExpiredEvent.OutputObject
+    >;
+
+    "InsuranceAgentAccessGranted(address,address,uint256)": TypedContractEvent<
+      InsuranceAgentAccessGrantedEvent.InputTuple,
+      InsuranceAgentAccessGrantedEvent.OutputTuple,
+      InsuranceAgentAccessGrantedEvent.OutputObject
+    >;
+    InsuranceAgentAccessGranted: TypedContractEvent<
+      InsuranceAgentAccessGrantedEvent.InputTuple,
+      InsuranceAgentAccessGrantedEvent.OutputTuple,
+      InsuranceAgentAccessGrantedEvent.OutputObject
     >;
 
     "RecordUploaded(address,uint256,uint256)": TypedContractEvent<

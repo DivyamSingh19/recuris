@@ -74,8 +74,8 @@
       ]
     },
     "C:\\fullStackProjects\\recuris\\contracts\\contracts\\PatientManagement.sol": {
-      "lastModificationDate": 1743070656968,
-      "contentHash": "5fb7f1dc3c353a559e46911a6015ca30",
+      "lastModificationDate": 1743108918638,
+      "contentHash": "1fcf8176abe112efd665bb75cab7b387",
       "sourceName": "contracts/PatientManagement.sol",
       "solcConfig": {
         "version": "0.8.28",
