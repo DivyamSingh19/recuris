@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Web3 from 'web3';
-import PatientManagement from '../../abi/PatientManagement.json';
+import PatientManagement from '../../abi/PatientManagement.json'
+import { PrismaClient } from '@prisma/client';
 
 class PatientManagementController {
    private web3: Web3;
@@ -18,11 +19,12 @@ class PatientManagementController {
      this.viewRecords = this.viewRecords.bind(this);
      this.getAccessList = this.getAccessList.bind(this);
    }
+  
 
    async uploadRecord(req: Request, res: Response) {
      try {
        const { recordHash, walletAddress } = req.body;
-
+       const encryption = {}
        if (!this.web3.utils.isAddress(walletAddress)) {
          return res.status(400).json({
            success: false,

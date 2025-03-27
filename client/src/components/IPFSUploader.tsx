@@ -58,27 +58,25 @@ export default function IPFSUploader() {
         setIpfsHash(data.IpfsHash);
         setUploadStatus('Upload successful!');
 
-        // Send the hash to your Express backend
-      // const backendResponse = await fetch('http://localhost:4000/api/data/ipfs', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     ipfsHash: data.IpfsHash,
-      //     walletAddress,
-      //     fileName: file.name,
-      //     fileSize: file.size,
-      //     timestamp: new Date().toISOString()
-      //   }),
-      // });
+       
+      const backendResponse = await fetch('http://localhost:4000/api/patient/records', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          recordHash: data.IpfsHash,
+          walletAddress,
+          
+        }),
+      });
       
-      // if (backendResponse.ok) {
-      //   setUploadStatus('Upload complete and hash saved to backend!');
-      // } else {
-      //   const backendError = await backendResponse.json();
-      //   setUploadStatus(`Upload successful, but failed to save hash: ${backendError.message}`);
-      // }
+      if (backendResponse.ok) {
+        setUploadStatus('Upload complete and hash saved to backend!');
+      } else {
+        const backendError = await backendResponse.json();
+        setUploadStatus(`Upload successful, but failed to save hash: ${backendError.message}`);
+      }
       } else {
         setUploadStatus(`Upload failed: ${data.error}`);
       }
