@@ -1,37 +1,25 @@
+"use client"
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { toast } from 'sonner';
+import { Label } from '@/components/ui/label';
 
-// Custom Toast Component
-const Toast = ({ message, type }) => {
-  return (
-    <div 
-      className={`fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${
-        type === 'success' 
-          ? 'bg-green-500 text-white' 
-          : 'bg-red-500 text-white'
-      }`}
-    >
-      {message}
-    </div>
-  );
-};
+// Define Prescription Interface
+interface Prescription {
+  patientAddress: string;
+  medication: string;
+  dosage: string;
+  frequency: string;
+  durationDays: string;
+  walletAddress: string;
+}
 
-const GeneratePres = () => {
-  // State for toast
-  const [toast, setToast] = useState(null);
-
-  // Toast utility function
-  const showToast = (message, type = 'success') => {
-    setToast({ message, type });
-    
-    // Auto-dismiss toast after 3 seconds
-    setTimeout(() => {
-      setToast(null);
-    }, 3000);
-  };
-  
+const GeneratePres: React.FC = () => {
   // State for prescription form
-  const [prescription, setPrescription] = useState({
+  const [prescription, setPrescription] = useState<Prescription>({
     patientAddress: '',
     medication: '',
     dosage: '',
@@ -41,10 +29,11 @@ const GeneratePres = () => {
   });
 
   // State for blockchain transaction
-  const [transactionHash, setTransactionHash] = useState(null);
+  const [transactionHash, setTransactionHash] = useState<string | null>(null);
+  const walletAddress = localStorage.getItem("walletAddress");
 
   // Handle input changes
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setPrescription(prev => ({
       ...prev,
@@ -53,7 +42,7 @@ const GeneratePres = () => {
   };
 
   // Handle select changes
-  const handleSelectChange = (name, value) => {
+  const handleSelectChange = (name: keyof Prescription, value: string) => {
     setPrescription(prev => ({
       ...prev,
       [name]: value
@@ -74,7 +63,7 @@ const GeneratePres = () => {
       } = prescription;
 
       // Comprehensive validation
-      const validationErrors = [];
+      const validationErrors: string[] = [];
       if (!patientAddress || !patientAddress.startsWith('0x')) 
         validationErrors.push("Invalid Patient Ethereum Address");
       if (!medication) 
@@ -90,7 +79,7 @@ const GeneratePres = () => {
 
       // Display validation errors
       if (validationErrors.length > 0) {
-        showToast(validationErrors.join(", "), 'error');
+        validationErrors.forEach(error => toast.error(error));
         return;
       }
 
@@ -98,7 +87,7 @@ const GeneratePres = () => {
       const response = await axios.post('/api/prescriptions/create', prescription);
 
       // Handle successful submission
-      showToast("Prescription successfully added to blockchain");
+      toast.success("Prescription successfully added to blockchain");
 
       // Store transaction hash
       setTransactionHash(response.data.transactionHash);
@@ -113,144 +102,140 @@ const GeneratePres = () => {
         walletAddress: ''
       });
 
-    } catch (error) {
+    } catch (error: any) {
       console.error('Prescription submission error:', error);
-      showToast(
-        error.response?.data?.message || "Failed to create prescription", 
-        'error'
+      toast.error(
+        error.response?.data?.message || "Failed to create prescription"
       );
     }
   };
 
   return (
-    <div className="container mx-auto p-4 relative">
-      {/* Toast Notification */}
-      {toast && <Toast message={toast.message} type={toast.type} />}
-
+    <>
+    <div className="container mx-auto p-4">
       <div className="max-w-2xl mx-auto bg-white shadow-md rounded-lg overflow-hidden">
         <div className="p-6">
           <h2 className="text-2xl font-bold mb-6 text-center">
-            Blockchain Prescription Generation
+            Create Prescription
           </h2>
 
           {/* Patient Blockchain Address */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
+            <Label>
               Patient Ethereum Address
-            </label>
-            <input 
-              className="w-full px-3 py-2 border rounded-lg"
+            </Label>
+            <Input 
               name="patientAddress"
               value={prescription.patientAddress}
               onChange={handleInputChange}
               placeholder="0x..."
               required
-            />
+              />
           </div>
 
           {/* Doctor's Wallet Address */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
+            <Label>
               Doctor&apos;s Wallet Address
-            </label>
-            <input 
-              className="w-full px-3 py-2 border rounded-lg"
+            </Label>
+            <Input 
               name="walletAddress"
               value={prescription.walletAddress}
               onChange={handleInputChange}
               placeholder="0x..."
               required
-            />
+              />
           </div>
 
           {/* Medication Details */}
           <div className="grid grid-cols-3 gap-4 mb-4">
             <div>
-              <label className="block text-gray-700 font-bold mb-2">
+              <Label>
                 Medication
-              </label>
-              <input 
-                className="w-full px-3 py-2 border rounded-lg"
+              </Label>
+              <Input 
                 name="medication"
                 value={prescription.medication}
                 onChange={handleInputChange}
                 placeholder="Medication name"
                 required
-              />
+                />
             </div>
             <div>
-              <label className="block text-gray-700 font-bold mb-2">
+              <Label>
                 Dosage
-              </label>
-              <select 
-                className="w-full px-3 py-2 border rounded-lg"
-                name="dosage"
+              </Label>
+              <Select 
                 value={prescription.dosage}
-                onChange={(e) => handleSelectChange('dosage', e.target.value)}
-                required
-              >
-                <option value="">Select Dosage</option>
-                {['5mg', '10mg', '15mg', '20mg', '25mg'].map(dose => (
-                  <option key={dose} value={dose}>{dose}</option>
-                ))}
-              </select>
+                onValueChange={(value) => handleSelectChange('dosage', value)}
+                >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select Dosage" />
+                </SelectTrigger>
+                <SelectContent>
+                  {['5mg', '10mg', '15mg', '20mg', '25mg'].map(dose => (
+                    <SelectItem key={dose} value={dose}>{dose}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div>
-              <label className="block text-gray-700 font-bold mb-2">
+              <Label>
                 Frequency
-              </label>
-              <select 
-                className="w-full px-3 py-2 border rounded-lg"
-                name="frequency"
+              </Label>
+              <Select 
                 value={prescription.frequency}
-                onChange={(e) => handleSelectChange('frequency', e.target.value)}
-                required
+                onValueChange={(value) => handleSelectChange('frequency', value)}
               >
-                <option value="">Select Frequency</option>
-                {['Once Daily', 'Twice Daily', 'Three Times Daily', 'As Needed'].map(freq => (
-                  <option key={freq} value={freq}>{freq}</option>
-                ))}
-              </select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select Frequency" />
+                </SelectTrigger>
+                <SelectContent>
+                  {['Once Daily', 'Twice Daily', 'Three Times Daily', 'As Needed'].map(freq => (
+                    <SelectItem key={freq} value={freq}>{freq}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
           {/* Duration */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
+            <Label>
               Treatment Duration (Days)
-            </label>
-            <input 
-              className="w-full px-3 py-2 border rounded-lg"
+            </Label>
+            <Input 
               type="number"
               name="durationDays"
               value={prescription.durationDays}
               onChange={handleInputChange}
               placeholder="Number of days"
               required
-            />
+              />
           </div>
 
           {/* Transaction Hash Display */}
           {transactionHash && (
             <div className="mt-4 p-2 bg-green-50 rounded">
-              <label className="block text-gray-700 font-bold mb-2">
+              <Label>
                 Transaction Hash:
-              </label>
+              </Label>
               <p className="text-sm text-green-700 truncate">{transactionHash}</p>
             </div>
           )}
 
           {/* Submit Button */}
-          <button 
+          <Button 
             onClick={submitPrescription} 
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+            className="w-full"
             type="button"
-          >
-            Create Blockchain Prescription
-          </button>
+            >
+            Create Prescription
+          </Button>
         </div>
       </div>
     </div>
+            </>
   );
 };
 

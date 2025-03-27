@@ -25,7 +25,7 @@ const ManageDocs = () => {
         },
         body: JSON.stringify({ walletAddress })
       })
-
+ 
       if (!response.ok) {
         throw new Error('Failed to fetch records')
       }
