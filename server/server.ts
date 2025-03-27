@@ -13,7 +13,8 @@ import totalPatientRouter from "./routes/totalPatients";
 import patientRoutes from "./routes/contractRoutes/patientRoute"
 import doctorRouter from "./routes/contractRoutes/doctorRoute";
 import diagnosticRouter from "./routes/contractRoutes/diagnosticRoute";
-import aiRoutes from "./routes/contractRoutes/aiRoute";
+// import aiRoutes from "./routes/contractRoutes/aiRoute";
+import multiSigRouter from "./routes/contractRoutes/multiSigRoute";
 const app = express();
 const port =process.env.PORT || 5000
 const server :http.Server=http.createServer(app)
@@ -45,8 +46,8 @@ app.use('/api/doctor',doctorRouter);
 app.use('/api/diagnostic-control',diagnosticRouter);
 
 app.use('/api/insurance',insuranceRouter)
-
-app.use('/api/ai', aiRoutes)
+app.use('/api/multisig',multiSigRouter)
+// app.use('/api/ai', aiRoutes)
 
 //global catches
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {

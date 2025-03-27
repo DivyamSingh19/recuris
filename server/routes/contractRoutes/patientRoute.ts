@@ -3,19 +3,29 @@ import PatientManagementController from '../../controllers/contractControllers/p
 
 const patientRoutes = express.Router();
 
-// Record Upload Route
+ 
 patientRoutes.post('/records', PatientManagementController.uploadRecord as RequestHandler);
 
-// Grant Access Route
+ 
 patientRoutes.post('/access', PatientManagementController.grantAccess as RequestHandler);
 
-// View Records Route
+ 
 patientRoutes.get('/view-records', PatientManagementController.viewRecords as RequestHandler);
 
-// Get Access List Route
+ 
 patientRoutes.get('/access-list/:patientAddress', PatientManagementController.getAccessList as RequestHandler);
-
-// Get Prescriptions Route
+ 
 patientRoutes.get('/prescriptions', PatientManagementController.getPrescriptions as RequestHandler);
+
+ 
+patientRoutes.post('/grant-insurance-access', PatientManagementController.grantInsuranceAgentAccess as RequestHandler);
+ 
+patientRoutes.post('/revoke-insurance-access', PatientManagementController.revokeInsuranceAgentAccess as RequestHandler);
+
+ 
+patientRoutes.get('/check-insurance-access/:patientAddress/:agentAddress', PatientManagementController.checkInsuranceAgentAccess as RequestHandler);
+
+ 
+patientRoutes.post('/view-patient-records', PatientManagementController.viewPatientRecords as RequestHandler);
 
 export default patientRoutes;
