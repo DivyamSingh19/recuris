@@ -10,7 +10,7 @@ class DoctorManagementController {
    constructor() {
       
      this.web3 = new Web3('http://127.0.0.1:7545');
-     this.contractAddress = '0xe3E5DE517064c72c08cFd1CbD49Aa7900C15700b'; // locally deployed using Ganache
+     this.contractAddress = '0xb1B37aDb35991Fe3e95ac7A4c811B2310a131a20'; // locally deployed using Ganache
      this.contract = new this.web3.eth.Contract(DoctorManagement.abi, this.contractAddress);
    }
 

@@ -12,7 +12,7 @@ class DiagnosticControlController {
         this.web3 = new Web3('http://127.0.0.1:7545');
 
         
-        this.contractAddress = '0xb5e62524Da8e30Bf550b3462Ab76b3302115432e'; //locally deployed on ganache
+        this.contractAddress = '0x0Fc0dF3c11C2b64A756C3d91AC90E007C18e56B2'; //locally deployed on ganache
 
         
         this.contract = new this.web3.eth.Contract(

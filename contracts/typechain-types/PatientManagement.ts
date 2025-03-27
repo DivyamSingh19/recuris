@@ -286,11 +286,7 @@ export interface PatientManagement extends BaseContract {
 
   owner: TypedContractMethod<[], [string], "view">;
 
-  patients: TypedContractMethod<
-    [arg0: AddressLike],
-    [[boolean, bigint] & { exists: boolean; recordCount: bigint }],
-    "view"
-  >;
+  patients: TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
 
   records: TypedContractMethod<
     [arg0: AddressLike, arg1: BigNumberish],
@@ -356,11 +352,7 @@ export interface PatientManagement extends BaseContract {
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
     nameOrSignature: "patients"
-  ): TypedContractMethod<
-    [arg0: AddressLike],
-    [[boolean, bigint] & { exists: boolean; recordCount: bigint }],
-    "view"
-  >;
+  ): TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
   getFunction(
     nameOrSignature: "records"
   ): TypedContractMethod<
