@@ -39,13 +39,11 @@ contract PatientManagement {
         string description
     );
     
-    // Other events remain the same...
+    event EmergencyAccessGranted(address indexed patient, address indexed entity);
     
     constructor() {
         owner = msg.sender;
     }
-    
-    // Other modifiers remain the same...
     
     function uploadRecord(
         bytes memory recordHash, 
@@ -56,7 +54,7 @@ contract PatientManagement {
         records[msg.sender][recordId] = Record({
             recordHash: recordHash,
             recordName: recordName,
-            description: description,  // Added description
+            description: description,
             timestamp: block.timestamp,
             uploader: msg.sender
         });
@@ -71,8 +69,7 @@ contract PatientManagement {
         );
     }
     
-    // Modify viewRecords to return record names and descriptions
-    function viewRecords() public view onlyAuthorized(msg.sender) returns (
+    function viewRecords() public view returns (
         bytes[] memory, 
         string[] memory, 
         string[] memory
@@ -91,8 +88,7 @@ contract PatientManagement {
         return (patientRecords, recordNames, descriptions);
     }
     
-    // Similarly modify viewPatientRecords
-    function viewPatientRecords(address patient) public view onlyAuthorized(patient) returns (
+    function viewPatientRecords(address patient) public view returns (
         bytes[] memory, 
         string[] memory, 
         string[] memory
@@ -116,12 +112,12 @@ contract PatientManagement {
         bytes memory reportHash, 
         string memory reportName, 
         string memory description
-    ) public onlyAuthorized(patient) {
+    ) public {
         uint256 recordId = patients[patient].recordCount;
         records[patient][recordId] = Record({
             recordHash: reportHash,
             recordName: reportName,
-            description: description,  // Added description
+            description: description,
             timestamp: block.timestamp,
             uploader: msg.sender
         });
@@ -135,11 +131,8 @@ contract PatientManagement {
             description
         );
     }
-    
-    // All other functions remain the same...
-   }
-    
-    function grantEmergencyAccess(address entity) public onlyAuthorized(msg.sender) {
+
+    function grantEmergencyAccess(address entity) public {
         require(entity != address(0), "Invalid address");
         require(!patients[msg.sender].emergencyAccess[entity], "Entity already has emergency access");
         
@@ -147,25 +140,20 @@ contract PatientManagement {
         
         emit EmergencyAccessGranted(msg.sender, entity);
     }
-    
-    // Multi-signature emergency unlock
+
     function multiSigUnlock(address patient, address[] memory approvers) public {
         require(approvers.length >= 2, "At least 2 approvers required");
         
-        // Check if all approvers are valid (e.g., recognized healthcare providers)
-        // This is a simplified version - in a real system, you'd need more robust validation
         for (uint256 i = 0; i < approvers.length; i++) {
             require(approvers[i] != address(0), "Invalid approver address");
         }
         
-        // Grant emergency access to the caller
         patients[patient].emergencyAccess[msg.sender] = true;
         
         emit EmergencyAccessGranted(patient, msg.sender);
     }
-    
-    
-    function getAccessList(address patient) public view onlyAuthorized(patient) returns (address[] memory) {
+
+    function getAccessList(address patient) public view returns (address[] memory) {
         return patients[patient].accessList;
     }
 }
