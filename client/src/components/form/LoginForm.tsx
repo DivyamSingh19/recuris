@@ -94,6 +94,9 @@ const LoginForm: React.FC = () => {
         case UserRole.DIAGNOSTIC_CENTER:
           endpoint = "/api/user/login-dc";
           break;
+        case UserRole.INSURANCE_COMPANY:
+          endpoint = "/api/user/login-ic";
+          break;
         // case UserRole.ADMIN:
         //   endpoint = "/api/user/login-admin";
         //   break;
@@ -147,6 +150,9 @@ const LoginForm: React.FC = () => {
             break;
           case UserRole.DIAGNOSTIC_CENTER:
             router.push("/dashboard/diagnostic-center");
+            break;
+          case UserRole.INSURANCE_COMPANY:
+            router.push("/dashboard/insurance-provider");
             break;
           // case UserRole.ADMIN:
           //   router.push("/dashboard/admin");

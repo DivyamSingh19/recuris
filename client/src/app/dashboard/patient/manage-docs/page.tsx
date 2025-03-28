@@ -27,7 +27,8 @@ const ManageDocs = () => {
       })
  
       if (!response.ok) {
-        throw new Error('Failed to fetch records')
+        console.log('Failed to fetch records')
+        return;
       }
 
       const data = await response.json()

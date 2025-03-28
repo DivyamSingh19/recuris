@@ -54,6 +54,7 @@ export default function DashboardLayout({
       doctor: "/dashboard/doctor",
       admin: "/dashboard/admin",
       diagnostic_center: "/dashboard/diagnostic-center",
+      insurance_provider: "/dashboard/insurance-provider",
     };
 
     if (rolePaths[role]) {
