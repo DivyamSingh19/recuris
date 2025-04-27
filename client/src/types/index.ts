@@ -28,11 +28,19 @@ export type DiagnosticCenter = {
   location: string;
 };
 
+export type InsuranceProvider = {
+  name: string;
+  email: string;
+  password: string;
+  location: string;
+}
+
 export enum UserRole {
   PATIENT = "patient",
   DOCTOR = "doctor",
   DIAGNOSTIC_CENTER = "diagnostic_center",
   // ADMIN = "admin",
+  INSURANCE_COMPANY = "insurance_provider"
 }
 
 export interface Appointment {
@@ -49,4 +57,4 @@ export interface Appointment {
 
 export type appointment = Appointment;
 
-export type UserByRole = Patient | Doctor | DiagnosticCenter | Admin;
+export type UserByRole = Patient | Doctor | DiagnosticCenter | Admin | InsuranceProvider;

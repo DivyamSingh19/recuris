@@ -1,6 +1,6 @@
 "use client"
 
-import { Accessibility, Book, BookOpen, Brain, Calendar, ChartPie, ChevronUp, ClipboardCheck, CreditCard, FilePlus, FileText, FolderOpen, Home, LifeBuoy, LogOut, User, User2, Users } from "lucide-react"
+import { Accessibility, Book, BookOpen, Brain, Calendar, ChartPie, ChevronUp, ClipboardCheck, Coins, CreditCard, FilePlus, FileText, FolderOpen, Home, LifeBuoy, LogOut, User, User2, Users } from "lucide-react"
 
 import {
   Sidebar,
@@ -57,6 +57,11 @@ const navItems = {
     { href: "/dashboard/admin/analytics", label: "Analytics", icon: ChartPie },
     { href: "/dashboard/admin/manage-doctors", label: "Manage Doctors", icon: Users },
   ],
+  insurance_provider: [
+    { href: "/dashboard/insurance-provider", label: "Dashboard", icon: Home },
+    { href: "/dashboard/insurance-provider/patient-records", label: "Patient Records", icon: FilePlus },
+    { href: "/dashboard/insurance-provider/claims", label: "Claims", icon: Coins },
+  ]
 };
 
 
@@ -89,6 +94,9 @@ export function AppSidebar({ user, role }: { user: any; role: string | null}) {
     }
     if (role === "admin") {
       router.push("/dashboard/admin/manage-profile");
+    }
+    if (role === "insurance_company") {
+      router.push("/dashboard/insurance-provider/manage-profile");
     }
   }
 

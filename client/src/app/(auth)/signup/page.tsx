@@ -12,6 +12,7 @@ import DiagnosticSignupForm from '@/components/form/DiagnosticSignupForm';
 import { Separator } from '@/components/ui/separator';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import InsuranceProviderSignupForm from '@/components/form/InsuranceProviderSignupForm';
 
 export default function SignupPage() {
   const [selectedRole, setSelectedRole] = useState<UserRole>(UserRole.PATIENT);
@@ -31,6 +32,8 @@ export default function SignupPage() {
         return <DoctorSignupForm />;
       case UserRole.DIAGNOSTIC_CENTER:
         return <DiagnosticSignupForm />;
+      case UserRole.INSURANCE_COMPANY:
+        return <InsuranceProviderSignupForm />;
       // case UserRole.ADMIN:
       //   return <AdminSignupForm />;
       default:
