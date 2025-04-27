@@ -82,7 +82,7 @@ const LoginForm: React.FC = () => {
       setLoading(true);
       setAuthError(null);
 
-      // Determine the endpoint based on selected role
+       
       let endpoint = "";
       switch (selectedRole) {
         case UserRole.PATIENT:
@@ -117,7 +117,7 @@ const LoginForm: React.FC = () => {
       const data = await response.json();
 
       if (data.success) {
-        // Store the auth token
+         
         console.log(data);
         localStorage.setItem("token", data.token);
         localStorage.setItem("id", data.id);
@@ -126,7 +126,7 @@ const LoginForm: React.FC = () => {
         localStorage.setItem("email", data.metaData.email);
         localStorage.setItem("name", data.metaData.name);
 
-        // Store user data in Redux
+         
         dispatch(
           setUser({
             id: data.token,
@@ -137,7 +137,7 @@ const LoginForm: React.FC = () => {
           })
         );
 
-        // Redirect based on role
+         
         switch (selectedRole) {
           case UserRole.PATIENT:
             router.push("/dashboard/patient");

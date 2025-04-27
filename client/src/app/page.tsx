@@ -6,8 +6,8 @@ import Link from "next/link";
 import { Lato } from 'next/font/google';
 import { Poppins } from 'next/font/google';
 import ContactPage from "@/components/landing/contact";
-import Model from "@/components/Model";
-import GradientButton from "@/components/landing/GradientButton";
+ 
+ 
 import FeatureSection from "@/components/landing/FeatureCard";
 
 
@@ -29,7 +29,7 @@ export default function Home() {
             <Link href="/login">Get Started</Link>
           </Button>
         </div>
-      <Model />
+       
       <div className="absolute left-0 bottom-0 bg-gray-300/20 backdrop-blur-md w-full p-14">
         <p className={`pl-72 text-xl text-gray-600 font-semibold ${lato.className}`}>
           With blockchain-powered trust and AI-driven efficiency, it bridges the gap between patients, doctors, and hospitals—ensuring seamless collaboration without compromising privacy. 

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import Web3 from 'web3';
 import MultiSigAccessABI from '../../abi/MultiSigAccess.json';
-
+import { PrismaClient } from '@prisma/client';
 class MultiSigAccessController {
    private web3: Web3;
    private contract: any;

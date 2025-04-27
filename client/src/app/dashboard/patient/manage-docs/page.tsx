@@ -18,7 +18,7 @@ const ManageDocs = () => {
 
   const fetchRecords = async () => {
     try {
-      const response = await fetch('http://localhost:4000/api/patient/view-records', {
+      const response = await fetch('http://localhost:4000/api/patient/records', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
