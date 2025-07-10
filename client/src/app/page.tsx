@@ -30,15 +30,7 @@ export default function Home() {
           </Button>
         </div>
        
-      <div className="absolute left-0 bottom-0 bg-gray-300/20 backdrop-blur-md w-full p-14">
-        <p className={`pl-72 text-xl text-gray-600 font-semibold ${lato.className}`}>
-          With blockchain-powered trust and AI-driven efficiency, it bridges the gap between patients, doctors, and hospitals—ensuring seamless collaboration without compromising privacy. 
-          Recuris transforms how healthcare works—faster, smarter, and safer.
-        </p>
-        <div className="absolute left-20 -bottom-32 flex items-center">
-          <Image src="/assets/heropills.svg" width={250} height={250} alt="Hero Pills" />
-        </div>
-      </div>
+      
       </section>
 
       <section id="features" className="relative min-h-screen flex justify-center flex-col items-center py-20" >

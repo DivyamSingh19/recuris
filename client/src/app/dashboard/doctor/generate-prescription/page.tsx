@@ -30,7 +30,7 @@ const GeneratePres: React.FC = () => {
 
   // State for blockchain transaction
   const [transactionHash, setTransactionHash] = useState<string | null>(null);
-  const walletAddress = localStorage.getItem("walletAddress");
+  // const walletAddress = localStorage.getItem("walletAddress");
 
   // Handle input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

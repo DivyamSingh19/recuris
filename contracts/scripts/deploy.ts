@@ -10,8 +10,6 @@ async function main() {
     "DoctorManagement",
     "InsuranceProvider",
     "MedAccessControl",
- 
-     
     "PatientManagement",
     
   ];
