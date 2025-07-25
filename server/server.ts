@@ -47,9 +47,7 @@ app.use('/api/diagnostic-control',diagnosticRouter);
 
 app.use('/api/insurance',insuranceRouter)
 app.use('/api/multisig',multiSigRouter)
-// app.use('/api/ai', aiRoutes)
-
-//global catches
+ 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.error(err); 
   res.status(500).json({
