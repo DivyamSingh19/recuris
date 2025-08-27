@@ -22,4 +22,7 @@ Cross-Border Health Data Access via Decentralized Identity (DID) enables seamles
 ✅ Scalability & Compliance: Aligns with HIPAA & GDPR standards for legal and ethical medical data handling.
 
 
-Note: This project is currently being updated to add AI and a moblie app based interface
+
+
+
+Note: This project is currently being updated to add artificial intelligence , a moblie app based interface and multichain support
